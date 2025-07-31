@@ -1,0 +1,213 @@
+########################
+Day 13 : 29th July 2025
+########################
+
+	Jenkins Build Orchestration Tool ::::
+	
+	
+	Continuous Integration : 			CI
+	
+	Continuous Delivery/Deployment :	Cd/CD
+	
+	
+	Jenkins :::
+	
+	What is Jenkins :::
+	
+		Jenkins is Open-Source Build Orchestration Tool.
+		Used to Automate the End-to-End Application Build and Deployments
+		Using Jenkins we can create CI/CD Pipelines 
+		
+	Jenkins Architecture ::
+	
+		Jenkins is based on Master-Slave Architecture :::
+		
+			Jenkins_Master (VM)				==> To Create Jenkins CI/CD Pipeline Jobs/Projects & Schedule to run in Jenkins_SlaveNode
+											==> Install Git, JDK, Jenkins
+											==> Install Application Build Tools(Maven)
+										
+				Jenkins_SlaveNode1 (VM)		==> Perform Application Builds - compile/create artifacts
+											==> Install Application Build Tools
+						
+			
+	Scenario1 :
+	
+		Client :
+		
+			Java Web Application Development
+			
+			Change Request : 1 or 2 CR per week / 
+			
+			- Less no. of Application Builds and Production release 
+			
+
+			Jenkins_Master (VM)				==> To Create Jenkins CI/CD Pipeline Jobs/Projects & Schedule to run in Jenkins_Master
+											==> Install Git, JDK, Jenkins
+											==> Install Application Build Tools(Maven)
+											
+											
+	Scenario2 :
+	
+		Client :
+		
+			Java, .Net, python, Node-js, Angular, ruby, ......
+			
+			Frequency of Builds and Release are huge
+			
+			
+			Jenkins_Master Np(VM)				==> To Create Jenkins CI/CD Pipeline Jobs/Projects & Schedule to run in Jenkins_SlaveNode
+												==> Install Git, JDK, Jenkins											
+											
+				Jenkins_SlaveNode1 (VM1)		==> Java Build Tools					
+				Jenkins_SlaveNode1 (VM1.1)		==> Java Build 						
+				Jenkins_SlaveNode1 (VM2)		==> Python
+				Jenkins_SlaveNode1 (VM3)		==> .Net
+				Jenkins_SlaveNode1 (VM4)		==> Angular/Nodejs
+				Jenkins_SlaveNode1 (VM5)		==> Ruby
+				
+
+			Target_Server(QA)
+				
+			Target_Server(UAT)
+
+			Target_Server(PROD)
+
+	CI/CD Workflow :::
+	
+		SCM_Checkout 
+		Application Build 
+		Unit Testing 
+		Create Artifacts 
+		Promote the Application to Test Environments
+		Notify 
+		Deploy to Prod 
+		
+
+
+
+	Working with Jenkins :::
+	
+	
+		Developers' Perspective :
+			- All Developers are just the Consumers of Jenkins Tools and Services.
+			- Developers can just execute/cancel/view the Jenkins jobs/Status.		
+		
+		
+		DevOps Perspective :	
+	
+			Roles & Responsibilies of DevOps Team :			
+			
+			Jenkins Administration 
+				- Installation of Jenkins
+				- Global System Configurations 
+				- Plugins Management 
+				- Tools Management 
+				- User Management 					# To enable User Authentication
+				- Security Management				# To enable User Authorization
+				- Credential Management 
+				- Master/Slave Node Configurations
+				- Creation CICD Pipeline Projects 
+				- Onboard Applications to use Jenkins CICD Projects  
+				- Periodic Upgrade of Jenkins and its plugins 
+				- Periodic Backup 
+				- Troubleshooting the Issues!	
+	
+	
+	- Installation of Jenkins :::
+	
+		--> Jenkins can be installed in Linux - Ubuntu Machine AMI - v22.04
+				https://www.jenkins.io/doc/book/installing/
+				
+				https://www.jenkins.io/doc/book/installing/linux/
+				
+			Jenkins run as a service, it runs in default port 8080
+			
+
+	
+	- Global System Configurations ::
+	
+		--> Define the default properties and external resource connections to Jenkins.
+	
+	
+	- Plugins Management ::	
+	
+		--> Enable/Disable/Remove/Install/Upgrade Plugins!
+	
+	
+	Install & Configure Jenkins Server :
+
+	- Refer to that tools/Service's Official Documentation.
+				https://www.jenkins.io/doc/book/installing/linux/
+				
+Launch AWS EC2 Instance - AMI - Ubuntu 22.04v 
+t2.micro - Instance Type 
+				
+#Allow All Traffic for Demo!
+
+Updated Inbound Rule - Port 8080 
+
+1. Install the pre-requisites :::
+
+# Install Jdk:
+
+sudo -i 			
+sudo apt update -y
+
+sudo apt install git -y 					# To install git if required
+git --version 
+
+sudo apt install openjdk-17-jre -y 			# previous version
+java -version						
+
+2. Install the Actual tool :::
+ 								
+#Install Jenkins:
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install jenkins -y
+
+
+
+3. Perform Post_Installation Activities :::
+
+jenkins --version 
+
+systemctl status jenkins 
+
+# systemctl stop jenkins 
+# systemctl start jenkins 
+# systemctl restart jenkins 
+# systemctl enable jenkins 
+
+/var/lib/jenkins 		# Default Installation Dir of Jenkin on Linux Box
+
+
+
+Open web browser :
+
+http://<Public_IP_Address>:8080/
+
+E.g.: http://15.207.19.193:8080/
+
+sudo -i
+
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+Next :::
+	
+				- Tools Management 
+				- User Management 					# To enable User Authentication
+				- Security Management				# To enable User Authorization
+				- Credential Management 
+				- Master/Slave Node Configurations
+				- Creation CICD Pipeline Projects 	
+	
