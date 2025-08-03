@@ -368,13 +368,9 @@ pipeline {
         }
     }
 }	
-- click on apply and click on save
-- click on your pipeline dashboard
-- click on build now
-- click on that green tick mark you will the ouput log
-- click on stages, It will show you the graphical view of stages
 
 
+2nd build:
 Declarative Pipeline :
 
 
@@ -400,6 +396,12 @@ pipeline {
     }
 }	
 
+- click on apply and click on save
+- click on your pipeline dashboard
+- click on build now
+- click on that green tick mark you will the ouput log
+- click on stages, It will show you the graphical view of stages
+
 
 	- Master/Slave Node Configurations :::
 	
@@ -408,7 +410,17 @@ pipeline {
 									
 			Jenkins_SlaveNode (VM)	# Perform Application Build 
 									# git, jdk, maven
-									
+- We already have Master node now we have to create slave node
+- click on launch instance
+- Name-0 PL-Jenkins_SlaveNode1
+- AMI- ubuntu -22.04
+- Instancetype- t2.medium
+- keypair
+- rest is default
+- click on launch
+- connect to the instance
+- sudo -i
+
 									
 			SSH Connection :
 				- Host Name : <private_IP>
@@ -417,7 +429,9 @@ pipeline {
 					- Public key/authorized_keys
 					- Private Key 
 	
-	
+
+-
+
 pipeline {
     agent { label 'slave1' }
 
