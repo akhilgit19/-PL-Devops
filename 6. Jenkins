@@ -396,6 +396,64 @@ pipeline {
     }
 }	
 
+
+Console output:
+-------------------
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/PL-Pipeline-Proj1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (stg1)
+[Pipeline] echo
+Hello World
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (stg2)
+[Pipeline] echo
+Hello Everyone
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+2nd build:
+------------
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/PL-Pipeline-Proj1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (SCM_Checkout)
+[Pipeline] echo
+Perform SCM_Checkout from github repository
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Application Build)
+[Pipeline] echo
+Perform Maven Application Build
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to QA Environment)
+[Pipeline] echo
+Deploy Artifacts to QA Testing Environment
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+
+
+
 - click on apply and click on save
 - click on your pipeline dashboard
 - click on build now
