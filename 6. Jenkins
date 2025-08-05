@@ -315,7 +315,8 @@ Next ::
 Day 15 : 1st August 2025
 ########################	
 
-
+Jenkins Master server:
+------------------------
 - Connect to the Jenkins Master server
 - login as root user: sudo -i
 - copy the public ip and open in browser http://publicip:8080
@@ -469,7 +470,7 @@ Finished: SUCCESS
 			Jenkins_SlaveNode (VM)	# Perform Application Build 
 -									# git, jdk, maven
 #Configure Slave Node1 for Java Maven App. :
-
+--------------------------------------------------
 Launch an Ubuntu Machine : v22.04
 
 sudo -i
