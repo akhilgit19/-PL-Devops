@@ -218,20 +218,90 @@ Day 14 : 31st July 2025
 
 				- Tools Management 
 				
-				- User Management 					# To enable User Authentication
-				- Security Management				# To enable User Authorization
+				- User Management 	# To enable User Authentication
+				- Security Management	# To enable User Authorization
 				
 				
-				- Credential Management 			# To save the credentials used to access remote servers
-													# Eg.: Build Servers, DockerHub, Github, Kubernetes Cluster Credentials
+				- Credential Management  # To save the credentials used to access remote servers
+					# Eg.: Build Servers, DockerHub, Github, Kubernetes Cluster Credentials
 				
 				
 				- Creation Jenkins Projects on Jenkins Master
 	
 				- Master/Slave Node Configurations
 				- Creation CICD Pipeline Projects 	
-	
-	
+
+- Tools Mnagement:
+------------------------
+- Login into master node
+- default path for jenkins - cd /var/lib/jenkins/
+- ls (you can see lot of plugins installed)
+- Now open master node jenkins in the browser  http://publicip:8080
+- click on manage jenkins
+- click on tools 
+- When ever you install any tools, You have to configure in jenkings
+- Suppose if you want to install maven, You can see maven installations
+- name -maven
+- Maven_Home( maven homedirectory)
+- click on apply and save
+- Like wise, JDK, Gradle etc
+
+UserManagement
+-------------------
+- click on manage jenkins
+- In secruity click on users (create/delete/modify users)
+- You can see users dasboard to maintain users profiles
+- actual location of database is
+- login to jenkings master
+- cd /var/lib/jenkins
+- ls
+- cd users
+- ls
+var/lib/jenkins/users# ls
+Loksai_8055814431391192506  users.xml
+- go to the directories of default
+cd Loksai_8055814431391192506 
+- ls
+config.xml
+-cat config.xml (view the xml code where you can see users id, users name )
+-  Now in the browser, click on create usrs
+- Username -user1, password, fullname -user1, email address
+- click on createuser
+- if you want to change the details click on setting button, it will take to user configuration deashboard
+- In security of users dashboard , you can change password.
+
+Security Management	
+-------------------------
+- In jenkins dashboard, In security, click on security
+- There you can see authentication and authorization
+- For authentication jenkins uses it's own database, (xml))
+- For authorization - Matrix based security
+- click on adduser- user1
+- now you can choose as per your requirement (overall credentials, agents,jobs, run,view, scm, metrics)
+
+
+Credential Management
+-----------------------------
+- click on manage jenkins
+- click on credentials
+- kind ssh username with privatekey
+
+For example:
+- domain - global credentials 
+- kind- ssh username with private eky
+- id -slave1_cred
+- User Name :devopsadmin
+- click on privatekey, click on add , now goto slave node - cat id_ecdsa
+- copy the entire private key and paste their
+- click on add
+- now in the drop of credentials select slave1_cred
+- Host key verification strategy- manually trusted key verification strategy
+- choose require manual verification of initial connection 
+-  click on save
+
+
+Jenkins Projects:
+
 	- Creation Jenkins Projects on Jenkins Master ::::
 	
 		- Free Style Project 		
@@ -239,10 +309,6 @@ Day 14 : 31st July 2025
 			- This is just for internal tools/plugins validations 
 			- Do not use this to onboard the applications.
 			
-			
-			
-		Handling Variables :::
-		
 			- Environment Variables ::
 				- Pre-Defined Variables used by Jenkins.
 				
@@ -253,8 +319,8 @@ Day 14 : 31st July 2025
 								To Print the value of any variable :
 								
 									- "${var1}"
-					
-			
+
+
 			- User Defined Variables ::
 				- To prameterize the Jenkins Projects!
 				- Used to process run-time inputs
@@ -292,8 +358,8 @@ Day 14 : 31st July 2025
 					- This based on the parameters, auto-generate the groovy script to any task.
 					- Snippet generator!
 					- Declarative Pipelines are easy to create and maintain
-			
-						
+
+				
 		
 	Alternative to Jenkins :
 	
@@ -303,7 +369,39 @@ Day 14 : 31st July 2025
 		bamboo 
 		
 		-> *.yaml / groovy / shell / python
-		
+
+Freestyle Project:
+------------------------
+- In jenkins dashboard
+- click on new item name- PL-FreeStyle-Proj1
+- choose freestyle project, click ok
+- click on general, you can see description, -Sample Free styel project
+- you  can see source code manangement for scm checkout
+- you can see triggers, environment, build steps to perform the tasks
+- you can click on add build step and choose execute shell as well
+- echo "Hello everyone" >file1.txt
+- click no apply and save
+- click on job dashboard, click on buildnow and clickon  build outputs(where u see the green tick)
+- You can see the output under this path your workspace get created /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+
+Environment Variables:
+----------------------
+- go to this site and copy build tag syntax
+publicIP:8080/env-vars.html/
+- echo "Hello everyone" >> file1.txt
+- echo "jenkins-${JOB_NAME}-${BUILD_NUMBER}" >> file1.txt
+
+
+User defined Variables
+------------------------
+- In job dashboard, click on general and choose this project is parameterized
+- Name-envi
+- default value -QA
+- Description - Enter valid Environment NAME: QA/UAT/PROD
+- add this steup in build, echo"User-Defined vairalbes-${envi}"
+- click on build, it will ask for value to provide and click on ok you will see the variable given in the output.
+
+
 
 Next ::
 
