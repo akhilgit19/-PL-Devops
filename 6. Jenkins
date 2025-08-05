@@ -506,9 +506,22 @@ Public key/authorized_keys
 - clic on trust ssh host key( it appears for very first time)
 - it asks for the manual verfication, click on yes
 - Now it will take the private host username and check with autorized keys and enable connection
-- 
 
--
+- Now click on new item- PL-CICD-Pipeline-Project1
+- click on pipeline, click on ok
+- In general, In the description - Java_Maven- CICD Pipeline project
+- In pipeline script , provide below script
+Note: 
+if you dont below commands to put in the groovy script, click on pipeline sript
+#sample step git:GIT
+#give the git url
+#Branch master and click on generate pipeline script you will get the code
+git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+            
+#same for sh: shell script
+#mvn clean package and you will get command
+  sh 'mvn clean package'
+
 
 pipeline {
     agent { label 'slave1' }
@@ -534,6 +547,12 @@ pipeline {
     }
 }
 
+- Now click on build
+- now go to your build sever
+- cd workspace/
+- ls
+- cd PL-CICD-Pipeline-Project1
+- ls (you will see all the files from git repo)
 
 Next ::::
 
