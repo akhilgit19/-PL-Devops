@@ -844,6 +844,36 @@ Publish Over SSH Plugin is used to copt the artifacts from Jenkins Slave Node to
 Install Publish Over SSH Plugin in Jenkins Master.
 
 
+- click on manage jenkings, click on plugins manager
+- click on available plugins
+- search for Publish Over SSH and install and restart jenkings so that it's configutrations can be enabled
+- now go to jenkins dashboard, under manage jenkins, click on system
+- In publish over ssh , in ssh server , click on add , Name- QA-Tomcat
+- Hostname - [Private server of tomcat server]
+- username devopsadmin
+- remotedirectory- /opt/tomcat/webapps
+- click on advanced
+- choose use password authenticato or use a different key
+- now go to your devopsadmin user homedirectory 
+ /opt/tomcat/webapps cd ~
+ cd .ssh/
+- cat id_ecdsa, copy the private key
+- attach in the key 
+- click on test configuration 
+- now save and exit
+
+
+- now go to PL-CICD-Pipeline-Project1 job, click on pipeline syntax
+- select publishChecks: publish cutomized checks to SCM platforms
+- choose sshPublisher: send build artifacts over SSH
+- Name  choose QA server
+- sourcefiles- target/*.war
+- remote directory - . ( . refers to webapp folder)
+- remove prefix target/ 
+- clickon  generate pipeline script
+- copy the syntax and you can update in deploy to qa environment
+
+
 sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
 
@@ -873,17 +903,34 @@ pipeline {
     }
 }
 
+- copy the above pipelien and run the build
+- In the deploy server, cd /opt/tomcat/webapps/
+- ls (list the files)
+- you can see the war file.
+- copy the public ip of tomcat server publicip:8080/demo-1.0-SNAPSHOT/
+- you will see the webpage
+
+
+
 
 	Build Triggers :::
 	
 		- To Automate the Jenkins Pipeline Projects 
 		
-		
+- When u go to job-PL-CICD-Pipeline-Project1 configuration, In general, 
+- In triggersyou have build periodic, github webhook and poolscm
+- 	
 		-> Build Periodic					# https://crontab.guru/
 		
 			- Used to trigger the jenkins jobs irrespective of code change. - It is not meant for CI/CD.
 			- The build is sheduled based on the crontab 
-			
+
+
+- select build periodic  and click on ? in fron of schedule, you can see the  schedule descripton
+
+
+
+
 			Non-Prod Environments 										Prod Environment
 			 Shd be available only during business hrs 
 				DEV Servers 
@@ -893,7 +940,7 @@ pipeline {
 				
 				8AM - 10PM 
 		
-		
+
 		-> Github Webhook 
 		
 			- Used to trigger the jenkins Job whenever there is any commit happened in the remote repository
@@ -903,7 +950,21 @@ pipeline {
 					- latest Jenkins 
 						http://<Public_IP_Address>:8080/github-webhook/
 		
-		-> Poll-SCM 
+
+- got to the source code repository
+- click on setting, click on webhooks
+- click add webhooks
+- payload URL http://jenkinsmasterpublicip:8080/github-webhook/
+- content type application/json
+- which events would  your like to trigger this webhookd?
+ just the push event (deafult)
+- click on add webhook
+- and now go to the job configuration and in triggers, enable github hook trigger for GITScm POOLING
+- click on save
+
+
+
+                 -> Poll-SCM 
 		
 			- It is used to trigger the build based on the crontab only if there is any changes happened in the source-code repository.
 			
@@ -914,7 +975,9 @@ pipeline {
 				
 				8AM - 12PM - 3PM 
 				
-		
+- In triggers, clck on POLL SCM
+- schedule- *****
+	
 		
 		
 	Email Notifications :::
