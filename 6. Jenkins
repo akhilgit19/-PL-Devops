@@ -997,6 +997,9 @@ pipeline {
 To Setup the Email Notifications, First we need to set the Email Server in the Jenkins System configuration :
 
 
+
+
+
 How to setup the Email Server in the Jenkins Config:
 
 goto manage jenkins -> system configuration 
@@ -1006,9 +1009,19 @@ goto Email Notification
 SMTP Server :
 smtp.gmail.com
 
-SMTP Authentication
+Default  user email suffix - @gmail.com
+
+click on advanced setting
+
+use SMTP Authentication
+username akhilpagadapoola123@gmail.com
+password-16 bytes tokem
+
+use ssl
 
 SMTP Port :: 465
+Replay to address- akhilpagadapoola123@gmail.com
+
 
 Login to Gmail :::
 
@@ -1021,7 +1034,33 @@ MFA --> mobile#
 App Password = 16 bytes of App Password. vaufxdfsdf asdf ltzr
 
 What ? window
-Which Appln - email			
+Which Appln - email		
+
+- click on test configuration and enter your email id.
+- now you can go to the pipeline project and click on syntax generator
+
+- sample step mail: Mila
+- To 
+- cc
+- bcc
+- subject
+- Body
+
+-In the sample pipelinesyntax, click on global variables reference
+- Take the below and copy in  body and subject 
+
+copy mail to 'devops@acme.com'
+ subject: "Job ${job_name}' (${BUILD_NUMBER}) is waiting  for input",
+ body: "Please go to ${BUILD_URL} and verify the build"
+
+
+-
+
+
+
+
+
+
 
 pipeline {
     agent { label 'slave1' }
