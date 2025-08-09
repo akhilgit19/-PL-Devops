@@ -152,13 +152,16 @@ Next ::
 ########################
 Day 18 : 7th August 2025
 ########################	
-	
+
+
+- Login to slave node
+- sudo -i 
 	Working with Docker :
 	
 		- Install Docker Container Engine 
 		- Docker Cli Commands 			
-		
-	Installation of Container Engine :
+
+-	Installation of Container Engine :
 	
 		apt install docker.io -y			# Install Docker Container Engine in Jenkins Slave-Node/Build Server
 	
@@ -175,7 +178,8 @@ Day 18 : 7th August 2025
 		Login to DockerHub Console :
 		
 		Explore the Images!
-		
+
+- If you want to work with any image, click on the tags
 		
 		docker pull <image_name>		# To download a latest version of Container Image from DockerHub to Local Machine 
 		
@@ -183,8 +187,16 @@ Day 18 : 7th August 2025
 		
 		docker run <image_name>			# To create a Container based on Container Image 
 		
-		
-		
+- docker pull ubuntu 
+- if you say docker images, you can see the image and image ID size,
+
+- creating container- docker run  ubuntu 
+- docker ps (show the running container)
+- docker ps -a(show all the containers)
+- docker run ubuntu sleep 30
+
+
+ 
 		Three Modes of Container Execution :
 		
 		- Foreground/Attached Mode :
@@ -227,7 +239,14 @@ Day 18 : 7th August 2025
 			
 		- docker stop <Container_ID> 			# Stop the Running Container 
 		
-		
+
+
+
+- docker run alpine
+
+
+
+
 		- Port Mapping/Port Binding :::
 		
 			- It is used to expose the Container Application to Internet.			
