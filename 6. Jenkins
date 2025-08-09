@@ -127,12 +127,34 @@ Day 13 : 29th July 2025
 	- Global System Configurations ::
 	
 		--> Define the default properties and external resource connections to Jenkins.
-	
+
+        - you can set defualt executors 0/3 
+        - you can click on manage jenkins and clik on system(gloabal system config)
+        - you can see default directory - /var/lib/jenkins
+        - system message- test Jenkins server
+        - # of executors   as 5 
+        - you can set the external resource configurations
+        - eg QA server , UAT server or email configurations.
+
+
 	
 	- Plugins Management ::	
 	
 		--> Enable/Disable/Remove/Install/Upgrade Plugins!
-	
+
+     - clikc on manage jenkinsg, click on plugins
+     - you will see updates, available plugins , installed and advanced ed plugins
+     - if you install plugins you can see installed plugins
+     - There you can enable or disable the plugin which u have installed
+       health shows status of the plugin like comptability along the current version
+     - If i want to install maven, need to click on available plugins
+       select the plugin and click on install
+     - if you click on  docker plugin, click on released
+       you can see various versions of playings, understand the release notes , depenedcy updates
+     - if any version u want to install right clik on version no and copy the  link addresss
+     - go to your plugin management , go to advanced settings, paste the url and clik on deploy
+
+
 	
 	Install & Configure Jenkins Server :
 
@@ -200,6 +222,8 @@ E.g.: http://15.207.19.193:8080/
 sudo -i
 
 cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
 
 
 Next :::
