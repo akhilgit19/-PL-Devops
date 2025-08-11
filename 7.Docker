@@ -617,6 +617,106 @@ docker ps
 			- App Config file - Manifest file - *.yaml / *.json
 
 
+########################
+Day 20 : 11th August 2025
+########################	
+
+- Containerization ::::
+
+  - Docker build command to create an Container Image
+
+  - Create Dockerfile & maintained in the Source Code Repository
+
+- Source Code Repe. URL
+
+- Create a CICD Pipeline using Jenkins:
+
+- Servers:
+     Jenkins_Master   ==>> Create CICD Pipeline projects and Schedule to run in the resp, Agents
+                      ==>> git,jdk,jenkins
+            Jenkins_Build_Server_Node ==> Perform Application Build
+                                      ==> git,jdk,maven,docker
+- CICD Pipeline Stages:
+
+        Input:  Source Code Repo URL
+        Output: Application Aritifacts, Application Container Image, Publish to Container Registry
+
+        Pipeline: 
+               - SCM-Checkout
+               - Application_Build
+               - Application_Image_Build(Packaging)
+               - Publish Application( Publish the Image) to Container Registry(Docker Hub)
+       
+        Dockerfile:
+           https://github.com/akhilgit19/java-webapp-project/blob/master/Dockerfile
+
+             FROM tomcat:8.0
+             COPY ./target/*.war /usr/local/tomcat/webapps
+             EXPOSE 8080	
+
+       Dockerfile Instructions:
+
+       FROM              # This is to identify the based Image
+
+       RUN               # To execut any package manager 
+
+       COPY              # To Copy the files from host volume to Container volume
+
+
+        cp               # To Copy the files withing the Container volume
+
+        ADD              # To Coyp/Download the files using external URLS to Container Volume
+
+        EXPOSE           # To set the Container Port.
+
+        WORKDIR          # Set the Current Working Directory_Name
+
+        CMD              # To Set the default Start-up Task to start  a Container
+                         # The Start up  Task can be Modified at the time of Container Creation
+
+        ENTRYPOINT       # To Set the default Start-up Task to start  a Container
+
+                         # The Start up  Task cannot be Modified at the time of Container Creation
+       
+
+
+
+
+
+
+pipeline {
+    agent { label 'slave1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM_Checkout from github repository'
+				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Maven Application Build'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to QA Environment') {
+            steps {
+                script{
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+				}
+            }
+        }
+    }
+}
+       
+
+
+
+
+
+
+
 
 
 
