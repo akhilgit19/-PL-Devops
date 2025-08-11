@@ -117,11 +117,14 @@ Day 8 : 21st July 2025
 	Types of VCS :
 	
 	
-	- Local VCS 
+	- Local VCS - The source code cannot be shared can be mainted in locl repository itself
 	
-	- Centralized VCS 
+	- Centralized VCS - The source code will be on centralized repository and from other servers users can connect via online but
+                        cannot download to the local machine
 	
-	- Distributed VCS 
+	- Distributed VCS - The source code will be on remote repostiory and users can establish  a connection to the remote servers
+                         and ccan able to download to the local machine,once it is updated can be pushed to remote repositories
+
 
 
 
@@ -179,7 +182,10 @@ Day 8 : 21st July 2025
 			index.html 	 --------------->	index.html ----------------->	index.html_v1.6	-------------------->	index.html_v1.6	
 							git add 					  git commit 						      git push							
 	
-		
+
+
+
+
 	
 	GIT Cli Commands :::
 		
@@ -234,6 +240,7 @@ Day 8 : 21st July 2025
 		cd PL-DevOps
 			mkdir projrepo1
 				cd projrepo1
+                    git init
 			mkdir projrepo2
 		
 		d: 
