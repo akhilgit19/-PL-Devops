@@ -617,75 +617,96 @@ docker ps
 			- App Config file - Manifest file - *.yaml / *.json
 
 
-########################
+#########################
 Day 20 : 11th August 2025
-########################	
+#########################		
+		
+	- Containerization :::
+		
+		- Docker Build Command to create any Container Image
+		
+		- Create Dockerfile & maintained in the Source Code Repository
+		
+	
+	- Source Code Repo. URL 
+	
+	- Create a CICD Pipeline using Jenkins :
+	
+	- Servers & Tools :
+		
+		Jenkins_Master 			==> Create CICD Pipeline Projects and Schedule to run in the resp. Agents 
+								==> git,jdk,jenkins 
+								
+			Jenkins_Build_Server_Node	==> Perform Application Build 
+										==> git,jdk,maven,docker
+	
 
-- Containerization ::::
-
-  - Docker build command to create an Container Image
-
-  - Create Dockerfile & maintained in the Source Code Repository
-
-- Source Code Repe. URL
-
-- Create a CICD Pipeline using Jenkins:
-
-- Servers:
-     Jenkins_Master   ==>> Create CICD Pipeline projects and Schedule to run in the resp, Agents
-                      ==>> git,jdk,jenkins
-            Jenkins_Build_Server_Node ==> Perform Application Build
-                                      ==> git,jdk,maven,docker
-- CICD Pipeline Stages:
-
-        Input:  Source Code Repo URL
-        Output: Application Aritifacts, Application Container Image, Publish to Container Registry
-
-        Pipeline: 
-               - SCM-Checkout
-               - Application_Build
-               - Application_Image_Build(Packaging)
-               - Publish Application( Publish the Image) to Container Registry(Docker Hub)
-       
-        Dockerfile:
-           https://github.com/akhilgit19/java-webapp-project/blob/master/Dockerfile
-
-             FROM tomcat:8.0
-             COPY ./target/*.war /usr/local/tomcat/webapps
-             EXPOSE 8080	
-
-       Dockerfile Instructions:
-
-       FROM              # This is to identify the based Image
-
-       RUN               # To execut any package manager 
-
-       COPY              # To Copy the files from host volume to Container volume
+	- Add devopsadmin user to docker group :
+	
+		usermod -aG docker devopsadmin
 
 
-        cp               # To Copy the files withing the Container volume
+		
+	- CICD Pipeline Stages :
+	
+		Input : 	Source Code Repo. URL 
+		
+		Output :	Application Artifacts, Application Container Image, Publish to Container Registry.
+		
+		
+		Pipeline :
 
-        ADD              # To Coyp/Download the files using external URLS to Container Volume
+			- SCM-Checkout
+			- Application_Build 			*.war 
+			- Application_Image_Build 
+			- Publish Application_Image to Container Registry(DockerHub)
+			
+		Dockerfile :
 
-        EXPOSE           # To set the Container Port.
+			FROM ubuntu 
+			RUN apt update -y 
+			RUN apt install git -y 
+			RUN apt install maven -y
+					
+		
+		FROM tomcat:8.0
+		COPY ./target/*.war /usr/local/tomcat/webapps
+		EXPOSE 8080		
+		
+		
+		Dockerfile Instructions :
+		
+		FROM 			# This is identify the based Image 
+		
+		RUN				# To execute any package manager
 
-        WORKDIR          # Set the Current Working Directory_Name
+		COPY 			# To Copy the files from host volume to container volume 
+		
+		CP				# To Copy the files within the Container Volume 
+		
+		ADD 			# To Copy/Download the files from external URLs to Container Volume 
 
-        CMD              # To Set the default Start-up Task to start  a Container
-                         # The Start up  Task can be Modified at the time of Container Creation
+		EXPOSE			# To set the Container Port.
+		
+		WORKDIR			# To Set the Current Working Directory
+		
+		CMD				# To Set the default Start-up Task to start a Container 
+						# The Start-up Task can be Modified at the time of Container Creation 
+						
+		ENTRYPOINT		# To Set the default Start-up Task to start a Container 
+						# The Start-up Task cannot be Modified at the time of Container Creation 						
+		
 
-        ENTRYPOINT       # To Set the default Start-up Task to start  a Container
 
-                         # The Start up  Task cannot be Modified at the time of Container Creation
-       
+- CICD Pipeline using Docker:
 
-
-
-
-
-
+	
 pipeline {
     agent { label 'slave1' }
+
+	environment {	
+		DOCKERHUB_CREDENTIALS=credentials('dockerloginid')
+	}
 
     stages {
         stage('SCM_Checkout') {
@@ -694,31 +715,34 @@ pipeline {
 				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
             }
         }
+		
         stage('Application Build') {
             steps {
                 echo 'Perform Maven Application Build'
                 sh 'mvn clean package'
             }
         }
-        stage('Deploy to QA Environment') {
+		
+        stage('Build Docker Image') {
             steps {
-                script{
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-				}
+
+				sh "docker build -t loksaieta/pl-javawebappimg ."
+				
             }
         }
+		
+		stage('Login2DockerHub') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+		
+		stage('Publish_to_Docker_Registry') {
+			steps {
+				sh "docker push loksaieta/pl-javawebappimg"
+			}
+		}
+
     }
 }
-       
-
-
-
-
-
-
-
-
-
-
-
-
