@@ -25,9 +25,7 @@ Day 20 : 11th August 2025
 		- Used to Ensure High Availability of Containers by creating Replicas of Containers.
 		- It supports Auto-Scaling & Load Balancing.		
 		
-		- App Config file - Manifest file - *.yaml / *.json		
-			
-	
+
 	- Kubernetes Architecture :::
 		
 		Based on:
@@ -35,7 +33,18 @@ Day 20 : 11th August 2025
 			Kubernetes_Control_Plane/Master 
 				- Kubernetes_WorkerNode1,2,3,4,5
 	
-	
+
+		- App Config file - Manifest file - *.yaml / *.json		
+        - Once ready with the manifest file , we use kubectl to interact with Kubernetes master components
+        - API server acts as a interface betwween user request and kubernetes master
+        - Any task will execute in POD
+        - Scheduler will always idenfitier the suitable node
+        - kublet is an agent upon running  kubernetes worker components
+        - CRI- Container runtime interface, it will download the image then kublet will identify and deploy it into the pod
+        - Controll Manger ensures that pod is running in it;s own desire state.
+        - 
+
+
 	- Kubernetes Architecture Components :::
 	
 	- Terminologies :::
