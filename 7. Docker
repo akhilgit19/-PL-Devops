@@ -656,10 +656,10 @@ Day 20 : 11th August 2025
 		
 		Pipeline :
 
-			- SCM-Checkout
-			- Application_Build 			*.war 
-			- Application_Image_Build 
-			- Publish Application_Image to Container Registry(DockerHub)
+			- SCM-Checkout                        (using git)
+			- Application_Build 			*.war (using maven)
+			- Application_Image_Build              (using docker)
+			- Publish Application_Image to Container Registry(using DockerHub)
 			
 		Dockerfile :
 
@@ -697,6 +697,46 @@ Day 20 : 11th August 2025
 						# The Start-up Task cannot be Modified at the time of Container Creation 						
 		
 
+- In Slave Node:c
+- Login to your slave node machine.
+- sudo -i
+- docker images ( You can see all the images as a root user
+- su -devopsadmin ( if you login as a devopsadmin user it will throw as errror while createting docker images)
+- So whenver im communicating from master to slave i will user devopsadmin user
+- So simple we have to add the devopsadmin user to docker group
+- usermod -aG docker devopsadmin
+- su - devopsadmin
+- docker images( Now you will not get any permission error)
+
+- cd workspace/PL-CICD_Pipeline_MavenProjects1
+- ls
+Dockerfile README.md mvnw mvnw.cmd pom.xml src target
+- pwd
+/home/devopsadmin/workspace/PL-CICD_Pipeline_MavenProjects1
+- cat Dockerfile
+		FROM tomcat:8.0
+		COPY ./target/*.war /usr/local/tomcat/webapps
+		EXPOSE 8080		
+
+- docker  build -t <imagename> .
+- exit , you will get into root user
+
+- Restart the slave node give reboot command 
+
+
+- Now go to manage jenkins, In security, credentials
+- click on global and click on add credential
+- kind - username and password
+- id - dockerlogind
+- description -dockerlogind
+- username- loksaieta
+- password - personal access docker token
+- click on create
+
+
+- From master node copy the ip adress and open in the browser
+- open PL-CICD_Pipeline_MavenProjects1 job
+- In trigggers  copy below pipeline and paste it
 
 - CICD Pipeline using Docker:
 
@@ -746,3 +786,56 @@ pipeline {
 
     }
 }
+
+
+- click on build
+
+- now in slave node
+- sudo -i
+- su - devopsadmin
+- docker images
+REPOSITORY                   TAG      IMAGE ID              CREATED               SIZE
+loksaieta/pl-javawebappimg   latest   0022d38bb3f2           57 ago               420 MB
+
+You can check now in slave node target container.
+
+In slave
+- sudo -i
+- su -devopsadmin
+- docker run -it loksaieta/pl-javawebappimg bash (running container via interactive mode)
+root@3828ba7dfaa2:/user/local/tomcat# ls
+LICENSE   NOTICE   RELEASE-NOTES   RUNNING.txt   bin   conf  include lib logs native-jni-lib   temp webapps work
+-
+root@3828ba7dfaa2:/user/local/tomcat# cd webapps/
+- ls
+- ROOT demo-1.0-SNAPSHOT.war docs examples host-manager  manager
+-root@3828ba7dfaa2:/user/local/tomcatwebapps#
+
+- Now i want to run the container as webservice
+- docker run -t -p 8080:8080 loksaieta/pl-javawebappimg
+- now it will start the tomcat service
+- copy the slave node public ip curl http:/publicip:8080/demo-1.0-SNAPSHOT.war
+- You will see the webpage
+
+
+
+1:42:01 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
