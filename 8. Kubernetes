@@ -551,15 +551,24 @@ Day 22 : 14th August 2025
 -  Login to kmaster node
 - sudo -i
 - kubectl get nodes( You should be able to get list of nodest)
-NAME             STATUS         ROLES        AGE        VERSION
-kmaster-node     Ready         control-plane   46h       v1.29.15
-worker-node1     Ready          <none>         46h       v1.29.15
-worker-node2     Ready          <none>         46h       v1.29.15
+    NAME             STATUS         ROLES        AGE        VERSION
+    kmaster-node     Ready         control-plane   46h       v1.29.15
+    worker-node1     Ready          <none>         46h       v1.29.15
+    worker-node2     Ready          <none>         46h       v1.29.15
 - kubectl get pods
 - kubectl get pods -- all-namespaces (You will see all the name spaces s in the cluster)
 - kubectl get ns 
 - kubectl get pods -- all-namespaces -o wide
 
+
+- In master node kmaster node
+- mkdir kubernetes
+- cd kubernetes
+- ls
+- pwd
+- /root/kubernetes
+- vi nginx-pod.yaml
+- copy below from apiVersion to the end past it
 
 *******************************************************************
 # 1. 	Create Pod Object Manifest File :
@@ -581,6 +590,121 @@ spec:
 
 
 *******************************************************************
+- cat nginx-pod.yaml
+
+*******************************************************************
+2. Create and display Pods
+
+# Create and display PODs
+
+#kubectl apply -f nginx-pod.yaml( To update the manifest file)
+
+kubectl create -f nginx-pod.yaml ( to create the  pod)
+kubectl get pod
+kubectl get pod -o wide
+kubectl get pod nginx-pod -o yaml
+kubectl describe pod nginx-pod
+
+
+*******************************************************************
+- kubectl create -f nginx-pod.yaml 
+Note: if it gets timed out update the instance type from t2micro to t2.medeium
+pod/nginx-pod created
+- kubectl get pods
+NAME       READY    STATUS     RESTARTS      AGE
+nginx-pod    1/1     Running     0            32s
+- kubectl get podes -o wide
+NAME       READY    STATUS     RESTARTS      AGE        IP         NODE            NOMINATED_NODE READINESS GATES
+nginx-pod   1/1     Running     0             72s     10.244.2.2   worker-node2     <none>
+
+- Based upon kubeadm ip range that we have given as reference it's taking fgrom there to provide the ip for POD
+- kubectl get pods -o yaml  or kubectl get pods -o json( it will give actual manifest file that store in teh system)
+- it's the information from ETCD
+- 
+3. Test & Delete
+# To get inside the pod
+kubectl exec -it nginx-pod bash
+
+- ls
+bin boot dev docker-entrypoint.d docker-entrypoint.sh etc home lib64 media mnt opt proc root run sbin srv sys tmp usr var
+- cd /usr/share/nginx/ (defualt directory for nginx
+- ls
+- html 
+- cd html
+ls
+50x.html  indexhtml
+- root@nginx-pod: /usr/share/nginx/html# 
+-
+
+# Create test HTML page
+cat <<EOF > /usr/share/nginx/html/test.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Testing..</title>
+</head>
+<body>
+<h1 style="color:rgb(90,70,250);">Hello, Everyone...!</h1>
+<h2>Welcome to Kubernetes Demo :-) </h2>
+</body>
+</html>
+EOF
+exit
+
+Now in master node
+- root @kmaster-node: ~/kubernetes#  kubectl get svc
+NAME         TYPE        CLUSTER-IP          EXTERNAL-IP         PORTTS      AGE
+kubernetes   clusterIP   10.96.0.1            <none>            443/TCP      47H
+
+# Expose PODS using NodePort service
+#NodePort Service Create Port between - 30000 to 32767
+# Node-Port Range : 30000 - 32767 
+
+-  - root @kmaster-node: ~/kubernetes#  kubectl expose pod nginx-pod --type=NodePort --port=80
+
+-# Display Service and find NodePort
+- root @kmaster-node: ~/kubernetes#   kubectl describe svc nginx-pod
+
+NAME         TYPE        CLUSTER-IP          EXTERNAL-IP         PORTTS      AGE
+kubernetes   clusterIP   10.96.0.1            <none>            443/TCP      47H
+nginx-pod    NodePort    10.105.105.66        <none>            80:32049/TCP   10s
+
+- # Open Web-browser and access webapge using 
+http://<external-nodeip>:<nodeport>/test.html
+
+#eg.: http://43.205.215.212:32049/filename
+
+
+- root @kmaster-node: ~/kubernetes# kubectl describe svc nginx-pod
+Name:          nginx-pod
+Namespace      default
+Labels:         app=nginx
+                tier=dev
+Annotations:    <none>
+Selector:       app=nginx,tier=dev
+Type:           NodePort
+IP Family Policy:   SingleStack
+IP Families:        IPv4
+IP:                 10.105.105.66
+IPs:                10.105.105.66
+Port:               <unset>    80/TCP
+TargetPort:         80/TCP
+NodePort:            <unset>    32049/TCP
+Endpoints:          10.244.2.2:80
+Session Affinity:    None
+External Traffic Policy:  Cluster
+Events:                   <none>
+
+- root @kmaster-node: ~/kubernetes#  kubectl get pods -o wide
+
+NAME       READY    STATUS     RESTARTS      AGE        IP         NODE            NOMINATED_NODE READINESS GATES
+nginx-pod   1/1     Running     0             72s     10.244.2.2   worker-node2     <none>
+
+
+
+1:06:29
+
+
 
 
 	- Pods :
@@ -705,62 +829,9 @@ spec:
 			Kubernetes_WorkNode2	(VM)
 
 
-*******************************************************************
-
-
-
-2. Create and display Pods
-
-# Create and display PODs
-
-#kubectl apply -f nginx-pod.yaml
-
-kubectl create -f nginx-pod.yaml
-kubectl get pod
-kubectl get pod -o wide
-kubectl get pod nginx-pod -o yaml
-kubectl describe pod nginx-pod
-
 
 *******************************************************************
 
-3. Test & Delete
-
-# To get inside the pod
-kubectl exec -it nginx-pod bash
-
-# Create test HTML page
-cat <<EOF > /usr/share/nginx/html/test.html
-<!DOCTYPE html>
-<html>
-<head>
-<title>Testing..</title>
-</head>
-<body>
-<h1 style="color:rgb(90,70,250);">Hello, Everyone...!</h1>
-<h2>Welcome to Kubernetes Demo :-) </h2>
-</body>
-</html>
-EOF
-exit
-
-# Expose PODS using NodePort service
-
-kubectl expose pod nginx-pod --type=NodePort --port=80
-
-#NodePort Service Create Port between - 30000 to 32767
-
-kubectl get svc
-
-# Node-Port Range : 30000 - 32767 
-
-# Display Service and find NodePort
-kubectl describe svc nginx-pod
-
-# Open Web-browser and access webapge using 
-http://<external-nodeip>:<nodeport>/test.html
-
-#eg.: http://43.205.215.212:32049
 
 
 
