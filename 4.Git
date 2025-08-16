@@ -253,15 +253,6 @@ Day 8 : 21st July 2025
 Day 9 : 22nd July 2025
 #######################	
 
-	
-		cd d:
-		mkdir PL-DevOps 
-		cd PL-DevOps
-			mkdir projrepo1
-				cd projrepo1
-			mkdir projrepo2
-
-
 
 		- git init				# 	To initialize the git repository 
 									Create .GIT Directory 
@@ -282,6 +273,12 @@ Day 9 : 22nd July 2025
 		
 			- git log 
 
+
+
+
+
+
+
 			
 			- git config :::		
 			
@@ -298,6 +295,129 @@ Day 9 : 22nd July 2025
 					- git config user.email "Loksai@ETA.com"
 
 
+
+
+-	
+		cd d:
+		mkdir PL-DevOps 
+		cd PL-DevOps
+			mkdir projrepo1
+				cd projrepo1
+                git init
+                ls (you will not see any files)
+                ls -a  
+                .git  ( you will see git directory which is hidden)
+                defualt branch is master or main
+-
+			mkdir projrepo2
+                 ls
+                 git init
+                 ls -a
+                .git
+                 git status
+                 echo "rec1" >>file1.txt
+                 ls 
+                 (file1.txt)
+                 git status
+                 (You will see untracked file as file1.txt)
+                 git add  file1.txt 
+                 git status
+                 ( file1.txt will move from untracked to staging area)
+                 git commit -m "created file1.txt" 
+                 ( file1.txt will move from stagingarea to localrepository )
+                 git status
+                 (Now you will get message as nothing to commit, working tree is clear)
+                  git log  ( to trach the changes)
+                  ( commit 0o37e9we7892937492734892374  HEAD -->master)
+                   Author: Loksai <Loksai@asdf.com?
+                   Date : Tue Jul22   20:22:53 
+                   created file1.txt
+
+                   echo "file2.txt " >> file2.txt
+                   ls 
+                   (file1.txt fil2.txt)
+                   git status
+                   (You will see untracked file as file2.txt)
+                    git add file2.txt
+                    git status
+                    ( file2.txt will move from untracked to staging area)
+                    git commit -m "Created file2.txt
+                    ( file2.txt will move from stagingarea to localrepository )
+                    git status
+                    (Now you will get message as nothing to commit, working tree is clear)
+                    git log  ( to trach the changes)
+                    ( commit 0o8877e9we7892937492734892374  HEAD -->master)
+                    Author: Loksai <Loksai@asdf.com?
+                    Date : Tue Jul22   20:22:53 
+                    created file2.txt
+
+                    ( commit 0o37e9we7892937492734892374 )
+                    Author: Loksai <Loksai@asdf.com?
+                    Date : Tue Jul22   20:22:53 
+                    created file1.txt
+
+                     echo "Record1" > file2.txt
+                     git status
+                     ( modified file2.txt will be in staged need to be staged the entrie file again )
+                     git add file2.txt
+  
+                     ( modified file2.txt will be in staged need ready to move to local repository )
+
+                      git commit -m "updated file2.txt"
+                      ( file2.txt will move from stagingarea to localrepository )
+
+                       git log
+
+                      ( commit 0o9877e9we7892937492734892374  HEAD -->master)
+                      Author: Loksai <Loksai@asdf.com?
+                      Date : Tue Jul22   20:22:53 
+                      updated file2.txt
+
+                      ( commit 0o8877e9we7892937492734892374 )
+                      Author: Loksai <Loksai@asdf.com?
+                      Date : Tue Jul22   20:22:53 
+                      created file2.txt
+
+                      ( commit 0o37e9we7892937492734892374 )
+                      Author: Loksai <Loksai@asdf.com?
+                      Date : Tue Jul22   20:22:53 
+                      created file1.txt
+                      - That;s how git maintains version control with commmit id by tracking the changes
+                      - git config --global user.name "LoksaiETA"
+                      - git config --global user.email "Loksai@ETA.com"
+         
+
+      cd projrepo1/
+               ls
+               git status
+               (nothing to commit)
+               echo "rec1" >> a1.txt
+               echo "rec1" >> a2.txt
+               echo "rec1" >> q1.java
+               echo "rec1" >> q2.java
+               echo "rec1" >> q3.java
+               echo "rec1" >> l1.html
+               echo "rec1" >> l2.html
+               echo "rec1" >> l3.html
+
+               git add  a1.txt a2.txt
+               git status
+               (a1.txt a2.txt will be in staging area and remaining will be untracked area)
+
+                git rm --cached a1.txt 
+                git status ( you will a1.txt will be moved back to working directory untracked files0
+                git rm -f a1.txt
+                ls( it will delete the file from working directory and staged area as well permanenetly)
+
+ 
+        cd projrepo2
+               git log (if commit history is going behind the page pressq it will come out of the screen
+               git log --oneline (short commit id's)
+                
+
+
+
+Flow:
 			cd d:
 			mkdir PL-DevOps 
 			cd PL-DevOps
