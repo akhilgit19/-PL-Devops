@@ -273,12 +273,6 @@ Day 9 : 22nd July 2025
 		
 			- git log 
 
-
-
-
-
-
-
 			
 			- git config :::		
 			
@@ -413,9 +407,13 @@ Day 9 : 22nd July 2025
         cd projrepo2
                git log (if commit history is going behind the page pressq it will come out of the screen
                git log --oneline (short commit id's)
-                
+               git log -1
+               git log --oneline -3
+			   git log --stat
+               git show d2999f8 ( it will give the complete picture of the commmit, like which one is updated)
 
-
+               
+  
 
 Flow:
 			cd d:
@@ -523,7 +521,41 @@ Flow:
 							
 								Rel0825-Updated Payment Module
 							
-							
+
+
+-   cd PL-DevOps
+            mkdir projrepo3
+                cd projrepo3
+                         ls
+                           git init
+                           vi .gitignore
+                            ( Press insert mode inside the file
+                             then give )
+                            samples.txt
+                            *.md
+                            target/
+                            *.war
+                            *.jar
+                            *.exec
+                            *.doc
+                            (:wq)
+                           git status
+                           git add .
+                           git commit -m "initial commit"
+
+                           echo "rec1"  >> f1.txt
+                           git status ( untracked file f1.txt
+                           echo "rec1"  >> samples.txt
+                           ls
+                            (f1.txt and samples.txt)
+                                     
+                            git status (you will not samplex.txt in untrackes fle as you have alreadyed hided in the .gnore files)\
+                             
+                            git ls-files			# Git Cli Command used to get the list of files/dir. that are being tracked by git.
+
+
+
+
   501  cd d:
   502  cd PL-DevOps
   503  mkdir PL-DevOps
