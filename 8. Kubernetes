@@ -841,3 +841,366 @@ kubectl delete pod nginx-pod
 
 
 
+#########################
+Day 23 : 18th August 2025
+#########################
+
+	Working with Deployment Controller Objects!
+	
+		- Manifest file 
+		
+			- Defines the properties of Deployment Controller Object!
+			
+			
+			Output :
+			
+				- Deployment Object 
+
+		     	- ReplicaSet 
+				
+				- Pod Instances!	
+
+*******************************************************************
+
+- In master kubernetes node
+- sudo -i
+- kubectl get pods
+-cd kubernetes/
+- vi nginx-deploy.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app1
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:stable-otel
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx-app
+
+-:wq!
+
+-kubectl create -f nginx-deploy.yaml
+deployment.apps/nginx-deploy created
+-kubectl get deploy
+NAME           READY      UP-TO-DATE       AVAILABLE   AGE
+nginx-deploy    3/3                3          1         11s
+- kubectl get rs
+NAME                       DESIRED       CURRENT   READY     AGE
+nginx-deploy-59cfff6f794   3               3        3         41s        11s
+-kubectl get pods
+NAME                             READY   STATUS      RESTARTS       AGE
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s
+
+- kubectl get pods -o wide
+NAME                             READY   STATUS      RESTARTS       AGE       IP              NODE          NOMINATED NODE   READINESSGATES
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running     0               73s      10.244.1.3     worker-node1   <none>             <none>
+nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s      10.244.2.4     worker-node2   <none>             <none>
+nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s      10.244.1.2     worker-node1   <none>             <none>
+
+
+-kubect describe deploy nginx-deploy
+- if you delete the pod deploy object will automatically create a new pod
+- kubectl delete pod nginx-deploy-59cfff6f794-7VL9W 
+
+- kubectl get pods -o wide
+NAME                             READY   STATUS      RESTARTS       AGE       IP              NODE          NOMINATED NODE   READINESSGATES
+nginx-deploy-59cfff6f794-7tmhn   1/1    Running     0               73s      10.244.1.5     worker-node2   <none>             <none>
+nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s      10.244.2.4     worker-node2   <none>             <none>
+nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s      10.244.1.2     worker-node1   <none>             <none>
+
+- kubectl scale deployment nginx-deploy --replicas=5
+- kubectl describe deploy nginx-deploy | grep -i image
+    Image:           nginx:stable-otel
+- kubectl set image deploy nginx-deploy nginx-container=nginx:stable-perl
+- kubectl describe deploy nginx-deploy | grep -i image
+    Image:           nginx:stable-perl
+
+
+-kubectl get deploy
+NAME           READY      UP-TO-DATE       AVAILABLE   AGE
+nginx-deploy    1/1              1         1           11s
+-kubectl get pods
+NAME                             READY   STATUS      RESTARTS       AGE
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running         0               73s
+nginx-deploy-59cfff6f794-FZ2D6    0/1    ErrImagePull    0               73s
+-kubectl rollout status deployment/nginx-deploy
+failed so ctrl c
+-kubectl rollout undo deployment/nginx-deploy
+- kubectl describe deploy nginx-deploy | grep -i image
+    Image:           nginx:stable-otel
+
+-kubectl get pods
+NAME                             READY   STATUS      RESTARTS       AGE
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running         0               73s
+
+- kubectl scale deployment nginx-deploy --replicas=3
+--kubectl get pods
+NAME                             READY   STATUS      RESTARTS       AGE
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s
+
+- kubectl describe deploy nginx-deploy | grep -i image
+    Image:           nginx:stable-otel
+-- kubectl describe pod nginx-deploy-59cfff6f794-7VL9W | grep -i image
+    Image:           nginx:stable-otel
+- kubectl set image deploy nginx-deploy nginx-container=nginx:stable-perl
+- kubectl get pods 
+NAME                             READY   STATUS      RESTARTS       AGE
+nginx-deploy-59cfff6f794-7VL9W    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s
+nginx-deploy-59cfff6f794-lfpw9    1/1    ImagePullBakoff    0               73s
+
+-kubectl rollout undo deployment/nginx-deploy
+- kubectl get deploy nginx-deploy -o yaml (it will query your etcd)
+
+
+
+	
+
+	- Kubernetes Services :::
+	
+		- Cluster-IP Service 			# Default Service!
+		- NodePort Services 
+         - Load Balancer:
+
+Node Port Service:
+
+https://192.168.1.1:31000
+Node Port:[30000 to 32767
+                  31000
+-----------------192.168.1.1-------------------->--Node IP
+|                                               |
+|                                               |
+|                                               |
+|                                               |
+|                                               |
+|                  80                           |
+|          | ---10.180.0.15-----|               |-----> Port
+|          |  service: nodePort |               |
+|          | ___________________|               |
+|                                               |
+|                                               |
+|                                               |
+|                    80   ----------------------|---> Target Port
+|           | ----10.2210.0.4-----|             |
+|           |     FrontEnd-Pod    |             |
+|           | --------------------|             |
+------------------------------------------------
+            NODE
+
+MultiInstance in same node
+
+
+                 31000
+_______________192.168.1.1__________________________________________________________Node1
+
+________________________________________________
+|                    80   ----------------------|--->service Port
+|           | ----10.1800.0.4-----|             |
+|           |    Selector: app:mypp|            |
+|           | --------------------|   
+____________________________________________________
+
+
+
+------------------------------------------------
+|                    80   ----------------------|---> Target Port
+|           | ----10.2210.0.4-----|             |
+|           |     lables:app-Myapp|             |
+|           | --------------------|   
+
+
+|                    80   ----------------------|---> Target Port
+|           | ----10.2210.0.4-----|             |
+|           |   lables:app-Myapp  |             |
+|           | --------------------|   
+
+
+|                    80   ----------------------|---> Target Port
+|           | ----10.2210.0.4-----|             |
+|           |    lables:app-Myapp |             |
+|           | --------------------|             |
+----------------------------------------------------Pod
+______________________________________________________________________Node1
+
+
+
+                 ---------------http://loksaieta.com
+                |
+		  - Load Balancer 
+
+
+   |                                   |
+  31000                             31000
+-192.168.1.1-                   192.168.1.2           
+
+              10.18.0.15
+             slector:
+               app: mapp
+    ------------------------------------service
+
+
+
+     80                                80             
+  10.210.0.1                        10.210.0.2
+ lablels:                           lablels:
+    app: Myapp                        app: Myapp
+------------------Node1           ------------------Node2
+----------------------------------------------------------------cluster
+
+
+
+		- Ingress Controller!
+		
+			- Used to reduce the Load Balancer!
+		
+		
+			- Routing!
+			
+			
+		- Simple Routing 				# meant for static web page 
+		
+		- Host Based Routing 
+		
+		- Path Routing!
+		
+		- Query/Parameter Based Routing!
+		
+		Eg.: 
+		
+			www.google.com !							Load Balancer URL 
+			
+			
+			www.mail.google.com 						# Host Based Routing!			
+			www.maps.google.com 						# Host Based Routing!			
+			www.drive.google.com 						# Host Based Routing!			
+			www.translate.google.com 					# Host Based Routing!
+
+	
+		www.mail.google.com/inbox 						# Path Based Routing!		
+		www.mail.google.com/sent 						# Path Based Routing!		
+		www.mail.google.com/trash 						# Path Based Routing!		
+		www.mail.google.com/compose 					# Path Based Routing!		
+		
+		www.mail.google.com/inbox 						# Path Based Routing!		
+		
+		www.mail.google.com/inbox/email=xyz@gmail.com	# Query/Parameter Based Routing
+
+
+
+
+
+
+
+*******************************************************************
+*******************************************************************
+
+# 1. Deployment YAML file
+
+# nginx-deploy.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app1
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:stable-otel
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx-app
+
+*******************************************************************
+# 2. Create and Display Deployment
+
+kubectl create -f nginx-deploy.yaml 
+kubectl get deploy -l app=nginx-app
+kubectl get rs -l app=nginx-app
+kubectl get po -l app=nginx-app
+kubectl describe deploy nginx-deploy
+
+*******************************************************************
+# 3. Testing: Rollback update 
+
+kubectl set image deploy nginx-deploy nginx-container=nginx:stable-pearl
+kubectl rollout status deployment/nginx-deploy
+kubectl rollout history deployment/nginx-deploy
+kubectl rollout undo deployment/nginx-deploy
+kubectl rollout status deployment/nginx-deploy
+kubectl describe deploy nginx-deploy | grep -i image
+
+*******************************************************************
+# 4. Testing: Update Version of "nginx:stable-otel" to "nginx:stable-perl"
+
+kubectl set image deploy nginx-deploy nginx-container=nginx:stable-perl
+# or
+kubectl edit deploy nginx-deploy
+kubectl rollout status deployment/nginx-deploy
+kubectl get deploy
+
+*******************************************************************
+# 5. Testing: Scale UP
+
+kubectl scale deployment nginx-deploy --replicas=5
+kubectl get deploy
+kubectl get po -o wide
+
+*******************************************************************
+# 6. Testing: Scale DOWN
+
+kubectl scale deployment nginx-deploy --replicas=3
+kubectl get deploy
+kubectl get po -o wide
+   
+*******************************************************************
+
+# 7. Cleanup
+
+kubectl delete -f nginx-deploy.yaml
+kubectl get deploy
+kubectl get rs
+kubectl get po 
+
+*******************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
