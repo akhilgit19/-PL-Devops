@@ -1117,9 +1117,7 @@ Day 10 : 24th July 2025
 					feature2 : cm1,cm2,cm3
 								cm1,cm2,cm3,f2cm1,f2cm2,f2cm3
 
-
-
-										
+									
 	Git Branching :
 	
 		- Create branch !
@@ -1148,6 +1146,59 @@ Day 10 : 24th July 2025
 							git merge feature1				# Perform Merge from feature1 to master 
 															# git merge command should be executed from target branch(master)
 				feature2	: cm1 
+
+
+
+
+- cd PL-DeVops
+- mkdir testrepo2
+- cd testrepo2
+- git init
+- git branch  (it will list all the branches)
+- echo "rec1" >> f1.txt
+- git add .
+- git commit -m "cm1"
+- git branch 
+master
+- git branch feature1
+- git log --oneline
+ 2687eae (HEAD-> master, feature1) cm1
+-git branch feature
+- git branch
+feature1
+feature2
+*master
+-git switch -c feature3
+switched to a new branch 'feature3'
+- git branch
+feature1
+feature2
+*feauture3
+master
+- git switch feature1
+- echo "rec1" >> s1.txt
+- git add .
+- git commit -m "f1cm1"
+- git log --oneline
+3a29339 (HEAD-> feature1) f1cm1
+2687eae (master, feature3 feature2) cm1
+- ls 
+f1.txt s1.txt
+- git switch master
+- git log ---oneline
+2687eae (master, feature3 feature2) cm1
+-ls
+f1.txt
+-git merge feature
+- ls
+f1.txt s1.txt
+- git log --oneline
+3a29339 (HEAD-> master,feature1) f1cm1
+2687eae (feature3 feature2) cm1
+
+
+
+
 
   998  cd PL-DevOps/
   999  clear
@@ -1495,8 +1546,7 @@ Day 11 : 25th July 2025
 							
 							feature2 : cm1,cm2,cm3
 										cm1,cm2,cm3,f2cm1,f2cm2,f2cm3			
-			
-			
+	
 			
 	git cherry-pick ::	****
 
