@@ -848,7 +848,69 @@ Day 10 : 24th July 2025
            git add .
            git commit -m "cm5"
            ls 
-           s1.txt  s2.txt  s3.txt  s3.txt   s4.txt #######################
+           s1.txt  s2.txt  s3.txt  s3.txt   s4.txt  s5.txt
+           git status
+           (working tree should be clear
+           git log --oneline
+           663e009 (HEAD -> master) cm5
+           a361734 cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+>          git reset --soft a361734
+           git status ( now as we used git reset soft the s5.txtt will be  moved from local repo to staging area
+           On branch master
+           changes to be commited:
+                  (user "git restore --staged >=<file>.." to unstage)
+                         new file s5.txt
+           git log --oneline
+           a361734 (HEAD -> master) cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+           Now commit it again git add .
+           git commit -m "cm5.1"
+           git log --oneline
+           ba8a137 (HEAD -> master) cm5.1
+           a361734 cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+>          git reset --mixed  a361734
+           git status  
+           you will see untracted files s5.txt This file is present in working directory 
+           git ls-files (you will not see the s5.txt as it is not tracked by git
+           git log --oneline
+           a361734 (HEAD -> master)  cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+           git add .
+           git commit -m "cm5.2"
+           ls( you will all the files)
+           git log --oneline
+           04093f2 (HEAD -> master) cm5.2
+           a361734 cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+>          git reset --hard a361734
+           HEAD is now at a361734 cm4
+           git status (you will get nothing to commit as git reset hard removes files permanently)
+           git ls-files( you will not see s5.txt)
+           ls  (you will get nothing to commit as git reset hard removes files permanently)
+           git log --oneline
+           a361734 (HEAD -> master)  cm4
+           a9e0fe8 cm3
+           d4bd6b7 cm2
+           2b818d1 cm1
+           34aff3  Initial commit - .gitignore
+
 
 
 
