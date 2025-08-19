@@ -910,7 +910,7 @@ Day 10 : 24th July 2025
            d4bd6b7 cm2
            2b818d1 cm1
            34aff3  Initial commit - .gitignore
-
+           git reset --hard 34aff3
 
 
 
@@ -927,7 +927,58 @@ Day 10 : 24th July 2025
 		Syntax ::
 			git revert <specific_Commit_ID>
 				
-				
+     cd PL-DeVops
+       cd testrepo1
+       echo "rec1" >> f1.txt
+       git addd .
+       git commit -m "cm1"
+       echo "rec1" >> f2.txt
+       git addd .
+       git commit -m "cm2"
+       echo "rec1" >> f3.txt
+       git addd .
+       git commit -m "cm3"
+       echo "rec1" >> f4.txt
+       git addd .
+       git commit -m "cm4"
+       echo "rec1" >> f5.txt
+       git addd .
+       git commit -m "cm5"
+        04093f2 (HEAD -> master) cm5
+        a361734 cm4
+        a9e0fe8 cm3
+        d4bd6b7 cm2
+        2b818d1 cm1
+        34aff3  Initial commit - .gitignore
+        git status(nothing to commit)
+>       git revert d4bd6b7  (when u run thi it expect a commit message to complete the action)
+        press i you will see defualt commit mess if you are  save :wq!
+        ls (you will not see f2.txt)
+        f1.txt f3.txt f4.txt f5.txt
+        git log --oneline
+        fb0ab42  (HEAD -> master) Revert "cm2"
+        04093f2 cm5
+        a361734 cm4
+        a9e0fe8 cm3
+        d4bd6b7 cm2
+        2b818d1 cm1
+        34aff3  Initial commit - .gitignore
+        git revert fb0ab42 ( you are repaply )
+        c6662031 (HEAD -> master) Reapply "cm2"
+        fb0ab42  Revert "cm2"
+        04093f2 cm5
+        a361734 cm4
+        a9e0fe8 cm3
+        d4bd6b7 cm2
+        2b818d1 cm1
+        34aff3  Initial commit - .gitignore
+        ls (you will see now f2.txt)
+       
+      
+
+
+
+
 	- git Branches ::::
 	
 		- Git Branch is a logical copy of a Repository/Specific Branch.
