@@ -1373,7 +1373,115 @@ spec:
 
         --mount source=vol1,destination=/vol1
 
+This is Static Provisioning:
+-----------------------------
+Persistent Volume(PV)
+---------------------------------
 
+#pv.yaml;
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-gce
+spec:
+  capacity:
+    storage: 15Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: slow
+  gcePersistentDisk: 
+    pdName: my-disk-123
+    fsType: ext4
+
+Persistent Volume Clain(PVC)
+---------------------------------
+
+#pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-disk-claim
+spec:
+  resources:
+    requests:
+      storage: 15Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: slow
+
+
+Referencing Claim in Pod
+-------------------------------
+# nginx-pv.yaml
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: pv-pod
+spec:
+  containers:
+  - name: test-container
+    image: nginx
+    volumeMounts:
+    - mountPath: /test-d
+      name: test-volume
+  volumes:
+  - name: test-volume
+    persistentVolumeClaim:
+      claimName:my-disk-claim
+
+
+
+Dynamic Provisioning:
+----------------------
+
+
+Storage Class
+-----------
+kind: StorageClass
+apiVersion: Storage.k8s.io/v1
+metadata:
+  name: fast
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+
+
+Persistent Volume Claim (PVC)
+----------------------------------
+#pvc-dv1.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata: 
+  name: my-disk-claim-1
+spec:
+  resources:
+    requests:    
+      storage: 30Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast
+
+
+Referencing claim in Pod
+----------------------------
+
+# nginx-pv.yaml
+apiVersion:v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  containers:
+  - name: test-container
+    image: nginx
+    volumeMounts: 
+    - mountPath: /test-pd
+      name: test-volume
+  volumes:
+  - name: test-volume
+    persistentVolumeClaim:
+      claimName: my-disk-claim-1
 
 
 
