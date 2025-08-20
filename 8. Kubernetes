@@ -1254,6 +1254,127 @@ kubectl get po
 *******************************************************************
 
 
+#########################
+Day 23 : 19th August 2025
+#########################
+
+
+Purpose of docker container volumes:
+---------------------------------------
+-Throught out the life cycle of your container, If you want to maintain stateful applicatoins
+we will be using container volume, Even if we loose container we should not loose docker volume.
+- Similarly in kubernetets we have different volumes
+
+
+- Kubernetes Volumes:
+        - Empty Dir  
+
+        - Hostpath Volume # can be compared with docker volume     
+                           (as like we created a volume in the host machine and that will be referereed in the containers, Here in POD)
+        - Persistant Volume
+        - Persistant Volume Claim
+
+Containerlevel and Pod Level storage:
+- TO manage a huge transaction data we cannot fulfill with host path volume. We need to procure the volume from external sources
+  like efs ebs persistant dIsk from azure.
+- if ant external storage server if we need to access we will use help of persistant volume or persistant volume claim
+- Users will not have acess to create persistant volume . Storage and kubernetes admain creates it.
+- Devops will not have acess to create persistant volume.
+- So, if we compare to continaer volue. In container we can mount one volume, if i have one more container,  same volume can be mounted to another container
+- if it is kubenetes, we will not deploy any container we will deploy pod. so that pod will be mountedd with the volume
+- Once the pod is allocated to the volume, They container uses the volume  and another container can also uses the volume
+- Hece volume can be shared.
+
+
+- Namespace!
+      -Logical Partitioning of Kubernetes cluster
+      -Namespaces can be created based on Environments, Appliation team,Services/objects
+      - working with namespace
+
+
+- Integrate Kubernetes with Namespace
+
+    - CICD 
+
+
+
+
+GCEPersistent Disk
+AWSElasticBlockStore
+AzureDisk
+Clinder(OpenStack Block Storage)
+FC( Fibre Channel)
+RBD(Ceph Block Device)
+Flocker 
+
+NFS
+ISCSI
+CEPHFS
+Glusterfs
+AzureFile
+FlexVolume
+
+Vsphere Volume
+Quobyte Volumes
+Hostpath
+Portworx Volumes
+ScaleIO volumes
+StorageOS
+
+ExternalStorage:
+- In general, Kubernetes support many volumes 
+- The storage service.server can be procured from external medium
+- In real time envirionment, for any partiuclar transations, we need to maintain persistent dtata
+- During autoscaling ,Imagine if i have 5 worker nodes, I will be deploying pods in all workes nodes, if i reduce the count to 2,
+  the worker nodes can be deleted, so we cannot maintain volume from node level.
+- Hence we rely on external storage
+- In general storage servers categorized as a block storage
+Block storage, NFS, Ojbect sotrage , others
+
+- How this is procured, Lets say im a dev, ihave prepared application artificats,
+  i want to execute as a pod. so execute this pod, i need around 1 TB of volume
+-  We have concept called Persistan Volume
+
+
+Persistent Volumes and Persisten Volume claim:
+- Abstracts details of hos storage is provided from how it is consumerd
+- Persistentt volume PV (Piece of storage in cluster) and Persistent volume clainm(PVC) ( Request for Storage)
+- It's responsible of storage administrators to create some storage in cluster for pod deployemnet
+- Once the volume is available in persistant volume pool
+- if you need 2 gb for pod deployment, you can create a request for storage is called as perisistenet volume claim
+- Now how this volume is allocated to the od
+- Two typoes of provisions
+- Static Provision and Dynamic Provision:
+  -when ever you are sure about the actual storage, then we can go with static provision. vOOLUMEN CAN BE 
+   procured from any external storage server like SSD  HDD NFS object 
+  - storage admin will created the persistant volumes in persistant volume pool
+  - Once they user the request for how much is needed and what type of volume needed, it will created by admins
+  - if the volume is available in the pools can be reserved for pod deployment.
+  - if requested volume is not avialalbe, then it will use the storage class parameter  based up allocation dynamically
+
+
+1.HostPath YAML file
+
+apiVersion: V1
+kind: Pod
+metadata: 
+  name: nginx-hostpath
+spec:
+  containers:
+    - name: nginx-containers
+      image: nginx
+      volumeMounts:
+      - mountPath: /test-mnt
+        name: test-vol
+  volumes:
+  - name: test vol
+    hostPath:
+      path: /test-vol
+
+        --mount source=vol1,destination=/vol1
+
+
+
 
 
 
