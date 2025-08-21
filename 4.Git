@@ -1412,7 +1412,6 @@ Day 11 : 25th July 2025
 															# git merge command should be executed from target branch(master)
 				feature2	: cm1 
 
-
 	- Handle Merge Conflicts :::
 	
 		- Reason for Merge Conflicts :
@@ -1432,7 +1431,94 @@ Day 11 : 25th July 2025
 	
 		- Prevent the Merge Conflicts!
 		
-		
+- Loging to server
+- mkdir samplerepo1
+- git init
+- echo "rec1" >> f1.txt
+- git add .
+- git commit -m "cm1"
+- git log --oneline
+b75639f  (HEAD-> master) cm1
+- ls
+f1.txt
+-git branch
+* master
+- git branch feature1
+- git branch feature2
+
+-git branch
+feature2
+feature1
+* master
+- git switch  feature1
+- git log --oneline
+b=b75639f  (HEAD-> feature1 master, feature2 ) cm1
+
+- ls
+f1.txt
+-  cat f1.txt
+rec1
+- git status
+clean
+
+- echo "Record2 from feature1" >> f1.txt
+- cat f1.txt
+rec1
+Record2 from feature1
+
+- git status
+- you will see modified file ( being tracked need to be staged a)
+
+- git add .
+- git commit -m "f1cm1"
+- git log --oneline
+ee999d3 (HEAD-> feature1) f1cm1
+b75639f  ( master, feature2 ) cm1
+
+- cat f1.txt
+rec1
+Record2 from feature1
+
+- git switch master
+- git status
+clean
+- git log --oneline
+b75639f  ( HEAD 0>master, feature2 ) cm1
+- git merge feature1
+- git log --oneline
+ee999d3 (HEAD-> master ,feature1) f1cm1
+b75639f  ( feature2 ) cm1
+
+- git switch feature2
+- ls
+f1.txt
+- cat f1.txt
+rec1
+- echo "Record2 from feature2" >> f1.txt
+- git add .
+- git commit -m "f2cm1"
+- git switch master
+- git merge featur2 ( if run this command now feature1 already updated record2 and feature is updating same frecor2 level 
+ it will create a conflict)
+
+- cat f1.txt
+re1
+<<<<<<<<HEAD
+Record2 from feature1
+======
+Record2 from feature2
+>>>>>>>>feature2
+
+- vi f1.txt
+- go to insert mode
+- remoe header and footer lines, you will see the actual contents
+- if you want to keep both the features :wq!
+-  git add .
+- git commit -m "Fixed conflicts"
+
+
+
+
 	Git Rebase ::::	
 	
 		- Rebase is used to maintain linear commit history 
@@ -1473,7 +1559,122 @@ Day 11 : 25th July 2025
 							
 							git merge feature2			
 		
-		
+- mkdir samplerepo2
+- cd samplerepo2
+- git init
+- echo "rec1" >> f1.txt
+- git add .
+- git commit -m "cm1"
+- echo "rec1" >> f2.txt
+- git add .
+- git commit -m "cm2"
+- git branch feature1
+- git branch feature2
+- git switch feature1
+- git log --oneline
+0366a297 (HEAD -> feature1, master ,feature2 ) cm2
+da168c5 cm1
+- echo "rec1" >> q1.txt
+ - git add .
+- git commit -m "f1cm1"
+- echo "rec1" >> q2.txt
+- git add .
+- git commit -m "f1cm2"
+-  echo "rec1" >> q3.txt
+- git add .
+- git commit -m "f1cm3"
+- git log --oneline
+0d9864b (HEAD- > feature1) f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 ( master ,feature2 ) cm2
+da168c5 cm1
+- git rebase master
+- git switch master
+- git merge feature1
+- git log --oneline
+
+0d9864b (HEAD- > master ,feature1) f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 ( feature2 ) cm2
+da168c5 cm1
+- ls
+f1.txt f2.txt q1.txt q2.txt q3.txt
+- git switch feature2
+-  git log --oneline
+0366a297 ( feature2 ) cm2
+da168c5 cm1
+- echo "rec1" >> w1.txt
+- git add .
+- git commit -m "f2cm1"
+- echo "rec1" >> w2.txt
+- git add .
+- git commit -m "f2cm2"
+
+- echo "rec1" >> w3.txt
+- git add .
+- git commit -m "f2cm3"
+- echo "rec1" >> w4.txt
+- git add .
+- git commit -m "f2cm4"
+
+- git rebase master
+- ls
+f1.txt f2.txt q1.txt q2.txt q3.txt w1.txt w2.txt w3.txt w4.txt
+- git log --oneline
+27d0f49 (HEAD --> feature2) f2cm4
+87b9999 f2cm3
+f4b0a25 f2cm2
+af08fdd f2cm1
+0d9864b (master ,feature1) f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 cm2
+da168c5 cm1
+
+- git switch master
+- git merge feature2
+
+- git log --oneline
+27d0f49 (HEAD --> master ,feature2) f2cm4
+87b9999 f2cm3
+f4b0a25 f2cm2
+af08fdd f2cm1
+0d9864b (feature1) f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 cm2
+da168c5 cm1
+
+
+- git switch feature1
+- ls
+ f1.txt f2.txt q1.txt q2.txt q3.txt
+- git log --oneline
+0d9864b (HEAD -> feature1) f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 cm2
+da168c5 cm1
+
+- git rebase master
+- - git log --oneline
+27d0f49 (HEAD --> master ,feature1, feature2) f2cm4
+87b9999 f2cm3
+f4b0a25 f2cm2
+af08fdd f2cm1
+0d9864b  f1cm3
+33d17f3 f1cm2
+ecdf670 f1cm1
+0366a297 cm2
+da168c5 cm1
+
+
+
+
+
+
 	- Git Squash ::::
 	
 	- git merge --squash <branch_name>
