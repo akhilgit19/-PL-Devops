@@ -1836,6 +1836,40 @@ da168c5 cm1
 		git remote add origin https://github.com/PL-DevOps-GenAI-0625/testrepo1.git
 
 		git remote remove origin
+
+
+- Login into github account
+- create a new repository
+- Repository name testrepo1
+- desdcription is same and choose publick
+- choose add a readme file
+- click on create repository
+- If you want to create a feature branch as you see main there you can give  feature1 
+- You can add file or create a new file
+- name-temfile.txt
+- click on commit changes			
+- Once you have committed it will ask for comparen and pull request into main branch
+- clikc on compare and pull request
+- title  CR1001- Pyament Module changes
+- In realtime option you can choose a user for the reviewer of pull request
+- Assignee - You can assign to you
+- cilck on create pulll request
+- while it creates pull request it will check for merge pull request
+- You can see the commits for merge conflicts
+- you can click on merge conflicts
+- clickon confirm merge and when ever you merge changes from current branch to target btranch 
+  you can delete the feature branch
+
+- How to take this repo into local server
+- ls
+- mkdir nremoterepos
+- git clone url
+- ls
+- testrepo1/
+- cd testrepo1
+- git status
+- git remote -v 		# Get the list of remote repositories linked to the local repository
+- git switch -c local-feature1
 #######################
 Day 12 : 28th July 2025
 #######################
