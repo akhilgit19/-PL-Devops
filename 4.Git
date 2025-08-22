@@ -1870,6 +1870,24 @@ da168c5 cm1
 - git status
 - git remote -v 		# Get the list of remote repositories linked to the local repository
 - git switch -c local-feature1
+- ls
+- echo "Rec1" >> localfile1.txt
+- git add .
+- git commit -m "create local file"
+- git push -u orgin local-feature1
+-github credentials used to push the changes!
+		- github account personal access token!
+- Now in the remote repository, You can see local feature 1  has recent push
+- click on compare and pull request
+- click on merge
+- Now in local env you have to synch as per remote 
+- git fetch to get the updated commits
+- git pull
+
+If you are creating a new repo which you doesnt have that in local repo. You can created repo without adding any file
+it will show the commands to init in the local machine
+
+
 #######################
 Day 12 : 28th July 2025
 #######################
