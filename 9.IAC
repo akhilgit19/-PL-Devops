@@ -31,19 +31,32 @@ Day 25 : 21st August 2025
 	- Ansible - Configuration Management Tool :::
 	
 		- What is Ansible ?
-		
+          Infra-Structure Configurations tool
+
 		- Why Ansible ?
-		
-		- Ansible Architecture ?
-		
-		- Ansible Architecture Components ?
-		
-		- Working with Ansible Adhoc Commands & Playbooks - *.yaml Scripts
-	
+          1. Meant for configuration management and apart from this, capable for continous delivery and deployement
+           In one scneario, We hav used publish puglin we have deployed from build to target while using jenkins, What if we are not using jenkins
+           That's where ansible used to copy from one file to another server.capable for server provisioning but not matured as terraform.
+          2. How your IT support team install all your packages to the remote machines of 100 +servers. They do it by ansible to aautomate
+
+          3. In another scenario, 
+
 		- Ansible Architecture :::
 			- Master/Ansible Controller 
 			- Client/Ansible Nodes Architecture
-			
+			                                                                    server1
+_____Inventory file__
+|
+|
+|  172.31.93.110              Server-x ---------ssh for operations----Server2
+|  172.31.93.120             172.31.93.81
+|  172.31.93.130                                                      Server3
+|
+|______________________
+          - all the default configuration is defined in Ansible.cfg
+          - inventory consits of all the targets ip adress
+          -  Ansible Engine/Controller/ Manager
+          -o
 		- Ansible Architecture Components
 			
 			- Ansible Controller 
@@ -80,7 +93,9 @@ Day 25 : 21st August 2025
 				
 			Ansible is Agentless.
 				
-				
+					
+- Working with Ansible Adhoc Commands & Playbooks - *.yaml Scripts
+		
 	- Ansible Adhoc Commands :
 	
 		- It is used to execute a module in the target machine.	
