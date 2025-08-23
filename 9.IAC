@@ -44,6 +44,7 @@ Day 25 : 21st August 2025
 		- Ansible Architecture :::
 			- Master/Ansible Controller 
 			- Client/Ansible Nodes Architecture
+-
 			                                                                    server1
 _____Inventory file__
 |
