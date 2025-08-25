@@ -640,18 +640,80 @@ dobug-
 key: value pair
 
 
-#ddebugmod.yaml  / *. yml
 
-
+- In Ansible controller 
+- cd /etc/ansible
+- ls
+ansible.cfg dev_servers file1.txt hosts roles
+- mkdir playbooks
+- vi debugmod.yaml
+paste the below content
 ---
  - hosts: testnodes
    tasks:
-    - debug:
-       msg:
-        - "The os distributing is: {{ansiblre_distribution)"
-        - "The os name is: {{ansible_system}}"
-        - The o familu is: {{ansible_os_faamily}}"
-*******************************************************************
+   - debug:
+      msg:
+       - "The os distributing is: {{ansiblre_distribution)"
+       - "The os name is: {{ansible_system}}"
+       - "The os familu is: {{ansible_os_faamily}}"
+
+- :wq!
+-  ansible-playbook dbug.yaml
+
+
+
+
+- vi  var1.yaml
+
+---
+ - hosts: samplenode1
+   vars:
+    x: 23
+    my_num: 45.67
+    my_name: Loksai
+    my_b: YES
+   tasks:
+   - debug:
+      msg:
+       - "The value of x is: {{x}}"
+       - "The value of my_num: {{my_num}}"
+       - "The value of my_name: {{my_name}}"
+       - "The value of my_b is: {{my_b}}"
+
+- ansible-playbook var1.yaml
+
+
+- mkdir variables
+- cd variables
+- vi myvarfile1.yaml
+
+/etc/ansible/variables/myvarfile1.yaml
+    x:26
+    my_num: 45.00067
+    my_name: Loksai_ETA
+    my_b: YES
+
+- cd ..
+/etc/ansible/
+- cd playbooks
+- vi var2.yaml
+---
+ - hosts: samplenode1
+   vars_files:
+     - /etc/ansible/variables/myvarfile1.yaml
+   tasks:
+   - debug:
+      msg:
+       - "The value of x is: {{x}}"
+       - "The value of my_num: {{my_num}}"
+       - "The value of my_name: {{my_name}}"
+       - "The value of my_b is: {{my_b}}"
+
+- ansible-playbook var1.yaml
+
+1:15:35
+
+******************************************************************
 
 # 1. HostPath YAML file
 
