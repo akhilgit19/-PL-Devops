@@ -545,6 +545,22 @@ ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin 
 ansible samplenode1 -m fetch -a "src=/home/ansibleadmin/filefrom _AN1.txt dest=/home/devopsadmin"
 
 
+Ansible_Controller :
+
+	-- AN1 - Jenkins_Slave		== *.war
+	
+	-- AN2 - Tomcat_Server 		== *.war
+
+
+UseCase 1 :
+	- Deploy an artifact *.war from Jenkins Slave Machine to QA-Server.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
 ### List all modules:
 ansible-doc -l
 
@@ -624,6 +640,31 @@ file1.txt file1.txt.125464.2025-08-22@14:55:51
 	
 	
 *******************************************************************
+
+
+#**************************************************************************************************************************
+Ansible Playbooks :::
+#**************************************************************************************************************************
+*.yaml scripts 		==> Key-value pair
+
+- Playbook creation
+
+
+
+Playbooks :::::
+
+	- *.yaml Script
+	- Defines the Tasks/Modules to be executed in target nodes.
+	- Reusability
+	
+	
+Build Server :::
+
+	- install jdk 
+	- install git 
+	- install maven
+
+
 
 #Ansible Variables !
 
@@ -711,9 +752,94 @@ paste the below content
 
 - ansible-playbook var1.yaml
 
-1:15:35
 
+
+
+
+-- Login to ansible node1
+-- sudo -i
+-- cd /etc/ansible/playbooks/
+ 
+
+####################################################################################
+---
+ - hosts: samplenode1
+   gather_facts: false
+   become: yes
+   tasks:
+   - name: Manage nginx tool
+     apt:
+       name: nginx
+       state: present
+	   
+
+Eg:
+	name : nginx
+	
+	state : present/absent/latest
+	
+	sudo apt install nginx			# In Linux Ubuntu 
+	
+	sudo apt remove nginx			# In Linux Ubuntu 
 ******************************************************************
+
+-- vi var3.yaml
+#var3.yaml
+---
+ - hosts: "{{ host_name }}"
+   become: yes
+   tasks:
+   - name: Manage "{{ tool_name }}" service
+     apt:
+       name: "{{ tool_name }}"
+       state: "{{ tool_state }}"
+
+
+ansible-playbook var3.yaml -e "host_name=testnodes tool_name=nginx tool_state=present"
+
+
+
+Handling Variables in Ansible :::
+
+	- Environment variables -- accessible using Setup Module.
+	
+	- Hardcoding the values in playbook 
+		using vars :
+	
+	- Using External Variable files :
+		using var_files
+
+	- Using -e to pass the values at run time.
+
+
+Handling Variables :::
+
+	--> Hardcoding the variables --> vars:
+	--> Using Variables files    --> vars_files: 	#recommended approach
+	--> Passing Extra values     --> -e 
+
+
+
+Using When Condition :::
+
+---
+  - hosts: testnodes
+    become: yes
+    tasks:
+      - name: Install-nginx on Debian
+        apt:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "Debian"
+      - name: Install-nginx on Redhat
+        yum:
+          name: nginx
+          state: "{{pkg_state}}"
+        when: ansible_os_family == "RedHat"
+
+
+
+1:48:55
 
 # 1. HostPath YAML file
 
