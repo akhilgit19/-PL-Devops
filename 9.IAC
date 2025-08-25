@@ -504,7 +504,153 @@ samplenode2 ansible_ssh_host=172.31.38.32 ansible_ssh_user=ansibleadmin
 - ansible dev_server_grp1 -m ping -i dev_servers
 
 
+
+
+#########################
+Day 26 : 22nd August 2025
+#########################	
+
+
+*******************
+ansible all -m ping ## will ping all hosts from /etc/ansible/hosts file
+
+ansible samplenode1 -m ping
+ansible samplenode2 -m ping
+
+#or using user defined Inventory file
+#ansible ansible-node1 -m ping -i myinventoryfile.txt
+
+ansible samplenode1 -m ping -i myinventoryfile.txt
+
+ansible samplenode2 -m ping
+ansible samplenode1 -m shell -a "sleep 20 ; echo 'hi'"
+
+
+Ansible Facts!
+
+ansible samplenode1 -m setup
+ansible samplenode1 -m setup -a "filter=ansible_mounts"
+
+ansible testnodes -m setup -a "filter=ansible_distribution"
+
+## Transfer a file from Ansible Controller to Target Nodes using copy Module
+
+ansible samplenode1 -m copy -a "src=/etc/ansible/file1.txt dest=/home/ansibleadmin"
+
+ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin bacup =yes"
+
+
+## Transfers a file  Ansible  nodes to  Ansible Controller using FETCH module
+
+ansible samplenode1 -m fetch -a "src=/home/ansibleadmin/filefrom _AN1.txt dest=/home/devopsadmin"
+
+
+### List all modules:
+ansible-doc -l
+
+### No of modules:
+ansible-doc -l | wc -l
+
+##Seach for specific modules:
+ansible-doc -l | grep shel
+
+### To know about any specific modules:
+ansible-doc shell
+
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
+******************
+				
+- Login back to Ansible controller  and Ansible nodes
+- In Ansible controller
+- cd /etc/ansible
+- ls
+ansible.cfg dev_servers hosts roles
+-  ansible samplenode1 -m shell -a "sleep 20 ; echo 'hi'"
+-  ansible samplenode1 -m setup  ( To know the architecutre details of particular node from ansible cntroller)
+-  ansible samplenode1 -m setup -a "filter=ansible_mounts"
+-  ansible testnodes -m setup -a "filter=ansible_distribution"
+- echo "rec1" >> file1.txt
+- pwd
+/etc/ansible
+- ls
+ansible.cfg dev_servers hosts roles file1.txt
+- ansible samplenode1 -m copy -a "src=/etc/ansible/file1.txt dest=/home/ansibleadmin"
+- echo "dummy-record1" > file1.txt
+- ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin backup =yes"
+- If you check now in samplenode1, loging to samplenod1
+- ls ( you can see the backup as well in another file contains of old record)
+file1.txt file1.txt.125464.2025-08-22@14:55:51
+- here echo "rec1" >> filefrom_ANI.txt
+- ls
+- file1.txt file1.txt.125464.2025-08-22@14:55:51 
+- Now got to ansible controller
+- ansible samplenode1 -m fetch -a "src=/home/ansibleadmin/filefrom_AN1.txt dest=/home/devopsadmin"
+
+
+- ansible-doc -l ( use to get list of modules********)
+
+
+
+			- Ansible Adhoc Commands :
+			
+				- It is used to execute a module in the target machine.
+				
+					Eg.: 
+					
+					Target Server :
+					
+						install git :
+							- apt install git -y				
+			
+			- Ansible Playbooks :
+			
+				- Used to execute the series of task/Modules in the target machine.
+				- Ansible Playbooks should be reusable 
+				- Ansible Playbooks are written using *.yaml Scripts 
+				
+					Eg.: 
+						Target Server : 
+						
+							Setup the Jenkins Slave_Node :
+							
+								- apt install git -y 
+								- apt install jdk -y 
+								- apt install maven -y 
+								- apt install docker.io -y 
+	
+	
 *******************************************************************
+
+#Ansible Variables !
+
+#shell: echo $var1"
+
+in yaml: "{{var1}}"
+
+ansible samplenode1 -m setup
+
+dobug-
+   msg  -used to print the constant  value and variable data
+   var - used to print only the fariable data
+
+key: value pair
+
+
+#ddebugmod.yaml  / *. yml
+
+
+---
+ - hosts: testnodes
+   tasks:
+    - debug:
+       msg:
+        - "The os distributing is: {{ansiblre_distribution)"
+        - "The os name is: {{ansible_system}}"
+        - The o familu is: {{ansible_os_faamily}}"
 *******************************************************************
 
 # 1. HostPath YAML file
