@@ -839,7 +839,74 @@ Using When Condition :::
 
 
 
-1:48:55
+		
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~ register and set-facts
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#test_var-datatype.yaml
+---
+ - hosts: samplenode1
+   gather_facts: false
+   tasks:
+   - shell: "bash --version"
+
+
+#test_var-datatype.yaml
+---
+ - hosts: samplenode1
+   tasks:
+   - shell: "bash --version"
+     register: bash_ver
+   - debug: var=bash_ver
+
+
+- sudo -i
+- su - devopsadmin
+- cd /etc/ansible/playbooks
+- vi loop1.yaml
+
+
+ 
+Loops :
+
+---
+  - hosts: samplenode1
+    become: yes
+    tasks:
+      - apt:
+         name: git
+         state: present
+      - apt:
+         name: maven
+         state: present
+      - apt:
+         name: nginx
+         state: present
+
+- ansible-playbook loop1.yaml
+
+
+
+
+
+
+Loops :::
+
+---
+  - hosts: samplenode1
+    gather_facts: false
+    become: yes
+    tasks:
+      - apt:
+         name: "{{item}}"
+         state: absent
+        loop:
+          - git_2.81.0
+          - maven
+          - nginx
+
+
 
 # 1. HostPath YAML file
 
