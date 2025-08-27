@@ -3,25 +3,24 @@ Day 13 : 29th July 2025
 ########################
 
 	Jenkins Build Orchestration Tool ::::
+	========================================
+	        Continuous Integration : 			CI
 	
-	
-	Continuous Integration : 			CI
-	
-	Continuous Delivery/Deployment :	Cd/CD
-	
+	        Continuous Delivery/Deployment :	Cd/CD
 	
 	Jenkins :::
-	
+	=============
 	What is Jenkins :::
-	
-		Jenkins is Open-Source Build Orchestration Tool.
-		Used to Automate the End-to-End Application Build and Deployments
-		Using Jenkins we can create CI/CD Pipelines 
+	====================
+		- Jenkins is Open-Source Build Orchestration Tool.
+		- Used to Automate the End-to-End Application Build and Deployments
+		- Using Jenkins we can create CI/CD Pipelines 
+     
 		
 	Jenkins Architecture ::
-	
+	========================================
 		Jenkins is based on Master-Slave Architecture :::
-		
+		====================================================
 			Jenkins_Master (VM)				==> To Create Jenkins CI/CD Pipeline Jobs/Projects & Schedule to run in Jenkins_SlaveNode
 											==> Install Git, JDK, Jenkins
 											==> Install Application Build Tools(Maven)
@@ -31,7 +30,7 @@ Day 13 : 29th July 2025
 						
 			
 	Scenario1 :
-	
+	========================================
 		Client :
 		
 			Java Web Application Development
@@ -47,7 +46,7 @@ Day 13 : 29th July 2025
 											
 											
 	Scenario2 :
-	
+	========================================
 		Client :
 		
 			Java, .Net, python, Node-js, Angular, ruby, ......
@@ -60,10 +59,10 @@ Day 13 : 29th July 2025
 											
 				Jenkins_SlaveNode1 (VM1)		==> Java Build Tools					
 				Jenkins_SlaveNode1 (VM1.1)		==> Java Build 						
-				Jenkins_SlaveNode1 (VM2)		==> Python
-				Jenkins_SlaveNode1 (VM3)		==> .Net
-				Jenkins_SlaveNode1 (VM4)		==> Angular/Nodejs
-				Jenkins_SlaveNode1 (VM5)		==> Ruby
+				Jenkins_SlaveNode1 (VM2)		==> Python build tools
+				Jenkins_SlaveNode1 (VM3)		==> .Net build tools
+				Jenkins_SlaveNode1 (VM4)		==> Angular/Nodejs build tools
+				Jenkins_SlaveNode1 (VM5)		==> Ruby build tools
 				
 
 			Target_Server(QA)
@@ -78,7 +77,7 @@ Day 13 : 29th July 2025
 		Application Build 
 		Unit Testing 
 		Create Artifacts 
-		Promote the Application to Test Environments
+		Promote the Application to Test Environments (QA, UAT,PROD)
 		Notify 
 		Deploy to Prod 
 		
@@ -86,15 +85,16 @@ Day 13 : 29th July 2025
 
 
 	Working with Jenkins :::
-	
+	========================================
 	
 		Developers' Perspective :
+        =========================
 			- All Developers are just the Consumers of Jenkins Tools and Services.
 			- Developers can just execute/cancel/view the Jenkins jobs/Status.		
 		
 		
 		DevOps Perspective :	
-	
+	   ======================
 			Roles & Responsibilies of DevOps Team :			
 			
 			Jenkins Administration 
@@ -114,7 +114,7 @@ Day 13 : 29th July 2025
 	
 	
 	- Installation of Jenkins :::
-	
+	  ===============================
 		--> Jenkins can be installed in Linux - Ubuntu Machine AMI - v22.04
 				https://www.jenkins.io/doc/book/installing/
 				
@@ -123,44 +123,56 @@ Day 13 : 29th July 2025
 			Jenkins run as a service, it runs in default port 8080
 			
 
-	
+	Dashboard:
+    ===========
+          Build Executor Status:
+           =========== ===========
+         - if you 0/2 That means I want to run 2 jobs parallely.
+           Build Queue:
+           ===========
+         - if user triggers 4 jobs, Then
+           2 jobs will trigger and other 2 jobs will in build queue
+
+Manage Jenkins:
+=================
 	- Global System Configurations ::
-	
+	 ==========================================================
+        - click on manage jenkins, system configuration.
 		--> Define the default properties and external resource connections to Jenkins.
 
-        - you can set defualt executors 0/3 
-        - you can click on manage jenkins and clik on system(gloabal system config)
+        - you can set defualt executors 0/5, click on apply and save
         - you can see default directory - /var/lib/jenkins
         - system message- test Jenkins server
-        - # of executors   as 5 
+        - you can set defualt jenkins url
         - you can set the external resource configurations
         - eg QA server , UAT server or email configurations.
-
+       
 
 	
 	- Plugins Management ::	
-	
+	 ===============================
 		--> Enable/Disable/Remove/Install/Upgrade Plugins!
 
-     - clikc on manage jenkinsg, click on plugins
-     - you will see updates, available plugins , installed and advanced ed plugins
+     - clikc on manage jenkins, click on plugins
+     - you will see updates, available plugins , installed and advanced plugins
      - if you install plugins you can see installed plugins
-     - There you can enable or disable the plugin which u have installed
+     - There you can enable or disable the plugin which u have installed or uninstall
        health shows status of the plugin like comptability along the current version
      - If i want to install maven, need to click on available plugins
        select the plugin and click on install
      - if you click on  docker plugin, click on released
-       you can see various versions of playings, understand the release notes , depenedcy updates
+       you can see various versions of playings, understand the release notes , dependency updates
      - if any version u want to install right clik on version no and copy the  link addresss
      - go to your plugin management , go to advanced settings, paste the url and clik on deploy
 
 
 	
 	Install & Configure Jenkins Server :
-
+    ================================================
 	- Refer to that tools/Service's Official Documentation.
 				https://www.jenkins.io/doc/book/installing/linux/
-				
+
+
 Launch AWS EC2 Instance - AMI - Ubuntu 22.04v 
 t2.micro - Instance Type 
 				
@@ -223,6 +235,68 @@ sudo -i
 
 cat /var/lib/jenkins/secrets/initialAdminPassword
 
+Lab:
+=====
+- Launch AWS EC2 Instance - AMI - Ubuntu 22.04v 
+- Name: PL-Jenkins_Master
+- AMI - Ubuntu 22.04 version
+- t2.micro - Instance Type 
+- keypair
+- defualt network setting vpc
+- click on security groups
+  ssh          port 22
+  custom tcp   port 8080
+- login into PL-Jenkins_Master
+- sudo -i 
+- sudo apt update -y
+- sudo apt install git -y 
+  git --version 
+-
+We install JDK based on application requiremen. You can check the pom.xml for java.version
+https://github.com/akhilgit19/java-webapp-project.git
+- sudo apt install openjdk-17-jre -y 			# previous version 
+  java -version						
+
+- #Install Jenkins:
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+- 
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+- sudo apt-get update
+- sudo apt-get install jenkins -y
+- cd /var/lib/jenkins/
+- pwd
+/var/lib/jenkins  (Default directory for jenkins
+- ls
+- cd plugins/
+- When u install jenkins, it comes with defualt plugins, 
+
+
+-  jenkins --version 
+   systemctl status jenkins 
+
+# systemctl stop jenkins 
+# systemctl start jenkins 
+# systemctl restart jenkins 
+# systemctl enable jenkins 
+
+- http://publicip:8080
+- cat /var/lib/jenkins/secrets/initialAdminPassword
+- click on install suggested plugins
+- you can check the same in 
+cd /var/lib/jenkins/plugins/
+- Create First admin user
+  Username- Akhil
+  Password- admin
+  Confirm Password- admin
+  Full name akhilp
+  Email address akhilpagadapoola123@gmail.com
+ 
+
+- In available plugins, Maven Integration plugin, click on install
+- In available plugins, Publish Over ssh plugin, click on install
 
 
 
