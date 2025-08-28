@@ -1080,10 +1080,50 @@ chmod 600 /home/devopsadmin/.ssh/*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #make devopsadmin user as a owner to tomcat dir :
 
+devopsadmin@ip-172-31-27-236://opt/tomcat$ ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+devopsadmin@ip-172-31-27-236://opt/tomcat$ ll
+total 160
+drwxr-xr-x 9 root root  4096 Aug 28 07:37 ./
+drwxr-xr-x 3 root root  4096 Aug 28 07:38 ../
+-rw-r----- 1 root root 20913 Feb 14  2024 BUILDING.txt
+-rw-r----- 1 root root  6210 Feb 14  2024 CONTRIBUTING.md
+-rw-r----- 1 root root 57011 Feb 14  2024 LICENSE
+-rw-r----- 1 root root  1726 Feb 14  2024 NOTICE
+-rw-r----- 1 root root  3342 Feb 14  2024 README.md
+-rw-r----- 1 root root  7139 Feb 14  2024 RELEASE-NOTES
+-rw-r----- 1 root root 16505 Feb 14  2024 RUNNING.txt
+drwxr-x--- 2 root root  4096 Aug 28 07:37 bin/
+drwx------ 3 root root  4096 Aug 28 07:39 conf/
+drwxr-x--- 2 root root  4096 Aug 28 07:37 lib/
+drwxr-x--- 2 root root  4096 Aug 28 07:39 logs/
+drwxr-x--- 2 root root  4096 Aug 28 07:37 temp/
+drwxr-x--- 7 root root  4096 Feb 14  2024 webapps/
+drwxr-x--- 3 root root  4096 Aug 28 07:39 work/
+devopsadmin@ip-172-31-27-236://opt/tomcat$ 
+
+Here is the command to change:
 chown -R devopsadmin /opt/tomcat
 
 
-
+root@ip-172-31-27-236:/opt/tomcat# ll
+total 160
+drwxr-xr-x 9 devopsadmin root  4096 Aug 28 07:37 ./
+drwxr-xr-x 3 root        root  4096 Aug 28 07:38 ../
+-rw-r----- 1 devopsadmin root 20913 Feb 14  2024 BUILDING.txt
+-rw-r----- 1 devopsadmin root  6210 Feb 14  2024 CONTRIBUTING.md
+-rw-r----- 1 devopsadmin root 57011 Feb 14  2024 LICENSE
+-rw-r----- 1 devopsadmin root  1726 Feb 14  2024 NOTICE
+-rw-r----- 1 devopsadmin root  3342 Feb 14  2024 README.md
+-rw-r----- 1 devopsadmin root  7139 Feb 14  2024 RELEASE-NOTES
+-rw-r----- 1 devopsadmin root 16505 Feb 14  2024 RUNNING.txt
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 bin/
+drwx------ 3 devopsadmin root  4096 Aug 28 07:39 conf/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 lib/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:39 logs/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 temp/
+drwxr-x--- 7 devopsadmin root  4096 Feb 14  2024 webapps/
+drwxr-x--- 3 devopsadmin root  4096 Aug 28 07:39 work/
 
 		What is Deployment ?
 		
@@ -1132,8 +1172,9 @@ Install Publish Over SSH Plugin in Jenkins Master.
 - clickon  generate pipeline script
 - copy the syntax and you can update in deploy to qa environment
 
+test sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/ ', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
-sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+prod sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
 
 pipeline {
@@ -1155,7 +1196,7 @@ pipeline {
         stage('Deploy to QA Environment') {
             steps {
                 script{
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/ ', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 				}
             }
         }
@@ -1169,6 +1210,133 @@ pipeline {
 - copy the public ip of tomcat server publicip:8080/demo-1.0-SNAPSHOT/
 - you will see the webpage
 
+
+Output:
+------
+
+Started by user akhilp
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on JavaMvnBuildServer1 in /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (SCM_Checkout)
+[Pipeline] echo
+Perform SCM_Checkout from github repository
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+ > git rev-parse --resolve-git-dir /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/.git # timeout=10
+ > git config remote.origin.url https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git # timeout=10
+Fetching upstream changes from https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 353876657987eb5da3702c042a912e50ad99add1 (refs/remotes/origin/master)
+Commit message: "Create kdeploy.yaml"
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 353876657987eb5da3702c042a912e50ad99add1 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 353876657987eb5da3702c042a912e50ad99add1 # timeout=10
+ > git rev-list --no-walk 353876657987eb5da3702c042a912e50ad99add1 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Application Build)
+[Pipeline] echo
+Perform Maven Application Build
+[Pipeline] sh
++ mvn clean package
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36mcom.loksai:demo[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding demo 1.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Deleting /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 17] to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 1 source file with javac [debug release 17] to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running com.loksai.demo.[1mDemoApplicationTests[m
+08:02:06.353 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.loksai.demo.DemoApplicationTests]: DemoApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:02:06.583 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.loksai.demo.DemoApplication for test class com.loksai.demo.DemoApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2025-08-28T08:02:07.421Z  INFO 1464 --- [           main] com.loksai.demo.DemoApplicationTests     : Starting DemoApplicationTests using Java 17.0.16 with PID 1464 (started by devopsadmin in /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1)
+2025-08-28T08:02:07.425Z  INFO 1464 --- [           main] com.loksai.demo.DemoApplicationTests     : No active profile set, falling back to 1 default profile: "default"
+2025-08-28T08:02:09.384Z  INFO 1464 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2025-08-28T08:02:10.318Z  INFO 1464 --- [           main] com.loksai.demo.DemoApplicationTests     : Started DemoApplicationTests in 3.431 seconds (process running for 5.766)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.033 s -- in com.loksai.demo.[1mDemoApplicationTests[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 1, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-war-plugin:3.4.0:war[m [1m(default-war)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Packaging webapp
+[[1;34mINFO[m] Assembling webapp [demo] in [/home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT]
+[[1;34mINFO[m] Processing war project
+[[1;34mINFO[m] Copying webapp resources [/home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/src/main/webapp]
+[[1;34mINFO[m] Building war: /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT.war
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.3:repackage[m [1m(repackage)[m @ [36mdemo[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT.war.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19.446 s
+[[1;34mINFO[m] Finished at: 2025-08-28T08:02:17Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to QA Environment)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sshPublisher
+SSH: Connecting from host [ip-172-31-30-243]
+SSH: Connecting with configuration [QA-Tomcat] ...
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
 
 
 
