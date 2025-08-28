@@ -989,7 +989,7 @@ Day 16 : 4th August 2025
 
 
 Set-up Tomcat web application server 
-	
+========================================	
      Jenkins_Master (VM) 		# Create CICD Pipeline Projects/Jobs and schedule to run in the Nodes
 					# Install git, jdk, jenkins 
 								
@@ -1013,16 +1013,19 @@ Set-up Tomcat web application server
 
 - Installation of Tom cat
 
-#####################Install TOMCAT Application Server on Ubuntu :::
-Launch New Node - Ubuntu - 22.04 ami 
-
 Enable port 8080
 
 Install Tomcat ::  https://tomcat.apache.org/download-80.cgi
 
 https://tomcat.apache.org/
 
-
+#####################Install TOMCAT Application Server on Ubuntu :::
+- Name - PL- Tomcat_Server
+- Launch New Node - Ubuntu - 22.04 ami 
+- Instance type - t2.micro
+- keypair
+- Security : Enable port 8080
+- Login to PL- Tomcat_Server
 sudo -i
 apt update -y
 apt-get install default-jdk -y
@@ -1080,6 +1083,8 @@ chmod 600 /home/devopsadmin/.ssh/*
 chown -R devopsadmin /opt/tomcat
 
 
+
+
 		What is Deployment ?
 		
 			==> Copy artifacts from one server to another server ?
@@ -1092,14 +1097,12 @@ chown -R devopsadmin /opt/tomcat
 					target/*.war									/opt/tomcat/webapps
 																/opt/tomcat/webapps/*.war
 
-
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Publish Over SSH Plugin is used to copt the artifacts from Jenkins Slave Node to Tomcat Server
 		
 Install Publish Over SSH Plugin in Jenkins Master.
 
-
+- In Master server from the jenkins browser
 - click on manage jenkings, click on plugins manager
 - click on available plugins
 - search for Publish Over SSH and install and restart jenkings so that it's configutrations can be enabled
@@ -1122,7 +1125,7 @@ Install Publish Over SSH Plugin in Jenkins Master.
 - now go to PL-CICD-Pipeline-Project1 job, click on pipeline syntax
 - select publishChecks: publish cutomized checks to SCM platforms
 - choose sshPublisher: send build artifacts over SSH
-- Name  choose QA server
+- Name  choose QA server same way you do it for UAT AND PROD
 - sourcefiles- target/*.war
 - remote directory - . ( . refers to webapp folder)
 - remove prefix target/ 
@@ -1169,12 +1172,12 @@ pipeline {
 
 
 
-	Build Triggers :::
-	
-		- To Automate the Jenkins Pipeline Projects 
+Build Triggers :::
+=======================
+- To Automate the Jenkins Pipeline Projects 
 		
 - When u go to job-PL-CICD-Pipeline-Project1 configuration, In general, 
-- In triggersyou have build periodic, github webhook and poolscm
+- In triggersyou have build periodically, github webhook and poolscm
 - 	
 		-> Build Periodic					# https://crontab.guru/
 		
@@ -1183,7 +1186,7 @@ pipeline {
 
 
 - select build periodic  and click on ? in fron of schedule, you can see the  schedule descripton
-
+   *****
 
 
 
@@ -1237,7 +1240,7 @@ pipeline {
 		
 		
 	Email Notifications :::
-	
+	==========================
 	
 	
 		In Jenkins Pipeline Jobs, Email Notifications can be done as a post build action.
@@ -1257,6 +1260,7 @@ To Setup the Email Notifications, First we need to set the Email Server in the J
 
 
 How to setup the Email Server in the Jenkins Config:
+===========================================================
 
 goto manage jenkins -> system configuration 
 
