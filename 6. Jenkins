@@ -251,15 +251,25 @@ Lab:
 - sudo apt update -y
 - sudo apt install git -y 
   git --version 
+root@ip-172-31-29-205:~# git --version
+git version 2.43.0
+root@ip-172-31-29-205:~# 
+
 -
-We install JDK based on application requiremen. You can check the pom.xml for java.version
+We install JDK based on application requirement. You can check the pom.xml for java.version
 https://github.com/akhilgit19/java-webapp-project.git
 - sudo apt install openjdk-17-jre -y 			# previous version 
   java -version						
 
+root@ip-172-31-29-205:~# java -version
+openjdk version "17.0.16" 2025-07-15
+OpenJDK Runtime Environment (build 17.0.16+8-Ubuntu-0ubuntu124.04.1)
+OpenJDK 64-Bit Server VM (build 17.0.16+8-Ubuntu-0ubuntu124.04.1, mixed mode, sharing)
+root@ip-172-31-29-205:~# 
+
+
 - #Install Jenkins:
-sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
-  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 - 
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
@@ -275,7 +285,11 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 
 
 -  jenkins --version 
-   systemctl status jenkins 
+root@ip-172-31-29-205:~# jenkins --version 
+2.516.2
+root@ip-172-31-29-205:~# 
+
+-   systemctl status jenkins 
 
 # systemctl stop jenkins 
 # systemctl start jenkins 
@@ -330,7 +344,7 @@ Day 14 : 31st July 2025
 				- Creation CICD Pipeline Projects 	
 
 - Tools Mnagement:
-------------------------
+ ================================================
 - Login into master node
 - default path for jenkins - cd /var/lib/jenkins/
 - ls (you can see lot of plugins installed)
@@ -338,16 +352,16 @@ Day 14 : 31st July 2025
 - click on manage jenkins
 - click on tools 
 - When ever you install any tools, You have to configure in jenkings
-- Suppose if you want to install maven, You can see maven installations
+- Suppose if you want to install maven,You can see maven installations, click on add
 - name -maven
 - Maven_Home( maven homedirectory)
 - click on apply and save
-- Like wise, JDK, Gradle etc
+- Like wise, JDK, Gradle , Git etc
 
 UserManagement
--------------------
+ ================================================
 - click on manage jenkins
-- In secruity click on users (create/delete/modify users)
+- In secruity click on users (create/delete/modify users that can log in to this jenkins)
 - You can see users dasboard to maintain users profiles
 - actual location of database is
 - login to jenkings master
@@ -361,16 +375,16 @@ Loksai_8055814431391192506  users.xml
 cd Loksai_8055814431391192506 
 - ls
 config.xml
--cat config.xml (view the xml code where you can see users id, users name )
--  Now in the browser, click on create usrs
+-cat config.xml (view the xml code where you can see users id, users name and password )
+-  If you want to create a new user, go to user management , click on create usrs
 - Username -user1, password, fullname -user1, email address
 - click on createuser
 - if you want to change the details click on setting button, it will take to user configuration deashboard
 - In security of users dashboard , you can change password.
 
 Security Management	
--------------------------
-- In jenkins dashboard, In security, click on security
+ ================================================
+- In jenkins dashboard, Manage jenkins, In security, click on security
 - There you can see authentication and authorization
 - For authentication jenkins uses it's own database, (xml))
 - For authorization - Matrix based security
@@ -379,9 +393,11 @@ Security Management
 
 
 Credential Management
------------------------------
+ ================================================
+- depends on remote server. iF u want to access remote server or ssh connection , you can used credential
+
 - click on manage jenkins
-- click on credentials
+- click on credentials, click on global, click on add credential
 - kind ssh username with privatekey
 
 For example:
@@ -399,15 +415,17 @@ For example:
 
 
 Jenkins Projects:
-
+ ===================
 	- Creation Jenkins Projects on Jenkins Master ::::
 	
-		- Free Style Project 		
+		- Free Style Project 	
+          =====================
 			- These are based on the Manual Configurations
 			- This is just for internal tools/plugins validations 
 			- Do not use this to onboard the applications.
 			
-			- Environment Variables ::
+		
+			- Environment Variables :
 				- Pre-Defined Variables used by Jenkins.
 				
 					echo "jenkins-${JOB_NAME}-${BUILD_NUMBER}"
@@ -427,14 +445,12 @@ Jenkins Projects:
 				var1 = "Hello"
 				
 		
-			
-		
 		- Pipeline Project :
-		
+		 =====================
 			- It is used to automate CI/CD Pipeline executions 
 			- This can be created using groovy scripts
 			- To Automate Application Builds and Deployments 
-			- This CI/CD Workflow can be automated.
+			- This CI/CD Workflow can be automated and used in onboarding applications
 					CI/CD Workflow :::
 					
 						SCM_Checkout 
@@ -484,6 +500,7 @@ Freestyle Project:
 
 Environment Variables:
 ----------------------
+- In any project build step, you can see list of avaialbel environment variables
 - go to this site and copy build tag syntax
 publicIP:8080/env-vars.html/
 - echo "Hello everyone" >> file1.txt
@@ -492,11 +509,15 @@ publicIP:8080/env-vars.html/
 
 User defined Variables
 ------------------------
-- In job dashboard, click on general and choose this project is parameterized
+- In job dashboard, click on general and choose this project is parameterized, You can click on add parameter 
+  Any parameter you choose it will  have 3 tags 
+  Name - variable name,
+  defulat value - 
+  Description- 
 - Name-envi
 - default value -QA
 - Description - Enter valid Environment NAME: QA/UAT/PROD
-- add this steup in build, echo"User-Defined vairalbes-${envi}"
+- add this steup in build, echo "User-Defined vairalbes-${envi}"
 - click on build, it will ask for value to provide and click on ok you will see the variable given in the output.
 
 
