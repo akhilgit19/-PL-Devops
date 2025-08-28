@@ -498,6 +498,34 @@ Freestyle Project:
 - click on job dashboard, click on buildnow and clickon  build outputs(where u see the green tick)
 - You can see the output under this path your workspace get created /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
 
+Started by user akhilp
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+[PL-FreeStyle-Proj1] $ /bin/sh -xe /tmp/jenkins16874361542080649431.sh
++ echo Hello everyone
+Hello everyone
+Finished: SUCCESS
+
+Started by user akhilp
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+[PL-FreeStyle-Proj1] $ /bin/sh -xe /tmp/jenkins12417678379864096003.sh
++ echo Hello everyone
+Finished: SUCCESS
+
+Output in the master server: /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+
+root@ip-172-31-29-205:/var/lib/jenkins# cd workspace
+root@ip-172-31-29-205:/var/lib/jenkins/workspace# ls
+PL-FreeStyle-Proj1
+root@ip-172-31-29-205:/var/lib/jenkins/workspace# cd PL-FreeStyle-Proj1
+root@ip-172-31-29-205:/var/lib/jenkins/workspace/PL-FreeStyle-Proj1# ls
+file1.txt
+root@ip-172-31-29-205:/var/lib/jenkins/workspace/PL-FreeStyle-Proj1# cat file1.txt
+Hello everyone
+root@ip-172-31-29-205:/var/lib/jenkins/workspace/PL-FreeStyle-Proj1# 
+
+
 Environment Variables:
 ----------------------
 - In any project build step, you can see list of avaialbel environment variables
@@ -505,6 +533,15 @@ Environment Variables:
 publicIP:8080/env-vars.html/
 - echo "Hello everyone" >> file1.txt
 - echo "jenkins-${JOB_NAME}-${BUILD_NUMBER}" >> file1.txt
+
+Output 
+Started by user akhilp
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+[PL-FreeStyle-Proj1] $ /bin/sh -xe /tmp/jenkins16321883868178186530.sh
++ echo Hello everyone
++ echo jenkins-PL-FreeStyle-Proj1-3
+Finished: SUCCESS
 
 
 User defined Variables
@@ -519,6 +556,16 @@ User defined Variables
 - Description - Enter valid Environment NAME: QA/UAT/PROD
 - add this steup in build, echo "User-Defined vairalbes-${envi}"
 - click on build, it will ask for value to provide and click on ok you will see the variable given in the output.
+
+Started by user akhilp
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/PL-FreeStyle-Proj1
+[PL-FreeStyle-Proj1] $ /bin/sh -xe /tmp/jenkins3153017628177762721.sh
++ echo Hello everyone
++ echo jenkins-PL-FreeStyle-Proj1-4
++ echo User-Defined vairalbes-QA
+User-Defined vairalbes-QA
+Finished: SUCCESS
 
 
 
