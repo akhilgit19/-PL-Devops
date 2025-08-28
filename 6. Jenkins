@@ -620,7 +620,7 @@ pipeline {
     agent any
 
     stages {
-        stage('stg2') {
+        stage('stg1') {
             steps {
                 echo 'Hello World'
             }
@@ -735,31 +735,28 @@ Finished: SUCCESS
 -									# git, jdk, maven
 #Configure Slave Node1 for Java Maven App. :
 --------------------------------------------------
-Launch an Ubuntu Machine : v22.04
-
+- name - PL-Jenkins_SlaveNode-1
+- Launch an Ubuntu Machine : v22.04
+- instance type - t2 micro
+- renaming parameters stays defualt
+-
 sudo -i
-
 apt update -y 
-
-Install Java ::
-
+- Install Java ::
 sudo apt update -y 
 sudo apt install openjdk-17-jre -y
 java -version						
-
-Install GIT :
+-  Install GIT :
 
 sudo apt install git -y			
 git --version 
-
-Install Maven - Build Tool :
+- Install Maven - Build Tool :
 https://maven.apache.org/install.html
-
 sudo apt install maven -y 
-
 mvn --version
 
-Create User in Jenkins Slave Machine & Create SSH Keys 
+
+- Create User in Jenkins Slave Machine & Create SSH Keys 
 
 	SSH Keys --> is composed of public and private keys 
 
@@ -793,15 +790,15 @@ chmod 600 /home/devopsadmin/.ssh/*
 
 
 -
-Login to Jenkins - Manage Jenkins - Attach the Slave Node to jenkins Master
+Login to Master Jenkins - Manage Jenkins - Attach the Slave Node to jenkins Master
 
-	Goto to Manage Jenkins 
+-Goto to Manage Jenkins 
 		Select Nodes 
 			On Nodes Dashboard, Click on New Node
 				Give Node Name- JavaMvnBuildServer1, and choose permanent agent.
 
 - it will redirect to configuration page
-- give the description- JavaMvnBuildServer1- This is to build java maven appli ation
+- give the description- JavaMvnBuildServer1- This is to build java maven application
 - Number of executors- 3
 - Remote root directory - /home/devopsadmin( home directory devopsadmin user which we created in slave node)
 - labels- slave1
@@ -826,7 +823,7 @@ Public key/authorized_keys
 -  click on save
 
 - click on JavaMvnBuildServer1	
-- clic on trust ssh host key( it appears for very first time)
+- click on trust ssh host key( it appears for very first time)
 - it asks for the manual verfication, click on yes
 - Now it will take the private host username and check with autorized keys and enable connection
 
