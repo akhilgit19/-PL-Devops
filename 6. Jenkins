@@ -1454,11 +1454,10 @@ To Setup the Email Notifications, First we need to set the Email Server in the J
 How to setup the Email Server in the Jenkins Config:
 ===========================================================
 
-goto manage jenkins -> system configuration 
-
-goto Email Notification 
+-goto manage jenkins -> system configuration 
+- goto Email Notification 
 		
-SMTP Server :
+-SMTP Server :
 smtp.gmail.com
 
 Default  user email suffix - @gmail.com
