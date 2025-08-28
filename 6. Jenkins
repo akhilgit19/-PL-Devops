@@ -1338,6 +1338,30 @@ SSH: Connecting with configuration [QA-Tomcat] ...
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 
+var file in output in tomcat 
+-====================================
+devopsadmin@ip-172-31-27-236:/opt/tomcat$ ls
+BUILDING.txt  CONTRIBUTING.md  LICENSE  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+devopsadmin@ip-172-31-27-236:/opt/tomcat$ ll
+total 160
+drwxr-xr-x 9 devopsadmin root  4096 Aug 28 07:37 ./
+drwxr-xr-x 3 root        root  4096 Aug 28 07:38 ../
+-rw-r----- 1 devopsadmin root 20913 Feb 14  2024 BUILDING.txt
+-rw-r----- 1 devopsadmin root  6210 Feb 14  2024 CONTRIBUTING.md
+-rw-r----- 1 devopsadmin root 57011 Feb 14  2024 LICENSE
+-rw-r----- 1 devopsadmin root  1726 Feb 14  2024 NOTICE
+-rw-r----- 1 devopsadmin root  3342 Feb 14  2024 README.md
+-rw-r----- 1 devopsadmin root  7139 Feb 14  2024 RELEASE-NOTES
+-rw-r----- 1 devopsadmin root 16505 Feb 14  2024 RUNNING.txt
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 bin/
+drwx------ 3 devopsadmin root  4096 Aug 28 07:39 conf/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 lib/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:39 logs/
+drwxr-x--- 2 devopsadmin root  4096 Aug 28 07:37 temp/
+drwxr-x--- 8 devopsadmin root  4096 Aug 28 08:02 webapps/
+drwxr-x--- 3 devopsadmin root  4096 Aug 28 07:39 work/
+devopsadmin@ip-172-31-27-236:/opt/tomcat$ cd webapps
+devopsadmin@ip-172-31-27-236:/opt/tomcat/webapps$ ls
 
 
 Build Triggers :::
