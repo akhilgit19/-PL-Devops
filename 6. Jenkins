@@ -662,9 +662,9 @@ pipeline {
 }	
 
 
-Console output:
--------------------
-Started by user admin
+Console output of 1st build:
+----------------------------
+Started by user akhilp
 [Pipeline] Start of Pipeline
 [Pipeline] node
 Running on Jenkins in /var/lib/jenkins/workspace/PL-Pipeline-Proj1
@@ -688,7 +688,7 @@ Finished: SUCCESS
 
 2nd build:
 ------------
-Started by user admin
+Started by user akhilp
 [Pipeline] Start of Pipeline
 [Pipeline] node
 Running on Jenkins in /var/lib/jenkins/workspace/PL-Pipeline-Proj1
@@ -715,6 +715,7 @@ Deploy Artifacts to QA Testing Environment
 [Pipeline] // node
 [Pipeline] End of Pipeline
 Finished: SUCCESS
+
 
 
 
@@ -873,6 +874,98 @@ pipeline {
 - ls
 - cd PL-CICD-Pipeline-Project1
 - ls (you will see all the files from git repo)
+
+
+Output:
+----------
+Started by user akhilp
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on JavaMvnBuildServer1 in /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (SCM_Checkout)
+[Pipeline] echo
+Perform SCM_Checkout from github repository
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git
+ > git init /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1 # timeout=10
+Fetching upstream changes from https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 353876657987eb5da3702c042a912e50ad99add1 (refs/remotes/origin/master)
+ > git config remote.origin.url https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 353876657987eb5da3702c042a912e50ad99add1 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 353876657987eb5da3702c042a912e50ad99add1 # timeout=10
+Commit message: "Create kdeploy.yaml"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Application Build)
+[Pipeline] echo
+Perform Maven Application Build
+[Pipeline] sh
++ mvn clean package
+[[1;34mINFO[m] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/3.2.3/spring-boot-starter-parent-3.2.3.pom
+Progress (1): 2.8/13 kB
+Progress (1): 5.5/13 kB
+Progress (1): 8.3/13 kB
+Progress (1): 11/13 kB 
+Progress (1): 13 kB   
+
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar (752 kB at 1.0 MB/s)
+[[1;34mINFO[m] Replacing main artifact /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /home/devopsadmin/workspace/PL-CICD-Pipeline-Project1/target/demo-1.0-SNAPSHOT.war.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  31.781 s
+[[1;34mINFO[m] Finished at: 2025-08-28T05:30:43Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to QA Environment)
+[Pipeline] echo
+Deploy Artifacts to QA Testing Environment
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+
+Target jar file in Slave/Build Server
+
+devopsadmin@ip-172-31-30-243:~$ pwd
+/home/devopsadmin
+devopsadmin@ip-172-31-30-243:~$ ls
+authorized_keys  caches  remoting  remoting.jar  workspace
+devopsadmin@ip-172-31-30-243:~$ cd workspace
+devopsadmin@ip-172-31-30-243:~/workspace$ ls
+PL-CICD-Pipeline-Project1  PL-CICD-Pipeline-Project1@tmp
+devopsadmin@ip-172-31-30-243:~/workspace$ cd PL-CICD-Pipeline-Project1
+devopsadmin@ip-172-31-30-243:~/workspace/PL-CICD-Pipeline-Project1$ ls
+Dockerfile  README.md  bin  mvnw  mvnw.cmd  pom.xml  src  target
+devopsadmin@ip-172-31-30-243:~/workspace/PL-CICD-Pipeline-Project1$ cd target
+devopsadmin@ip-172-31-30-243:~/workspace/PL-CICD-Pipeline-Project1/target$ ls
+classes  demo-1.0-SNAPSHOT  demo-1.0-SNAPSHOT.war  demo-1.0-SNAPSHOT.war.original  generated-sources  generated-test-sources  maven-archiver  maven-status  surefire-reports  test-classes
+devopsadmin@ip-172-31-30-243:~/workspace/PL-CICD-Pipeline-Project1/target$ 
+
+
+
 
 Next ::::
 
