@@ -154,8 +154,10 @@ Day 18 : 7th August 2025
 ########################	
 
 
-- Login to slave node
+- Login to slave node (build server)
 - sudo -i 
+
+
 	Working with Docker :
 	
 		- Install Docker Container Engine 
@@ -190,11 +192,34 @@ Day 18 : 7th August 2025
 - docker pull ubuntu 
 - if you say docker images, you can see the image and image ID size,
 
+oot@ip-172-31-30-243:/# docker pull ubuntu 
+Using default tag: latest
+latest: Pulling from library/ubuntu
+b71466b94f26: Pull complete 
+Digest: sha256:7c06e91f61fa88c08cc74f7e1b7c69ae24910d745357e0dfe1d2c0322aaf20f9
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+root@ip-172-31-30-243:/# docker images  
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    e0f16e6366fe   4 weeks ago   78.1MB
+
+
 - creating container- docker run  ubuntu 
 - docker ps (show the running container)
+root@ip-172-31-30-243:/# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 - docker ps -a(show all the containers)
+root@ip-172-31-30-243:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                      PORTS     NAMES
+dde7fec3167d   ubuntu    "/bin/bash"   11 seconds ago   Exited (0) 10 seconds ago             sweet_wilson
+
 - docker run ubuntu sleep 30
 
+root@ip-172-31-30-243:/# docker run ubuntu sleep 30
+root@ip-172-31-30-243:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED              STATUS                          PORTS     NAMES
+9bd463eb9137   ubuntu    "sleep 30"    41 seconds ago       Exited (0) 10 seconds ago                 reverent_sanderson
+dde7fec3167d   ubuntu    "/bin/bash"   About a minute ago   Exited (0) About a minute ago             sweet_wilson
 
  
 		Three Modes of Container Execution :
@@ -214,7 +239,19 @@ Day 18 : 7th August 2025
 			Eg.: 
 			
 				docker run -d ubuntu sleep 20
-		
+
+root@ip-172-31-30-243:/# docker run -d ubuntu sleep 20
+920a718d212b2b528ade8eee41dc13ddd6c977bf67c8c082e44a181c62bb79b9
+root@ip-172-31-30-243:/# 
+
+root@ip-172-31-30-243:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                     PORTS     NAMES
+920a718d212b   ubuntu    "sleep 20"    13 seconds ago   Up 12 seconds                        optimistic_blackburn
+9bd463eb9137   ubuntu    "sleep 30"    2 minutes ago    Exited (0) 2 minutes ago             reverent_sanderson
+dde7fec3167d   ubuntu    "/bin/bash"   3 minutes ago    Exited (0) 3 minutes ago             sweet_wilson
+root@ip-172-31-30-243:/# 
+
+
 		- Interactive Mode :
 		
 			docker run -it <image_name>
@@ -245,8 +282,6 @@ Day 18 : 7th August 2025
 - docker run alpine
 
 
-
-
 		- Port Mapping/Port Binding :::
 		
 			- It is used to expose the Container Application to Internet.			
@@ -256,12 +291,31 @@ Day 18 : 7th August 2025
 				-p <host_port>:<container_port>
 			
 				Access the Application running inside the container using port mapping :
-			
+			    Enable inbount rule in VM(Slave node at 8085 or allow all traffice
 				<external_ip_addr>:<host_port>
 				
 				43.204.233.96:8085
 				
-		
+
+oot@ip-172-31-30-243:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    e0f16e6366fe   4 weeks ago   78.1MB
+alpine       latest    9234e8fb04c4   6 weeks ago   8.31MB
+tomcat       8.0       ef6a7c98d192   6 years ago   356MB
+root@ip-172-31-30-243:~# docker ps 
+CONTAINER ID   IMAGE        COMMAND             CREATED         STATUS         PORTS                                         NAMES
+11ffc627b9b8   tomcat:8.0   "catalina.sh run"   2 minutes ago   Up 2 minutes   0.0.0.0:8085->8080/tcp, [::]:8085->8080/tcp   wonderful_poincare
+root@ip-172-31-30-243:~# docker ps -a
+CONTAINER ID   IMAGE        COMMAND             CREATED          STATUS                       PORTS                                         NAMES
+11ffc627b9b8   tomcat:8.0   "catalina.sh run"   2 minutes ago    Up 2 minutes                 0.0.0.0:8085->8080/tcp, [::]:8085->8080/tcp   wonderful_poincare
+49308a625067   alpine       "/bin/sh"           2 minutes ago    Exited (0) 2 minutes ago                                                   nervous_banzai
+b1298bfe0891   ubuntu       "bash"              5 minutes ago    Exited (137) 3 minutes ago                                                 nervous_kapitsa
+920a718d212b   ubuntu       "sleep 20"          9 minutes ago    Exited (0) 8 minutes ago                                                   optimistic_blackburn
+9bd463eb9137   ubuntu       "sleep 30"          11 minutes ago   Exited (0) 10 minutes ago                                                  reverent_sanderson
+dde7fec3167d   ubuntu       "/bin/bash"         11 minutes ago   Exited (0) 11 minutes ago                                                  sweet_wilson
+root@ip-172-31-30-243:~# 
+
+
 		- Remove Containers & Images from Local Machine!
 		
 			- docker rmi <image_name>			# To Remove Container Images 
@@ -286,7 +340,8 @@ Day 18 : 7th August 2025
 				
 				- Back-End Layer	==> Database 			=> C3 
 		
-		
+
+
 Next : 
 			Work with Containers 
 			Build Images 
@@ -323,7 +378,7 @@ Day 19 : 8th August 2025
 		
 		docker run -it --mount source=pl-vol1,destination=/pl-vol1 ubuntu bash  
 
-- Start the slavenode 
+- Start the slavenode (build node)
 - login to slave node VM
 - docker ps ( show the running containers
 - docker images 
@@ -371,7 +426,7 @@ outfile.txt
 - root@21330000984d76: /pl-vol1# exit
 exit
 - Now if you give docker ps, no container is upon running
-- docker ps -a (you will the container in exit state
+- docker ps -a (you will see the container in exit state)
 - if u give ls command you can see the file
 - pwd
 /var/lib/docker/volumes/pl-vol1/_data"
@@ -445,6 +500,7 @@ infile1.txt outfile.txt
 
 
 Creating build container in Slave Machine:
+================================================
 - In my slave machine, creating a build docker container
 - docker ps -a
 - docker run -it ubuntu bash
@@ -473,9 +529,11 @@ In the dockerhub, In my hub, click on repositories , click on create repository
 	docker commit <existing_container_id> <dockerhub_repo_name>/New_Image_Name>:<tag_Name>
 				
 	docker commit 83d261074037 loksaieta/pl-mvn-env-img:v1.0
+
 above command create  anew image in local repo based on previous container 
 - docker images
 loksaieta/pl-mvn-env-img:v1.0
+
 - docker run -it loksaieta/pl-mvn-env-img:v1.0 bash
 - git --vesion
 
@@ -497,7 +555,7 @@ docker build -t <dockerhub_repo_name>/New_Image_Name>:<tag_Name> .		# '.' refers
 			
 docker build -t loksaieta/pl-mvn-env-img1 .
 
-- docker images (you will see new image -loksaieta/pl-mvn-env-img
+- docker images (you will see new image -loksaieta/pl-mvn-env-img1
 
 
 Docker push:
