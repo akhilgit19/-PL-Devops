@@ -1505,6 +1505,15 @@ copy mail to 'devops@acme.com'
  body: "Please go to ${BUILD_URL} and verify the build"
 
 
+
+mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'SCM-Checkout Failed', to: 'akhilpagadapoola123@gmail.com'
+
+mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'App Build Failed', to: 'akhilpagadapoola123@gmail.com'
+
+mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'App Deployment Failed', to: 'akhilpagadapoola123@gmail.com'
+
+mail bcc: 'akhilpagadapoola123@gmail.com', body: '"Please go to ${BUILD_URL} and verify the build"', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: '"Job ${job_name}\' (${BUILD_NUMBER}) is waiting  for input"', to: 'akhilpagadapoola123@gmail.com'
+
 -
 
 
@@ -1526,9 +1535,8 @@ pipeline {
              post {
                 failure {
                   sh "echo 'Send mail on failure'"
-					mail bcc: 'l@gmail.com', body: 'Jenkins Jobs Status ', cc: 'l@gmail.com', from: '', replyTo: '', subject: 'SCM-Checkout Failed ', to: 'l@gmail.com'
-					
-					
+					mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'SCM-Checkout Failed', to: 'akhilpagadapoola123@gmail.com'
+
                 }
               }
         }
@@ -1540,25 +1548,25 @@ pipeline {
              post {
                 failure {
                   sh "echo 'Send mail on failure'"
-					mail bcc: 'l@gmail.com', body: 'Jenkins Jobs Status ', cc: 'l@gmail.com', from: '', replyTo: '', subject: 'App Build Failed ', to: 'l@gmail.com'
+					mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'App Build Failed', to: 'akhilpagadapoola123@gmail.com'
                 }
               }
         }
         stage('Deploy to Tomcat_Server') {
             steps {
                 script{
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/ ', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 				}
                 
             }
              post {
                 failure {
                   sh "echo 'Send mail on failure'"
-					mail bcc: 'l@gmail.com', body: 'Jenkins Jobs Status ', cc: 'l@gmail.com', from: '', replyTo: '', subject: 'App Deployment Failed ', to: 'l@gmail.com'
+					mail bcc: 'akhilpagadapoola123@gmail.com', body: 'Jenkins Jobs Status', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: 'App Deployment Failed', to: 'akhilpagadapoola123@gmail.com'
                 }
                 success {
                   sh "echo 'Send mail on Successful'"
-					mail bcc: 'l@gmail.com', body: "jenkins-${JOB_NAME}-${BUILD_NUMBER}", cc: 'l@gmail.com', from: '', replyTo: '', subject: 'App Deployment Successful ', to: 'l@gmail.com'
+					mail bcc: 'akhilpagadapoola123@gmail.com', body: '"Please go to ${BUILD_URL} and verify the build"', cc: 'akhilpagadapoola123@gmail.com', from: '', replyTo: '', subject: '"Job ${job_name}\' (${BUILD_NUMBER}) is waiting  for input"', to: 'akhilpagadapoola123@gmail.com'
                 }
               }
         }
