@@ -115,14 +115,50 @@ Day 21 : 12th August 2025
 				
 		- Pods 					# Atomic Unit of Schedule
 								# Used to Execute Micro-Services 
-								
+
+
+
 		- Kubectl				# Is a command line utility to interact with Kubernetes Master 
-		
+
+     kubectl command    type       Name  flags
+             create     pods
+             get        deployment
+             desribe    replicaset
+             logs       replicationcontroller
+             exec       service
+             edit       daemonset
+             run        namesapce
+             apply      persistentvolume
+             scale       persistentvolumeclaim(s)
+                         jobs
+                         Cronjobs
 		- Kubernetes Objects :
 		
 			- Pods 					# Atomic Unit of Schedule
-									# Used to Execute Micro-Services 		
-									
+			 						# Used to Execute Micro-Services 		
+			- it has Inter and Intra Pod communication
+            - Inter pod network can be communted by pod ip address with port of container
+            - Intra pod network can be communted by host machine/pod ip  which is in the pod to communicate
+
+-
+
+apiVersion: V
+kind: Pod
+metadata:
+  name: test-pod
+  labels: 
+    app: nginx
+    tier: dev
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+  - name: redis-container
+    image: redis
+
+
+kubectl create -f test-pod.yaml
+						
 			- Deployment Controller Objects :::
 			
 				- Replicaset				
@@ -197,11 +233,14 @@ Day 21 : 12th August 2025
 
 
 ############################################################################################################
-
+-
 #Kube-Master(Controller)  - VM 			# Ubuntu v22.04 - 
 #	Kube-Worker1
 #	Kube-Worker2 
 
+Instance type -t2.micro
+
+//##########################
 #https://kubernetes.io/docs/setup/
 #https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 	
@@ -214,6 +253,8 @@ Day 21 : 12th August 2025
 
 Worker Nodes :
 ####  10250, 30000-32767(NodePort Range)
+//##########################
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ###On Both Master and Worker Nodes:
@@ -241,7 +282,7 @@ exec bash
 reboot
 
 
-#To allow kubelet to work properly, we need to disable swap on both machines.
+#To allow kubelet to work properly, we need to disable swap on all the machines.
 
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
@@ -275,8 +316,6 @@ EOF
 sudo sysctl --system
 
 #Install curl.
-
-
 
 sudo apt install curl -y	
 
@@ -602,8 +641,8 @@ spec:
 kubectl create -f nginx-pod.yaml ( to create the  pod)
 kubectl get pod
 kubectl get pod -o wide
-kubectl get pod nginx-pod -o yaml
-kubectl describe pod nginx-pod
+kubectl get pod nginx-pod -o yaml (actual manifest file)
+kubectl describe pod nginx-pod 
 
 
 *******************************************************************
@@ -1417,26 +1456,10 @@ pod/nginx-pod created
 
 
 
--Assueme that the current version of the proj rnning v1.0 enhance it with v2.0
-
-Pod1	=	App_snapshot_img:v1.0	(blueenvironment)					====>			App_snapshot_img:v2.0	
-	
-	Prod server1,2,3,4,5 : LIVE Passive Server	App_snapshot_img:v1.0
-	
-	Replica:
-	
-	Prod server1,2,3,4,5 : App_snapshot_img:v2.0 - Active Server LIVE-- Green environment
-	
 
 
-	Namespace : Active-prod-ns  --> App_snapshot_img:v1.0
-	
-				Active-prod-ns1  --> App_snapshot_img:v2.0
-
-
-1:19
-
-
+Kubernetes Volumes
+=====================
 
 Containerlevel and Pod Level storage:
 
@@ -1506,8 +1529,82 @@ Persistent Volumes and Persisten Volume claim:
   - if requested volume is not avialalbe, then it will use the storage class parameter  based up allocation dynamically
 
 
+- Login to kubernetes master
+- vi hostpath.yaml
+
+# 1. HostPath YAML file
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-hostpath
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      volumeMounts:
+      - mountPath: /test-mnt
+        name: test-vol
+  volumes:
+  - name: test-vol
+    hostPath:
+      path: /test-vol
 
 
+	--mount source=vol1,destination=/vol1
+
+*******************************************************************
+# 2. Create and Display HostPath
+
+- kubectl create -f nginx-hostpath.yaml
+- kubectl get pods
+- kubectl get pods -o wide
+- you can on which node the hostpath created and you can login to that worker node to cross verify 
+- Login back to master node
+- kubectl exec nginx-hostpath df /test-mnt
+- ls
+- cd test-mnt/
+- 
+*******************************************************************
+3. Test: Creating "test" file underlying host dir & accessing from from pod
+
+From HOST:
+~~~~~~~~~~
+cd /test-vol
+echo "From Host" > from-host.txt
+cat from-host.txt
+
+From POD:
+~~~~~~~~
+kubectl exec nginx-hostpath cat /test-mnt/from-host.txt
+
+
+*******************************************************************
+4. Test: Creating "test" file inside the POD & accessing from underlying host dir
+
+From POD:
+~~~~~~~~~
+kubectl exec nginx-hostpath -it bash
+cd /test-mnt
+echo "From Pod" > from-pod.txt
+cat from-pod.txt
+
+From Host:
+~~~~~~~~~~
+cd /test-vol
+ls
+cat from-pod.txt
+
+
+*******************************************************************
+5. Clean up
+
+kubectl delete po nginx-hostpath
+kubectl get po
+ls /test-vol
+
+
+******************************************************************* 
 
 
 This is Static Provisioning:
@@ -1623,8 +1720,58 @@ spec:
 
 
 
+	- Namespace!
+	
+		- Logical Partitioning of Kubernetes Cluster
+		- Namespaces can be created based on Environments, Application Team, Services/Objects 
+		
+		- Working with Namespaces 
+Eg.: 
 
- 
+	kubectl create namespace dev 
+	
+	kubectl get ns 
+	
+root@kmaster-node:~/kubernetes# cat nginx-devpod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  namespace: dev
+  labels:
+    app: nginx
+    tier: dev
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80
+
+- kubectl create -f nginx-devpod.yaml
+- kubectl get pods --all-namespaces
+
+
+ -Assueme that the current version of the proj rnning v1.0 enhance it with v2.0
+
+Pod1	=	App_snapshot_img:v1.0	(blueenvironment)					====>			App_snapshot_img:v2.0	
+	
+	Prod server1,2,3,4,5 : LIVE Passive Server	App_snapshot_img:v1.0
+	
+	Replica:
+	
+	Prod server1,2,3,4,5 : App_snapshot_img:v2.0 - Active Server LIVE-- Green environment
+	
+
+
+	Namespace : Active-prod-ns  --> App_snapshot_img:v1.0
+	
+				Active-prod-ns1  --> App_snapshot_img:v2.0
+
+
+
+
+
 - Integrate Kubernetes with Namespace
 
     - CICD 
