@@ -1835,7 +1835,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 - In sample steps, choose sshpublish: Send build artifacts over ssh
 - Name choose kuberntes
 - sourcefile- *.yaml
-- remote directory /home/devopsadmin
+- remote directory .
 - exec command
    kubectl apply -f kdeploy.yaml
 - click on generate pipeplienscropt
