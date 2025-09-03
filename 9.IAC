@@ -35,31 +35,41 @@ Day 25 : 21st August 2025
 
 		- Why Ansible ?
           1. Meant for configuration management and apart from this, capable for continous delivery and deployement
-           In one scneario, We hav used publish puglin we have deployed from build to target while using jenkins, What if we are not using jenkins
-           That's where ansible used to copy from one file to another server.capable for server provisioning but not matured as terraform.
+             In one scneario, We hav used publish puglin we have deployed from build to target while using jenkins, What if we are not using jenkins
+             That's where ansible used to copy from one file to another server.capable for server provisioning but not matured as terraform.
           2. How your IT support team install all your packages to the remote machines of 100 +servers. They do it by ansible to aautomate
+             - Provisionning
+             - Configuration Management
+             - Continuous Delivery
+             - Application Deployment
+             - Security compliance
 
-          3. In another scenario, 
+            - it uses a push mechanisam 
+          3. In another scenario, wheere i have as server installed with ansible. ansible nodes can run on cloud platofrom
+              In another scenario, set of ansible nodes may run on cloud and other on onpremisis 
 
+
+               
 		- Ansible Architecture :::
 			- Master/Ansible Controller 
 			- Client/Ansible Nodes Architecture
 -
-			                                                                    server1
+			                                                          server1
 _____Inventory file__
 |
-|
+|                           Modules
 |  172.31.93.110              Server-x ---------ssh for operations----Server2
 |  172.31.93.120             172.31.93.81
 |  172.31.93.130                                                      Server3
-|
+|                          Ansible/Engine/Controller/Master
 |______________________
 
 
           - all the default configuration is defined in Ansible.cfg
           - inventory consits of all the targets ip adress
           -  Ansible Engine/Controller/ Manager
-          -o
+          - using ssh we will establish connection between nodes and master. So from Master we can execute scripts different nodes
+
 		- Ansible Architecture Components
 			
 			- Ansible Controller 
@@ -75,7 +85,9 @@ _____Inventory file__
 
               inventory
          defualt path -    /etc/ansible/hosts
-        
+
+               - As a best practice we manage multiple ansible nodes by groups
+
                server1.company.com
                server2.company.com
                [mail]
@@ -147,33 +159,23 @@ _____Inventory file__
 
 Ansible Installation & Configurations:
 
-Launch - Ubuntu - v22.04 | 3 EC2 Instances... 1 for Ansible Controller & 2 as Nodes - ubuntu v22.04
-
+- Launch - Ubuntu - v22.04 | 3 EC2 Instances... 1 for Ansible Controller & 2 as Nodes - ubuntu v22.04
+-
 SSH connections :::
-
+-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #Login to Ansible Node1 & Node2. Perform below activities:
-
 #Add User in Ansible Nodes : 
-
 sudo -i
-
 apt update -y 
-
 useradd ansibleadmin -s /bin/bash -m -d /home/ansibleadmin 
-
 passwd ansibleadmin
-
 #Enter New Password:
 #Confirm Password:
-
 #Goto:
-
 vi /etc/ssh/sshd_config
-
 #Enable Password Authentication to Yes and save the file
 #Execute Below command to update the changes.
-
 service ssh reload
 
 #As a root user edit below file:
@@ -181,13 +183,10 @@ service ssh reload
 $ visudo
 
 #add the below mentioned line in the file and save it.
- 
 ansibleadmin ALL=(ALL) NOPASSWD: ALL
-
 su - ansibleadmin
-
 ls -a 
-
+pwd
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,12 +202,10 @@ sudo -i
 #ssh-copy-id ansibleadmin@172.31.33.217
 
 sudo apt update -y
-
 sudo apt install software-properties-common -y
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt update -y
 sudo apt install ansible -y
-
 ansible --version
 
 #go to /etc/ansible
