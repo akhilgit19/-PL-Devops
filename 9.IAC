@@ -671,13 +671,11 @@ in yaml: "{{var1}}"
 
 ansible samplenode1 -m setup
 
-dobug-
+debug-
    msg  -used to print the constant  value and variable data
    var - used to print only the fariable data
 
 key: value pair
-
-
 
 - In Ansible controller 
 - cd /etc/ansible
@@ -753,7 +751,7 @@ paste the below content
 
 
 
--- Login to ansible node1
+-- Login to ansible controller
 -- sudo -i
 -- cd /etc/ansible/playbooks/
  
@@ -909,7 +907,7 @@ Loops :::
 
 
 #########################
-Day 26 : 22nd August 2025
+Day 27 : 23nd August 2025
 #########################	
 
 Handlers :::
@@ -998,7 +996,8 @@ Ansible Roles :::
 
 		- Are used to organize the Ansible Components, it's always best practise to start with roles
         - In real time they create roles, based on roles they create playbooks
-        -  for Reusability
+        - for Reusability
+        - if i create role it will automatically creates tasks ,vars, handlers ,templates
    
         - If i want to setup below services,installations, configurations,
         - with one playbook we can reuse by using roles
@@ -1153,6 +1152,20 @@ main.yml
 - In this you will have main.yml, simple template you can customize and prepare your own path defintiion
 - vi main.yml
 
+---
+# tasks file for testrole1
+      - name: Install-nginx
+        apt:
+          name: nginx
+          state: present
+        notify:
+        - start-nginx
+
+- cd ..
+- cd handlerts
+- vi main.yml
+
+---
 # handlers file for testrole1
     - name: start-nginx
       service:
@@ -1174,9 +1187,13 @@ main.yml
 - ansible-playbook rolesdemo.yaml
 
 
+- So this is how we mantain ansible roles, In enterprise levels, There will 1000+ scenarios and requirements
+   we cannot create a new playbooks we have to create roles and use it as resuable 
 
 
-1:01:23
+
+
+
 
 # 1. HostPath YAML file
 
