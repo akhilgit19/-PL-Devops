@@ -1,0 +1,84 @@
+Introduction to Cloud:
+============================
+   - Devops Projects:
+      ---> Use this project in reusme
+                - Banking/ Retails     ====> Phase 1 - ( Here you will be using defulat vpc, subnets)
+
+      ---> AWS Cloud Services          =====> Phase 2 - ( Here you will create a dedicated vpc,subnets, routetables, intergetatway)
+                                             within the private network you will deploy through jenkins and implement your services using kubernetes
+                                             by  the help of load balancer.
+
+
+#########################
+Day 33 : 4th Sep. 2025
+#########################
+
+	AWS Solution Architect Associate Level!
+	
+	Introduction to Cloud :::
+
+		What is Cloud Computing?
+
+		- If you want to avail , servers ,databases ,storage,networking from internet instead of onpremsis
+
+    why is cloud computing important?
+
+    - faster service provisioning
+      dynamic scalability
+      good reliablitiy
+      cost effective 
+      higher productivity 
+      efficient performance
+      high security
+
+    Diffent Layers of cloud computing
+
+      Applications           Software as a serveice      applications
+      programming            platform as a service       Programming
+      environment                                        environment
+
+      virtual Machine1        Infrascture as a service    Virtual Machine
+                               servers
+
+
+
+     Different Cloud Computing Service Modes
+
+
+ On premise             Infrasctureas a service           platform as a service      software as a service
+===========            =========================          =====================       =======================
+applications            applications                        applications              applications
+data                    data                                 data                     data
+runtime                 runtime                  ==========  runtime                  runtime
+middleware              middleware                            middleware              middleware
+o/s                     o/s                                   o/s                     o/s
+virtualization          ==========virtualization              virtualization          virtualization
+servers                           servers                     servers                 servers
+storage                           storage                      storage                 storage
+networking                        networking                   networking             networking
+
+
+
+
+public cloud
+private cloud
+hybrid cloud
+community cloud
+
+
+
+		IAM Services
+		- 
+		EC2 Services 
+		
+		
+		
+		https://docs.aws.amazon.com/cli/latest/userguide/cli_code_examples.html
+		
+Next :
+
+	IAM Service Demo
+	EC2 Service!
+	
+	
+	https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
