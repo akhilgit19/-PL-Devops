@@ -453,14 +453,71 @@ Day 35 : 8th Sep. 2025
 	EBS Volumes ::::
 	
 		- Elastic Block Store !
-		
-		
+		- you can attach or dettach the volume or modify the volume
+    snapshots
+         - click on create snapshot
+         - give the volume id
+         - now click on create snapshot
+         - select snapshot, click on actions, click on create volume from snapshot
+
+     Loadbalancer
+         Target group--- The request is sent to  target server uses round robindmethod
+
+
 	EFS Volumes ::::
-	
+	    
 	S3 ::::
-	
-	
-	
+	  - Amazon s3 allows people to store objects)(files) in buckets(directories)
+      - buckets must have a globally unique name( acorss all regions all accounts)
+      - buckets are defined at the region level
+      - s3 looks like a global service but buckets are created in a region
+      - Naming convention
+           . No uppercase, No underscore
+           . 3-63 characters long
+           . not an ip
+           . must start with lowercase letter or number
+           . must not start with the prefix xn
+           . must not end with the suffic -s3alia
+	   - objects(files) have a key
+       - the key is the full path
+           . s3://my-bucket/my_file.txt
+           . s3://my-bucket/my_folder/another_folder/my_file.txt
+       - key is composed of prefix + object name
+           . s3://my-bucket/my_folder/another_folder/myfile.txt
+       - There's no concept of directories within buckets
+       - Object values are the content of the body
+           . Max object size is 5 TB ( 5000 TB)
+           . If uploading more than 5 gb must use multi-part upload
+       - Metadata( list of text key /value  pairs- system or user meta data)
+       - tags
+       - version ( if versioning is enabled)
+
+    S3 Bucket Policies
+     - JSON based policies
+          . Resources: buckets and objects
+          . effect: allow / deny
+          . actions: set of api to allow or deny
+          . principal: the account or user to apply the policy to
+     - Use s3 bucket for policy to:
+          . Grant public access to the bucket
+          . force objects to be encrypted at upload
+          . Grant access to another account( Cross account)
+
+     Creation of bucket
+      - click on create bucket 
+      - bucket type - general purpose 
+      - bucket name - ol-temp-bkt1
+      - object ownership 
+     Block public access setting for this bucket
+      - disable block all public access 
+      - acknowledge this 
+      - bucket versioning - disable
+      - tags
+      - default encryption 
+      - advanced settings 
+         - disable 
+
+
 	AWS CodeCommit ==> Distributed VCS in AWS.
 	
 	
