@@ -389,7 +389,82 @@ Ec2 Instances Purchasing options
 
 
 
+#######################
+Day 35 : 8th Sep. 2025
+#######################
 
+	EC2 Services!	
+
+		VM - Jenkins_Server 
+
+		AMI :	AMI contains the operating system, application server, and applications for your instance.
+		 - Create an AMI and Copy to any target Region.
+	     - select the instance, click on actions, click on image and templates
+         - launch template name, template version , instance type, keypair, 
+         - network setting
+         - click on create image
+         - image name - PL-BS-AMI-1
+         - Reboot instance by defualt
+         - instant volumes , Size -8
+         - click on create image
+         - In the images, you can see AMI's,
+       Using AMI we can create EC2:
+         - In ec2 create my AMI - PL-BS-AMI-1
+         - launch test-server 1
+         - instance type- t2 micro
+         - keypair 
+         - click on ec2 instance
+       copy AMI
+        - click on the ami, click on actions, click on copy ami
+        -  ami copy  name -PL-BS-AMI-1
+        - destination region  asia pacific (singapore)
+        - choose copy tags
+
+      Security groups
+        - launch instance -
+        - ami ubuntu
+        - instance type t2.micro
+        - key pair 
+        - networksetting 
+        - create security group - edi inbound rule 
+        - custom tcp 8080 source allow all
+        - type ssh , custom source allow all
+      Allocate Elastic ip address
+        - click on ec2 , click on elastic bip address
+        - click on allocate elasti ip address
+          - Publick IPv4 address pool
+          - amaon pool of ipv4 address
+          - network border group( choose your network availablitiy zone)
+            ap-south-1
+          - click on allocate
+    placement group: for tightly coupled we use placement group
+
+			OS -> Ubuntu 
+			
+		Server Templates ::::		
+		- 
+		Docker :::
+		
+			Containers				VM  
+			
+			Images 					AMI 
+		
+		
+	EBS Volumes ::::
+	
+		- Elastic Block Store !
+		
+		
+	EFS Volumes ::::
+	
+	S3 ::::
+	
+	
+	
+	AWS CodeCommit ==> Distributed VCS in AWS.
+	
+	
+	Use S3 Buckt to host static web appln. 
 
 
 
