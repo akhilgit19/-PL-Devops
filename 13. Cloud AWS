@@ -14,15 +14,15 @@ Day 33 : 4th Sep. 2025
 #########################
 
 	AWS Solution Architect Associate Level!
-	
+=============================================	
 	Introduction to Cloud :::
-
+=============================================
 		What is Cloud Computing?
-
+=============================================
 		- If you want to avail , servers ,databases ,storage,networking from internet instead of onpremsis
 
     why is cloud computing important?
-
+=============================================
     - faster service provisioning
       dynamic scalability
       good reliablitiy
@@ -32,8 +32,9 @@ Day 33 : 4th Sep. 2025
       high security
 
     Diffent Layers of cloud computing
-
+=============================================
       Applications           Software as a serveice      applications
+
       programming            platform as a service       Programming
       environment                                        environment
 
@@ -43,7 +44,7 @@ Day 33 : 4th Sep. 2025
 
 
      Different Cloud Computing Service Modes
-
+=============================================
 
  On premise             Infrasctureas a service           platform as a service      software as a service
 ===========            =========================          =====================       =======================
@@ -66,14 +67,85 @@ hybrid cloud
 community cloud
 
 
+AMS - AMAZON Web services
+=============================================
+- Benefits of AWS
+   -  Easy to use
+   -  scalable and provides high performance
+   -  dominant market position
+   -  cost efective
+   -  reliable
+   -  secure
+   -  flexible
+   -  can support large organization
+
+
+AWS Services
+
+       1. Compute - EC2, Amazone ElasticBeanstalk, Amazon lambda, Amazon scaling, Elastic load balancer
+       2. Storage and content delivery - amazon ebs, amazon efs, amazon s3, amazon glacier,
+                                       amazon storage gateway, amazon cloudfront
+       3. Networking - amazon vpc, aws direct connect , amazon route s3
+       4. database- amazon rds , amazon dyanmo db, amazon elasticcache, amazon redshift
+       5. managment tools- amazon cloudwatch, aws cloud formation, aws cloud trail, aws trustadvisior
+       6. security and identity - aws idently access management (IAM), aws key managemnt service(KMS)
+       7. Application services- amazon ses , amazone sns, amazon sqs , amazon swf
+       8. developer tools- codepipeline, code deploy, code build , code commit
+
+
+ Services Comparision: AWS , AZURE   and GCP
+
+  AMAZON AWS            MICROSOFT Azure        GCP
+=========================================================
+   S3                   Blog storage          storage
+   EC2                  Virtual machines      compute engine
+   ec2 container serv    container service     kubernetes engine
+   elastic beanstalk     cloud service         app engine
+   dynamodb              cosmos db              bigtable
+   redshift              sql databse            bigquery
+   lambda                azure functions        cloud functions
+   dynamo                cosmos db              cloud datastore
+
+
+
+AWS Global infrascture
+==========================
+- aws regions
+    - aws has regions all around the world
+    - names can be us-east-1 eu-west-3
+    - a region is a cluster of data centers
+    - most aws services are region scoped
+   -  How to choose an aws regions
+    1 compliance with data goverance and legal requirements: data never leaves a region without 
+      your explict permission
+    2 proximity to customers reduced  letency
+    3 available services within a region: new servers and new features arent' available in every region
+    4 pricing: pricing varies region to region and is transparent in the service pricing page
+
+
+- aws availabitiy zones:
+    - Eachi region has many availablity zones
+       (usualyly 3 min is 3 max is 6)
+     example ap-souteast-2a, ap-souteast-2b, ap-souteast-2c
+    - each avaialbity zone is one or more discrete data centers with redundant powers
+      networking and connectivity
+    - they are separate from each other so that they are isolated from disasters
+    - they are connected with high bandwidth, ultralow latency networking
+
+- aws data centers
+ 
+- aws edge locations/ points of presence
+  - Amazon has 400+ points of presence (400 + edge locations & 10+ regional caches)
+    in 90+ cities across 40+ countries
+  - content is delivered to en uses with lower latency
+
 
 		IAM Services
 		- 
 		EC2 Services 
 		
 		
-		
-		https://docs.aws.amazon.com/cli/latest/userguide/cli_code_examples.html
+
 		
 Next :
 
@@ -81,16 +153,77 @@ Next :
 	EC2 Service!
 	
 	
-	https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
-
-
 ########################
 Day 34 : 5th Sep. 2025
 #########################		
 	
 	- IAM Services :
-	
-	- Create User 
+
+	https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
+
+
+    - IAM user and groups
+      - IAM = Identy and access managmentl, global service
+      - root account created by defulat shouln't be used or shared
+      - users are people within organization and can be grouped
+      - groups only contain users, not other groups
+      - users dont have to belongs to a group and user can belong to multiple groups
+
+    - IAM : Permission
+      - users or groups can be assigned json documents called policies
+      - These policies define the permission of the users
+      - In AWS you apply the least privilege prinicple dont give more permission tha a user neede
+
+    - IAM Policies structure
+      - consists of 
+         . versions: policy language version, always include 2012-10-17
+         . id: an identifier for the policy 
+         . statement: one or more individual statements
+      - statements consits of
+         . sid: and identifier for the statement
+         . effect: wheather the statement allows or denies access 
+         . prinicpal: account/users/role to which this policy applied to 
+         . action: list of actions this policy allows or denies
+         . resouce: list of resouces to which the actions applied to 
+         . condition: conditions for when this policy is in effect
+
+     - How can users access AWS.
+         . To access AWS, you  have three options
+           - AWS Managment console( Protected by  password + MFA)
+           - AWS command line interface (CLI) protected by access keys
+           - AWS software Developer Kit( SDK) for code protected  by access keys
+         . Access keys are generated through the AWS console.
+         . users manage their own access keys
+         . Access keys are secret, just like a password, Dont share them
+         . Access key id = username
+         . secret accesskey = password
+
+     - IAM: MFA device options in AWS (optional)
+
+      - How can users access AWS
+
+			- AWS Console 
+			
+			- AWS Cli 
+			    https://github.com/aws/aws-cli
+                https://docs.aws.amazon.com/cli/latest/userguide/cli_code_examples.html
+			- AWS SDK
+               - AWS software development kit( AWS SDK)
+               - language speicfic API's ( set of libraries)
+               - enables you to access and manage AWS services programmatically
+               - embedded within your application
+               - supports 
+                      - SDK's( javascript, pythong, pHP NET, Ruby java, Go nodejs c++)
+    - IAM Roles for services
+       - Some AWS service will need to perform actions on your behalf
+       - To do so we will assign permission to AWS services with IAM roles
+       - Common roles 
+           EC2 instance roles
+           Lambda function roles
+           roles for cloud formation
+
+    
+	- Create IAM User 
            - In aws console, Go to IAM, click on users, click on create user,username - plappuser1
            - choose (provide user access to the AWS Management console)
            - choose (i want to create an IAM user)
@@ -139,14 +272,8 @@ Day 34 : 5th Sep. 2025
            but not the cloud service estimation it should be discussed with wendor and customer
     - Cost and usage analysis
     - aws well architectured tool
+      
 
-		Create IAM User :
-		
-			- AWS Console 
-			
-			- AWS Cli 
-			
-			- AWS SDK
 			
 	- Associate / 
 	
