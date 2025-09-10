@@ -643,6 +643,30 @@ Amazon RDS - Summary
 - RDS custom for access to and customizee the underlying instance
 
 
+EBS Volume
+-  An EBS( Elastic Block store) volume is a network drive you can  attache to your instances while they run
+- it allows your instances to persist data, even  after their termination
+- They can only be mounted to one instance at a time( at the  CCP leevel)
+- They are bound to a specific availability zone
+
+- Analogy: This of them as a network USB stick
+- Free tier: 30 GB of free EBS storage oft type general purpose(SSD) or magnetic per month
+
+EBS Volume
+- Its a network drive ( not a physi al dirve)
+   . it uses the network to communicate the isntance, which means there mimght be a bit of letency
+   . it can be detached from an EC2 isntance and attached to another one quickly
+- it's located to an avaialbitliy zone( AZ)
+   . An EBS volume in us-east-ia cannot be attached to us-east-1b
+   . to move a volume across you first need to snapshotit
+- Have a provisioned capacity( size in GBS and IOPS)
+   . You get billed for all provisioned capacity
+   . you can increase the capacity of the drive over time
+1:07:26
+
+
+
+
 	192.168.0.0/16	==> Home 
 	
 	172.0.0.0/16	==> AWS Default VPC 
