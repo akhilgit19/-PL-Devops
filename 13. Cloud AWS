@@ -516,15 +516,150 @@ Day 35 : 8th Sep. 2025
       - default encryption 
       - advanced settings 
          - disable 
+      - Click on create bucket, now you can upload files to your bucket
+
+    Amazon S3 Static Website Hosting
+     - S3 can host static websites and have them  accessible on the internaet
+     - the website URL will be ( depending on the region) 
+        http://bucket-name.s3-website-aws-region.amazonaws.com
+         or
+        http://bucket-name.s3-website.aws-region.amazonaws.com
+     - if you get a 403 forbidden error, make sure  the bucket policy allows public reads
+
+     s3 - versioning
+     - you can version your files in amazon s3
+     - it is enabled at the bucket level
+     - same key oeverwrite will change the version:1 ,2,3
+     - it is best practice to version your buckets
+        . protect against unintended deletes( ability to restore a version)
+        . easy roll back to previous version
+     - Notes:
+         . Any file that is not versioned prior to enabling versioning will have version " null"
+         . Suspending versioning does not delete the previous bversions
+
+    s3 durabliity and avaialbility 
+      Durability
+          - high durability (999.9999 % ) of objects across multiple AZ
+          - If you store 10,,000000 objects with amazon s3 you can on average  expect to incur a loss of a single object once eveery 100,000 years
+          - same for all storage classed
+      Avaialbility 
+          - Measures how readily avaialbe a service is
+          - varies depending on storage class
+          - example s3 standard has 99.999% avaialbitliy = not avaiable 53 min  a year
 
 
+
+
+      
 	AWS CodeCommit ==> Distributed VCS in AWS.
 	
 	
 	Use S3 Buckt to host static web appln. 
 
 
+#######################
+Day 36 : 9th Sep. 2025
+#######################
 
+	S3 
+	
+	Volumes 
+	
+	Dbase Services 
+	
+	Networking :
+	
+		VMs - dedicated VPC
+		
+		
+	EC2 Instance -> AMI 
+	
+		-> Kubernetes / Jenkins / Ansible - AC / Target Nodes -> Provision
+		
+		-> Configure Kube_WN1 ->		
+
+
+- launch ec2 instance
+- PL- Webappserver
+- AMI- amazon linux 2023 kernel -6.12 AMI
+- Instance type t2 micro
+- keypair
+- networksetting -  
+  - create security group 
+  - allow ssh, http
+- storage - 8 gb
+- Advanced details
+- UserData :
+	
+	#!/bin/bash
+	yum update -y
+	yum install -y httpd
+	systemctl start httpd
+	systemctl enable httpd
+	echo "<h1>Hello! You accessing web server - $(hostname -f)</h1>" > /var/www/html/index.html
+	
+- launch the instance
+
+
+Database services
+- Databases- Aurora and RDS- click on create database
+- instance cype db.rg.2x large 
+- availablity and durability 
+- Templates
+   - production, dev/test, free tier
+-
+
+Migration services
+-  Database Migration service
+
+Aurora and RRD
+
+Choosing the right databse:
+ - we have a lot of managed databases on AWS to choose from 
+ 
+questions to choose the right database based on your architecture:
+ - Read-heavy, write-heavy or balanced workload? throughtput needs? will it?
+   change, does it  need to scal or fluctuate during the data?
+- how much data to store and for how long? will it grow? average object size?
+  how are they accessed?
+- data durability? source of truth for the data?
+- latency requirements? concurerent users?
+- data model? how ill you query the data? jjoins? structeured?
+ semi-structured?
+- strong schema? more flexibility? reporting? sear? RDSBMS/ NOSQL?
+- License costs? switch to cloud native DB such as aurora?
+
+Amazon RDS - Summary
+
+- Manageed PostgreSQL/MQL/Oracle/SQL Server/ DB2 /MairaDB/ Custom
+- Provisioned RDS Instant size and EBS volume type and size
+- autoscaling capability for storage
+- suppport for read replicas and multi az
+- security through IAM security groups KMS, SSL in transit
+- automated backup with point in time restore feature
+- manual  DB snapshot for longer term recovery
+- managed and scheduled mainteannce
+- support for IAM authentication, integration with secrets amanagers
+- RDS custom for access to and customizee the underlying instance
+
+
+	192.168.0.0/16	==> Home 
+	
+	172.0.0.0/16	==> AWS Default VPC 
+	
+	10.0.0.0/16		==> For any Big Network
+	
+	Networking :
+	
+		VMs - dedicated VPC
+		Subnet :
+			- Public Subnet & Private Subnet
+			
+			EC2 Instance using IAM Role and S3
+			
+		Route Table 
+		Route Table Asso.
+		Internet Gateway
 
 
 
