@@ -662,11 +662,39 @@ EBS Volume
 - Have a provisioned capacity( size in GBS and IOPS)
    . You get billed for all provisioned capacity
    . you can increase the capacity of the drive over time
-1:07:26
+- you can create a snapshot of the volume
+  EBS Snapshots:
+ - Make a backup(snapshot) of your EBS volume at a  point in a time
+ - No necessary to detach volume to do snapshot but recommened
+ - can copy snapshots across  AZ or region
+
+Note:
+One EBS volume can be attached  to 16 EC2 instances
 
 
+ EBS Encryption:
+ - When you create an encrypted  EBS volume you get the folowing:
+   . Data at rest is encrypted inside the volume
+   . All the data in fligh moving between the instnace and the  volume is encrypted
+   . all snapshots are encrypted
+   . all volumes created from the snapshot
+ - Encryption and decryption are handled transparently
+ - Encrypting has a minimal impact on latency
+ - EBS Encryption leverages keys from KMS( AWS-256)
+ - copying an unencrypted snapshot allows encryption
+ - snapshots of encrypted volumes are encrypted
 
+Amazon EFS Elastic File system
+- Managed NFS( network file system) that can be mounted on many EC2
+- EFS works with EC2 instances in multi a-z
+- Highly available, scable, expensive( 3xgp2 
+  pay per use
 
+- click on EFS 
+- name 
+- VPC 
+- Recommeneded settings
+   
 	192.168.0.0/16	==> Home 
 	
 	172.0.0.0/16	==> AWS Default VPC 
