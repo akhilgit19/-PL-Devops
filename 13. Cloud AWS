@@ -713,6 +713,184 @@ Amazon EFS Elastic File system
 		Route Table Asso.
 		Internet Gateway
 
+AWS Networking
+------------------
+docs.aws.amazon.com
+
+Amazon VPC
+
+
+Traditional On premisis network
+=================================
+ Internet
+
+-  Router
+
+Switch       Switch
+LANA          LANB
+
+A    B            C
+
+- Terminal a to b if you want to communte , The communication will be done thru lan network
+- Now if you want to connect terminal b in lan a to terminal c in Lan b is done thr switches
+- switches acts as a single point of communication to the LAN
+- if you have more lans , switch acts as an interface between lan and routed
+- Router distributes the routing request from one switch to another switch
+
+
+Physical Network:
+-
+Router
+
+hub  or switch
+
+terminals
+
+
+AWS VPC
+
+subnet A subnet B
+EC2  Router   EC2
+AZ1          AZ2
+
+- How do i compare physical network to AWS VPC(clOUD)
+- lAN network can be compared to subnet
+- workstations can be compared to ec2, So a subnet can have n number of ec2 instances
+- In phsyical network, lan is connectied to swtich which conummincates to another lan via switch 
+- In AWS Vpc , routers  are used to route the request from one aubnet to another subnet
+- In aws vpc, application is enabled to the intergateway which is exposed to external network
+- The router and internetgateway is attached through routetable association
+- subnets can be public and private subnets, public subnets are exposed to internetgateway
+- Example 3 teir application architecture, user application can be hosted in public subnet
+- application and database can be attached in private subnet
+- Through NACL, we can enable firewall protection to subnets
+- Security Group  access the EC2  instance protection 
+
+
+1 Region-= Multiple Availability Zones:
+Now AWS in 32 region and 102 availability zones
+
+VPC sc0pe with repsect to AWS account,region and AZ;
+=====================================================
+
+- once we create an account we will choose regions like mumbai tokyou or n virginia
+- once we choose the region we will prepare VPC in respective region level
+- each region as availability xones az1 az2 az3
+
+
+                aws account 
+                        |
+------------------------------------------------------
+  |                     |                          |
+Mumbai               tokyo                   n virginia
+region1             region2                  region3
+ 
+vpc                  vpc                        vpc   
+                     vpc                        vpc   
+                     vpc   
+
+
+az1 az2 az3        az1 az2 az3 az4              az1 az2 az3 az4 az5 az6
+
+
+- I can create a VPC and link all the 3 avaialbility zones. scope of your services
+  will be account level ,region level and vpc level
+
+                aws account IAM route53
+                        |
+------------------------------------------------------
+  |                     |                          |
+Mumbai               tokyo                   n virginia
+region1             region2                  region3
+ 
+vpc elb                 vpc                        vpc   
+ec2 rds               vpc                          vpc   
+sub sub               vpc   
+
+
+az1 az2 az3        az1 az2 az3 az4              az1 az2 az3 az4 az5 az6
+
+
+             
+AWS Services scope with respect to VPC
+- if you observe, once you create an account at account level , IAM, route53 willbe in global service region
+- similarly if you create an any s3 bucket or dynamodb will be in region level
+- same way if you create an vpc or elb can be associate with subnets
+- in each and every subnets we will deply our ec2 rds rousources
+- subnets is process of spliting vpc into various partitions
+- once i splits into multiple subnets we can host multiple resources
+- we can maintain subnets for ec2, rds resourcess
+-  there is an option to avail multiple az to vpc
+
+VPC building blocks Architecture
+
+- CIDR
+- subnets
+- routetables
+- security groups
+- network acl
+- internet gateway
+- vpn Gateway
+- Domain name server
+                             internelt
+
+| -----------------------------igw--------------------------------------------------
+|  |----------------------------------------------cidr 10.0.0.0/16---------------------------------
+|  |vpc           
+|  |  ---------------             -------------------
+|  |  |              |             |              |
+|  |  |   Subnet A   |             |  Subnet B    | 
+|  |  |              |             |              |
+|  |  |   EC2        |  Routeer    |    RDS       |
+|  |  |              |             |              |
+|  |  |              |             |              |
+|  |  |              |             |              |
+|  |  ----------------             ------------------
+|  |  CIDR 10.0.0.0/24             CIDR 10.0.1.0/24
+|  |-------------------------------------------------------------------------------
+|   availabiy zone 1               availabitliy zone 2
+-------------------------------------------------------------------------------
+vgw
+^
+| vpn or direct connect 
+|
+CGW
+^
+|
+Data Center 
+
+-------------------------------------------------------------------------------
+- So once we create a VPC we will be creating a subnet
+- while creating subnet CIDR range is imp parameter, it is used to assign the IP address
+- CIDR, Class less interdomain routing
+- Example, using CIDR we can able to choose or assign the ip address to subnet level
+- if you create a vpc you can able to set the CIDR range 10.0.0.0/16
+- /16 going to decides how many ip address can be set to this VPC
+- same thing can be looked for subnet level
+- Once subnet is defined if you maintain any communication to another subnet
+  is by router through routetables
+- Security groups decides incoming and outgoing traffic of ec2 leavl
+- Network acl maintains firewal at subnet level  
+- we cannot rely on ip address we rely on Domain name system, ;let say im running  a web application,
+  i dont need to enter my ip address i can easly access by DNS
+- VPN gateway provided secured encryption communication 
+- some of applications are in onpremisis i want the data to be used in cloud,
+  how my onpremisis can connect to cloud is VP or dirrect connect .
+- on premissing we will have Custermer gateway and in cloud we will have virtual gateway
+
+
+Ip addressing Basics
+- When ever users enters website address in browser, as soon as they hit the site, The dns
+  server which check for entries of the domain name and associate IP address and routes to the target webeserver
+-  DSN is just for end users understanding but actual communication is done by ip'
+-  what if dns is not having any entry, it will go to the next level
+
+
+
+
+
+
+
 
 
 
