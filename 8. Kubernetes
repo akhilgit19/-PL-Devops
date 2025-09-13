@@ -1824,7 +1824,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 - Name kubernetes
 - Hostname: private ip address of kubernetes master node
 - username: devopsadmin
-- remotedirectory : /home/devopadmin (home directory devopadadmin  in kubernetes clouser
+- remotedirectory : /home/devopsadmin (home directory devopadadmin  in kubernetes clouser
 - in master node
 - cd. ssh/
 - cat id_ecdsa 
@@ -1856,7 +1856,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM_Checkout from github repository'
-				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+				git 'https://github.com/akhilgit19/java-webapp-project.git'
             }
         }
 		
@@ -1870,7 +1870,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
 
-				sh "docker build -t loksaieta/pl-javawebappimg ."
+				sh "docker build -t akhilpagadapoola/pl-javawebappimg ."
 				
             }
         }
@@ -1884,22 +1884,20 @@ pipeline {
 		
 		stage('Publish_to_Docker_Registry') {
 			steps {
-				sh "docker push loksaieta/pl-javawebappimg"
+				sh "docker push akhilpagadapoola/pl-javawebappimg"
 			}
 		}
-
+		
 		stage('Deploy to Kubernetes') {
 			steps {
 				script {
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'Kubernetes-nonprod', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f kdeploy.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f kdeploy.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 				}
 			}
 		}
-    }
-}	
-			
-sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f kdeploy.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
+    }
+}
 
 - click on  build
 - Now in the kuberntes master node
