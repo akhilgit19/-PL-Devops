@@ -602,6 +602,7 @@ Day 36 : 9th Sep. 2025
 
 
 Database services
+------------------------------
 - Databases- Aurora and RDS- click on create database
 - instance cype db.rg.2x large 
 - availablity and durability 
@@ -613,7 +614,7 @@ Migration services
 -  Database Migration service
 
 Aurora and RRD
-
+------------------------------
 Choosing the right databse:
  - we have a lot of managed databases on AWS to choose from 
  
@@ -630,7 +631,7 @@ questions to choose the right database based on your architecture:
 - License costs? switch to cloud native DB such as aurora?
 
 Amazon RDS - Summary
-
+------------------------------
 - Manageed PostgreSQL/MQL/Oracle/SQL Server/ DB2 /MairaDB/ Custom
 - Provisioned RDS Instant size and EBS volume type and size
 - autoscaling capability for storage
@@ -644,6 +645,7 @@ Amazon RDS - Summary
 
 
 EBS Volume
+---------------
 -  An EBS( Elastic Block store) volume is a network drive you can  attache to your instances while they run
 - it allows your instances to persist data, even  after their termination
 - They can only be mounted to one instance at a time( at the  CCP leevel)
@@ -653,6 +655,7 @@ EBS Volume
 - Free tier: 30 GB of free EBS storage oft type general purpose(SSD) or magnetic per month
 
 EBS Volume
+---------------
 - Its a network drive ( not a physi al dirve)
    . it uses the network to communicate the isntance, which means there mimght be a bit of letency
    . it can be detached from an EC2 isntance and attached to another one quickly
@@ -673,6 +676,7 @@ One EBS volume can be attached  to 16 EC2 instances
 
 
  EBS Encryption:
+------------------------------
  - When you create an encrypted  EBS volume you get the folowing:
    . Data at rest is encrypted inside the volume
    . All the data in fligh moving between the instnace and the  volume is encrypted
@@ -685,6 +689,7 @@ One EBS volume can be attached  to 16 EC2 instances
  - snapshots of encrypted volumes are encrypted
 
 Amazon EFS Elastic File system
+---------------------------------------------
 - Managed NFS( network file system) that can be mounted on many EC2
 - EFS works with EC2 instances in multi a-z
 - Highly available, scable, expensive( 3xgp2 
@@ -739,7 +744,7 @@ A    B            C
 
 
 Physical Network:
--
+-------------------------------
 Router
 
 hub  or switch
@@ -748,7 +753,7 @@ terminals
 
 
 AWS VPC
-
+---------------
 subnet A subnet B
 EC2  Router   EC2
 AZ1          AZ2
@@ -813,6 +818,7 @@ az1 az2 az3        az1 az2 az3 az4              az1 az2 az3 az4 az5 az6
 
              
 AWS Services scope with respect to VPC
+---------------------------------------------
 - if you observe, once you create an account at account level , IAM, route53 willbe in global service region
 - similarly if you create an any s3 bucket or dynamodb will be in region level
 - same way if you create an vpc or elb can be associate with subnets
@@ -823,7 +829,7 @@ AWS Services scope with respect to VPC
 -  there is an option to avail multiple az to vpc
 
 VPC building blocks Architecture
-
+---------------------------------------------
 - CIDR
 - subnets
 - routetables
@@ -880,18 +886,217 @@ Data Center
 
 
 Ip addressing Basics
+------------------------------
 - When ever users enters website address in browser, as soon as they hit the site, The dns
   server which check for entries of the domain name and associate IP address and routes to the target webeserver
 -  DSN is just for end users understanding but actual communication is done by ip'
 -  what if dns is not having any entry, it will go to the next level
 
 
+class a 10.0.0.0 
+       first address 10.0.0.1
+       last address 10.2255.255.255
+       total address=16777214
+class b 172.16.0.0
+       first address 172.16.0.1
+       last address 172.16.255.255
+       total address=55534
+
+class 192.168.0.0
+       first address 192.168.0.1
+       last address 192.168.0.255
+       total address=255
+
+Private IP addresses
+------------------------------
+- There are server ranges of address reserverd for  private usuage as defined in RFC 1918
+
+These are 
+       CIDR              FirstAddress       Last address
+ 10.00.0/08              10.0.0.0          10.255.255.255
+ 172.16..0.0/12          172.16.0.0        172.31.255.255
+ 192.168.0.0/16         192.168.0.0        192.168.255.255
 
 
+- Private addressed are not routable on the  Internet
+- public ip address are allocated based upon vpc and cidr range
+- private ip address are allocated based upon subnet and cidr range
+
+VPC Addressing
+---------------
+- AWS VPC CIDR( IPV4)
+  - VPC prefix between /16 (65536 ips ) and /28 (16 ips)
+  - RFC 1918 ip ranges for private network and correspoding AWS recommended ranges
+    . 10.0.0.0/8 =>172.16..0.0 -1712.31.255.255 AWS CIDR 10.X.0.0/16
+    .172.16.0.0/12 => 172.16.0.0 -172.31.255.255 AWS CIDR 172.16.0.0/16 to  172.31.0.0/16
+    .192.168.0.0/16 => 912.168.0.0 - 192.168.255.255 => AWS CIDR 192.168.0.0/16
+ - subnet CIDR prefix between /16 TO /28 (same as VPC CIDR
+- AWS VPC CIDR (IPV6)
+  - VPC CIDR with prefix /56 (2^ 72 iPS)
+  - IPV6 CIDR is allocated by AWS
+  - Subnet CIDR prefix /64
+  - IPV6 IP addresses are gloablly unique and publicly routable
+
+- We can resue IPF4 but in IPV6 we can have glbally unique 
+
+Subnets, Route tables and Internet Gateway:
+------------------------------------------------------------
+- So when ever we need to prepare any ec2, wee need to choose VPC autoamatically it identifies subnet, 
+  within that subnet only we can create our ec2 instance 
+- whenever we create subnet and vpc a routetable will be created,similarly when we create a subnet for that alos we will have
+  routetable which will associate to internetgateway
+- Once you update the internetgateway, it will be elgible for your internetaccess
+- by defualt vpc communication withing the internal network if we want to expose to external applications it should be opened to internetgateway
+- When you expose your main routetable thru internetgateway bydefualt your subnets alos exposed to internet
+  but assume that i dont want to expose subnet internet, like public and private
+  in that case we should have dedicated routetable for subnet a and subnet b
+
+subnet a:
+Destination            Target
+10.10.0.0/16           local
+0.0.0.0/0              Internetgateway
 
 
+subnet b:
+Destination            Target
+10.10.0.0/16           local
 
+Routetable
+---------------
+- it contains rules to route the traffic ,in/out of subnets
+- Main route table at VPC level
+- custom route table at subnet level
+- each route table contains default immutable local route for VP
+- if no custom route table is defined then new subnets are associate with main route table
+- We can also modify the main route table
 
+public subnets
+---------------
+ - has route for internet
+ - instances with public ip can communicate to internet
+ - ex NAT, Webservers, load balancer
 
+Destination   Target
+172.31.0.0/16   local
+0.0.0.0/0       igw-xxx
 
+Region   
+       IGW
+          VPC 
+             AVAILABILITY ZONE 1     AVAILABILITY ZONE2
+                      PUBLIC SUB         PRIVATE SUBET
+
+1 Subnet == 1 az
+
+Private subnet
+------------------------
+ - no route to internet
+ - instances receive private IP
+ - Typically uses NAT of instance to have internet access
+ ex database, appserver
+
+Subnets - good to know
+------------------------
+- aws reservers 5 ips address( first 4 and last 1 ip address)  in each subnet
+- these 5 ip are not avaialble for user and cannot be assigned to an instance
+- example: if cidr block 10.0.0.0/24 reserer ips are
+  . 10.0.0.0: Network address
+  . 10.0.0.1 reserver by AWS for the VPC router
+  .10.0.0.2: Reserverd by aws for mapping to amaozon provided DNS
+  .10..0.0.3: Reserved by aws for futur use
+  .10.0.0.255: Network broadcast address. AWS does not support broadcast in a VPC
+ therefor this address is reserved.
+
+private IP 
+------------
+- private ip is assigned from the subnet rage
+
+Public ip
+------------
+- public ip as assigned from the amazons pool of public ip
+- public ip will change when you stop and start the instance
+
+Elastic iP
+------------
+- Elastic ip is allocated  to your AWS account
+- Remains allocated until released
+- Does not change on instance stop/start
+- can be remapped to another instance
+
+IPV6 Addresses
+------------------------
+- AWS VPC alos supports IPV6 addressed
+- IPV6 address is 128 bits in size with 8 blocks of 16 bits each
+  example 
+     2001:0db8:85a3:0000:0000:8a2e:0370:7334
+- vpc cidr with prefix /56 (2^72 ips) ansd subnet cidr prefix /64
+- ipv6 addresses are public and gloablly unique and allows resources to communicate with the internet
+- vpc can operate in dual stack mode where vpc resources can commmunicate over IPV 4 or ipv6 or both
+- IPV6 address persists when you stop and start your instances and is released whne you terminate your instance
+
+Firewalls inside VPC
+------------------------
+NACL ,SG:
+- IS a security allows acces to the subnet, once you reach subnet you will have security group
+  Alows access to ec2
+- nacl- Network access acontrol list
+- SG- Security group
+
+Security group
+------------------------
+- security groups are most basic, native and important firewall for EC2
+- security groups has inbound and outbound rules
+- security groups has only allow rules. does not support Deny blcok rules
+- defualt security grouop in each VPC
+- authorities traffic for both IPV4 and IPV6 traffic
+- security groups and stateful
+- you can reference another security group as a resource
+- single security group can be attached to multiple instances
+- single instance can have multiple security groups
+- all inbound traffic is blocked by default
+- all inbound traffic is authhorixed by defualt
+- authorisies traffice for both IPV4 nad IPV6 traffice
+- you can reference another securtiy group as a source
+
+NACL
+------------
+- works at subnet level- Hence automatically applied to al instances
+- contains both allow and deny rules, rules are numbered
+-  rules are evaluated in the order of rule number (1 to 32766)
+- stateless- we need to explicily open ports for return traffic
+- defualt NACL allos all inbound and outbound traffic
+- NACL are a greate way of block a speicif ip at the subnet level
+
+SG V NACL
+------------
+SG                                                NACL
+opeartes at ec2 instance or ENI level       Operates at subnet level
+supports only allow rules                   supports both allow and deny rules
+stateful- retrun traffic is allowed         stateless- return traffic needs to be in outbound rules
+all rules are evaluated before making       rules are evaluated in the order
+ a decision                                  and first matching rule is applied
+
+NAT GATEWAY
+---------------
+- to enable internet access to ec2 instance , nat will be defined in the subnet and will
+   be associated with ec2 instance and connected to interenet gateway
+- Nategateway is completely aws managed services
+- higher banwidth better availability no admin
+- pay bu the hour for usage and bandwidth
+- 5 gbps of bandwidth with automatic scaling up to 100 gbps
+- no security groups
+- NACL at subnet level applies to NAT gateay
+- supported protocl: TCP UDP and ICMP
+- uses ports 1024-65535 for outbound connection 
+- for outbound internet access NAT gateway should be created in public subnet so that it can 
+  communicate with the internet
+- NAT gateway should be allocated elastic ip
+
+NAT Instance
+-------------
+- to overcome the natgateway due to high cost we can use nat instance
+- Must be in a public subnet
+- must have public or elast ip
+- should be launched using AWS provided nat ami
+- disable source/destination check
 
