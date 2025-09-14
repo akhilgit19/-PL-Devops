@@ -16,13 +16,10 @@ Day 33 : 4th Sep. 2025
 	AWS Solution Architect Associate Level!
 =============================================	
 	Introduction to Cloud :::
-=============================================
 		What is Cloud Computing?
-=============================================
 		- If you want to avail , servers ,databases ,storage,networking from internet instead of onpremsis
 
     why is cloud computing important?
-=============================================
     - faster service provisioning
       dynamic scalability
       good reliablitiy
@@ -32,7 +29,7 @@ Day 33 : 4th Sep. 2025
       high security
 
     Diffent Layers of cloud computing
-=============================================
+
       Applications           Software as a serveice      applications
 
       programming            platform as a service       Programming
@@ -892,7 +889,7 @@ Ip addressing Basics
 -  DSN is just for end users understanding but actual communication is done by ip'
 -  what if dns is not having any entry, it will go to the next level
 
-
+            
 class a 10.0.0.0 
        first address 10.0.0.1
        last address 10.2255.255.255
@@ -1100,3 +1097,229 @@ NAT Instance
 - should be launched using AWS provided nat ami
 - disable source/destination check
 
+
+
+#######################
+Day 38 : 12th Sep. 2025
+#######################
+
+Working with AWS VPC ::::
+
+- In service catalog, go to VPC- It provides isolated cloud resources
+- you can see vpc , subnets, routetables, internetgateways
+
+-  AWS Infra-Structure  :
+
+- Create an AWS Infra Architecture Diagram
+
+                   wwww internet
+Region                               Mumbai Region
+                        IGW
+VPC                                       10.100.0.0/16
+
+     AVAILABILIYZONE            AVAILABILITY ZONE
+
+         Public subnet
+      public ip
+      private ip
+        EC2-A
+    10.100.0.0/24
+
+      ap-south-1a                      ap-south-1b
+
+Publick subnet route table
+-------------------------------
+Destination         Target
+10.100.0.0/16       local
+0.0.0.0/0           igw-xxxxxxxx
+
+
+  Url- mxtoolbox.com/subnetcalculatro.aspx ( To calculate VPC)
+
+EG 
+10.100.0.0/24 - ip address of vpc
+10.100.0 -- is internet mask
+0/24 is 32-24=8 2^8 is  the subnet mask
+
+Steps 
+1. Create VPC
+    A. aws console-- goto vopc service-- your vpcs-- create vpc( resource to create VPC only, name tag vpc-1a,
+       ipv4 CIDR block: select IPV4 CIDR manual input(10.1000.0.0/16), Teanancy: Default--> Create VPC
+2. Create Internet Gateway
+    A. Internet Gateways--> Create Internet Gateway( Name tag: VPC-A-IGW) -> Create Internet gateway
+    B. Select Internet gateway--> Actions--> Attach to VPC--> Select your VPC ( VPC-A) -> Attach Internet Gateway
+3. Create Subnet
+    a. subnets-> Create subnet
+    b. select VPC ID: VPC- A
+    c. subnet 1of 1 -> subnet Name VPC-A-Public, AZ: Select AZ 1, IPV4 CIDR block: 10.1000.0.0/24)--> Create
+       subnet
+    d. select subnet--> actions > edit subnet setting > modify auto assign ip settings> enable--> save
+
+1. Create Route table
+    a. route tables --> create route table( Name: VPC-A-Public-RT, select  VPC: VPC-A)>create route table
+    b. select routetable -> routes--> edit routes--> add another route( destination: 0.0.0.0/0, Target: Internet gateway-. igw-xxxxx) --> save changes
+4. Assocate route table with the subnet
+    a. select route table--> subnet associations--> edit sbnet associations--> check the VPC-a publick subnet--> save  associations
+
+	Public Subnet ::::
+	
+		VPC - PL1-VPC-A
+		
+				- PL1-VPC-A-IGW
+				
+				- PL1-VPC-A-Public			
+				
+				- PL1-VPC-A-Public-RT				
+				
+				- PL1-VPC-A-SG1
+		
+
+Creating VPC
+- Click on create vpc, choose VPC only
+- Name tag- PL1-VPC-A
+- IPV4 CIDR block
+- choose IPV34 CIDR manul input
+  IPV4 CIDR - 10.101.0.0/16
+  IPV6 CIDR block choose NO IPV6 CIDR block
+- click on create VPC
+
+Creating InternetGateway
+- click on create internetgateway
+- name -PL1-VPC-A-IGW
+- click on internetgateway now, click on actions click on attach to VP
+-  attach your vpcid 
+
+Creating Public Subnet
+- click on create subnet
+- it asks for VPC id so choose your vpc id 
+- based on vpc cidr range we need to create subnet range
+- in subnet settings
+- subnet name- PL1-VPC-A-Public	
+- availability zone- choose az as per your need , if no preference it will dyanamically allocate but it is recommened to choose
+- ipv4 vpc cidr block 10.101.0./16
+- ipv4 subnet cidr block 10.101.0./24
+- now select the subnet- click on actions - edit subnet ssettings
+- In auto assign IP setting- enable auto assign public ipv 4 address
+
+Creating Routetable
+- click on routetables
+- name -PL1-VPC-A-Private-RT
+- choose vpc -PL1-VPC-A
+- Now in the routtalbe, click on edit routes
+- by defualt it will have local
+- click on add routee
+- destination- 0.0.0.0/0  target- IGW
+Routeable
+destination              target 
+0.0.0.0/0               igw-0ffdasfd 
+10.101.0.0/16             local
+
+- In the route table, subnet association, we can add any no of subnets to the routetable
+- click on edit subnetassociation, choose PL1-VPC-A-Public	
+- click on save
+- Now in the subnet association you can 
+Name                   IPV4 CIDR
+PL1-VPC-A-Public	  10.101.0.0/24
+
+- Launch an ec2 instance now
+- Name - PL- Test-Publick- SN1, AMI amazon linux, instance type t2 micro
+- In networksetting - choose PL1-VPC-A
+- subnet -PL1-VPC-A-Public	
+- Auto assign public ip- enalbe
+- Seucrity group - PL1-VPC-A-SG1
+  Type- ssh 
+  source type - MyIP
+- Click on create ec2 instance
+- now choose the public ip addres open mobaxter give the remote host  username - ec2-user
+- choose private key - keypiar
+- Now you can connect
+
+
+- Creating private subnet
+ 	Private Subnet ::::
+		VPC - PL1-VPC-A
+				- PL1-VPC-A-Private 
+				
+				- PL1-VPC-A-Private-RT
+				
+				- PL1-VPC-A-SG2
+
+
+                   wwww internet
+Region                               Mumbai Region
+                        IGW
+VPC                                       10.100.0.0/16
+
+     AVAILABILIYZONE            AVAILABILITY ZONE
+
+         Public subnet
+      public ip
+      private ip
+        EC2-A
+    10.100.0.0/24
+
+         Private subnet
+      private ip
+        EC2-A
+    10.100.11.0/24
+
+      ap-south-1a                      ap-south-1b
+
+Private subnet route table
+-------------------------------
+Destination         Target
+10.100.0.0/16       local
+
+- go to subnet,  name -PL1-VPC-A-Private 
+- chooose  vpc-PL1-VPC-A
+- avaialbility zone -same az as of public subnet ap-south-1a
+- ipv4 vpc cidr 10.101.0.0/16
+- ipv4 subnet cidr blocl - 10.101.11.0/24
+- click on create subnet
+- now go to routetable, click on create routetable name-PL1-VPC-A-Private-RT
+- vpc- PL1-VPC-A
+- click on create routetable
+-  Now in the routtalbe , click on subnet associations, click on edit routes
+- add private subnet -PL1-VPC-A-Private 
+- launch instance  name-PL- Test-Publick- SN1
+-  ami - amazon linux
+- keypair choose our vpc
+- subnet- private subnet PL1-VPC-A-Private 
+- SG- PL1-VPC-A-SG2
+- type ssh
+  source type custom  vpc cidr- 10.100.0.0/16 
+  type all ICMP- IPV4 ( ping from one instance to another instance withing your private network)
+  source type custom  vpc cidr- 10.100.0.0/16 
+
+- Now connect to public instance 
+- ping parivate instanceip adress
+- you should see response as there in within a vpc and same az 
+- How to login to private instance
+- go to your public instance
+- vi key.pem
+- past the public key of private instance
+- chomod 400 key1.pem
+- ssh -i key1.pem ec2-user@privateipaddress 
+- Now you can connect to the private isntance
+
+
+
+VPC Connectivity Methods :::
+- VPC endpoints and pirvate link
+- VPC peering connection
+- Transit Gateway
+- Site-2-site VPN
+- client VPN
+- Direct Connect
+
+
+		
+	
+
+				
+				
+	Dedicated Network for : Kube_Cluster / Test Server  /  DBase Servers 	
+		
+Next ::
+	
+	VPC Connectivity Methods :::
