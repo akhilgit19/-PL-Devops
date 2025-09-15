@@ -28,20 +28,9 @@ Day 33 : 4th Sep. 2025
       efficient performance
       high security
 
-    Diffent Layers of cloud computing
 
-      Applications           Software as a serveice      applications
+Different Cloud Computing Service Modes:
 
-      programming            platform as a service       Programming
-      environment                                        environment
-
-      virtual Machine1        Infrascture as a service    Virtual Machine
-                               servers
-
-
-
-     Different Cloud Computing Service Modes
-=============================================
 
  On premise             Infrasctureas a service           platform as a service      software as a service
 ===========            =========================          =====================       =======================
@@ -58,10 +47,10 @@ networking                        networking                   networking       
 
 
 
-public cloud
-private cloud
-hybrid cloud
-community cloud
+1.public cloud
+2.private cloud
+3.hybrid cloud
+4.community cloud
 
 
 AMS - AMAZON Web services
