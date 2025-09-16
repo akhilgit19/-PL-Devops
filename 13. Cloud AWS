@@ -1921,6 +1921,16 @@ AWS Network Firewall:
 Why https:=?
 - https is encrypted connection of data
 
+
+7 Application    http
+6 Presentation   ssl/tls
+5 Session
+4 Transport
+3 Network
+2 Datalink
+1 Physical
+
+
 How Https work?
 - At application layer , HTTPS works
 - at presentation layer, ssl/tls works
