@@ -1521,7 +1521,449 @@ VPC Connectivity Methods :::
 - Direct Connect
 
 
-		
+
+#######################
+Day 39 : 15th Sep. 2025
+#######################	
+
+- Defualt VPC:
+   - By default we will be have a vpc in each region, 
+   - AWS creates Default VPC in eaach aws region
+   - creates VPC with cidr 172.31.0.0/16
+   - creates subnets in every az with CIDR /20
+   - creates internet gateway
+   - Main route table with route to internet which make all subnets public
+   - if deleted you can recreate default VPC
+
+Destination     Target
+172.31.0..0/16   local
+0.0.0.0/0        igw-xxxxxxx
+
+
+- Defualt VPC architecture in AWS
+
+                             wwww internet
+Region                                               Mumbai Region
+                                   IGW
+VPC                                                         172.31.0.0/16
+
+Mainroutetable
+
+     AVAILABILIYZONE            AVAILABILITY ZONE      AVAILABILITY ZONE
+
+    Public subnet                Public subnet           Public subnet
+  
+      
+    172.31.0.0/20                 172.31.16.0/20           1721.31.32.0/20
+
+
+      az1                             az1                    az1
+
+
+- 
+
+VPC Connectivity Methods :::
+
+		VPC Endpoints & PrivateLink
+		VPC Peering connection
+		Transit Gateway
+		Site-2-Site VPN
+		Client VPN
+		Direct Connect
+
+VPC Peering Connection:
+
+|----        VPC- A
+|             ))((--------------VPC Peering (A-B)
+|              |
+VPC Peering   VPC- B
+(a-c)          |
+|             ))((--------------VPC Peering (B-C)
+|              |
+|--          VPC- C
+
+            
+-  consider i have VPC -A and VPC -B if i want to use communication between both we suse 
+  vpc peering
+- privately connnet two  vpc using AWS network
+- Make them behave as if they were in the same network
+- Must not have overlapping CIDR's
+- VPC peering connection is not Transitive( must be established for each VPC that need to communicate with one anoanother)
+- You must update route tables in each VPC's subnets to ensure EC2 instances can communicate with each other
+
+VPC Endpoint and Private Link:
+
+                                        wwww internet
+                 Region                                               Mumbai Region
+                                              IGW
+                 VPC                          |                               10.0.0.0/16
+                                              |
+                 Mainroutetable               |--------------------------
+                                                                           |
+                                        AVAILABILITY ZONE                  |
+                                                                           |
+                                        Public subnet               Nategatewau
+ 
+                                           10.100.11.0/24               |
+                                                                        |    
+                                                                        | 
+                                                                        |
+                                             privatesubnet   -----------   
+s3     --------- VPC Endpoint----------  application (private ip
+dynamo db
+                                            
+                                                 az1                   
+
+
+
+- I have a vpc with public subnet and private subnet, when eever private subnet needs to access internet
+  we use nat gateway and connect intergateway and user s3
+- i want to access the s3 bucket, instead of using natgateway and using s3 bucket
+  we can create VPC endpoint gatewayy and connect to s3
+- so when ever you want to access external vpc load balancer in another vpc we can use endpoints which is associated with private link
+- private link and endpoints helps in accessing service VPC,
+
+                                        wwww internet
+                 Region                                               Mumbai Region
+                                              IGW
+                 VPC                          |                               10.0.0.0/16
+                                              |
+                 Mainroutetable               |
+                                                                           
+                                        AVAILABILITY ZONE               |
+                                                                           
+                                        Public subnet             
+ 
+                                           10.100.11.0/24             
+                                                                      
+                                                                      
+                                             privatesubnet   
+      -  Private link----- VPC Endpoint----------  application (private ip
+      |                                         az1 
+      |
+      |
+-------------------------------------------------|
+|applicationservice        networlload balancer   |
+--------------------------------------------------
+s3 
+dyanmo db
+   - In summary, dedicate service we have vpc endpoints and private to establish componets to private subnet commponeest to
+      puvlic subnets
+   - In general , every aws service is publick is exposed,which this endpoints your private subnet is exposed to public internet  
+   - This vpc endpoints it allows you to connecto aws services using private network instead public network
+   - every aws service is publicly exposed 
+   - vpc endpoints powered by aws private links allows you to connect to aws services using a private network instead of using the public ninternet
+   - there redudant and scale horizontally
+   - they remove the need of iGW, NATGW to acces AWS service
+   - In case of issues:       
+        check DNS setting resolution in your VPC
+        check route table
+
+Types of Endpoints:
+
+Interface endpoints( powered by private link):
+
+ - provisions an ENI( Private IP addresse) as an entry point( must attach a security group)
+ - supports most AWS services
+- $ per hour + $ per GB of data processed
+__________________________________________________
+| ____Region____________________________________________ 
+| | vpc                         
+| |   private subnet             
+| |       ec2 instance          vpc endpoint interface      
+| |                             ENI( privatelink)
+| |________________________________________________
+|           Amazon SNS 
+__________________________________________________
+
+
+__________________________________________________
+| ____Region____________________________________________ 
+| | vpc                         
+| |   private subnet             
+| |       ec2 instance           vpc endpoint gateway
+| |                              
+| |________________________________________________
+|           Amazon S3       or       amazon dynamo db
+__________________________________________________
+
+
+
+Gateway Endpoint:
+ - Provisions a gateway and must be used as a target in a route table (does not use security grouops)
+ - supports both S3 and dynamoDB
+ - Free
+
+
+Transit Gateway:
+
+- when ever you have more vpc instead vpc peering it is recommened to use transit gateway
+- it is a process acts as a interface between all the vpcs
+- vpc a wants to connect to vpc b it will use transit gateway to communicate
+
+|---------------------------------------------------------------------
+|region
+|
+|    --------------------------------------
+|    |  VPC                         10.0.0.0/16
+|    |
+|    |           public subnet
+|    |
+|    |                    
+|    |
+|    |           private subnet 
+|    |
+|    |                 private ip
+|    |                application
+|                           |
+|                           |
+|                           |
+|                         ))  ((------------------Transit gateway -------VPN---------------On premissin datacenter
+|                           |
+|                           |
+|     --------------------------------------
+|      |  VPC                         10.0.0.0/24
+|      |
+|      |
+|      |
+|      |
+|      |
+|      |      
+|      |
+|      |
+|      |
+|      |
+|      |
+|      
+|      
+|________________________________________________________________________________
+
+
+Transit Gateway with VPNC attachment:
+- from my on premiss if i want to connect to Transit gateway we use vpn attacchemnt
+
+Transit Gateway peering 
+- betweeen two different regions connected via transsit gateway 
+
+Site to Site VPN:
+__________________________________________________
+| ____Region____________________________________________ 
+| | vpc                 10.0.0.0/16
+| |   az     
+| |   publick subnet                      vpn gateway  -------IPSECVPN------Onpremisis datacenter
+| |   private subnet        
+| |        private ip(app)                    
+| |________________________________________________
+|          
+__________________________________________________
+
+client to Site VPN:
+__________________________________________________
+| ____Region____________________________________________ 
+| | vpc                 10.0.0.0/16
+| |   az     
+| |   publick subnet                      vpn gateway  -------INTERNET-----HOME WIFI
+| |   private subnet        
+| |        private ip(app)                    
+| |________________________________________________
+|          
+__________________________________________________
+
+Direct Connect (DX):
+
+AWS  ---  aws backbone network---- Direct Connect Location-----On premissis data center
+region    
+
+- Provides dedicated and consistent network
+- provided network bandwith from 50 Mbps up to 100 gbps over a single connection
+- low data transfer cost
+
+
+What is IPv6
+- IPv4 desinned to provide 4.3 billion address( they will be exhauted soon)
+- IPV6 is the sucess of iPV4
+- IPV6 is desinged to provide 3.4*10^38 unique ip address
+- every ipv6 address in aws is public and internet- routable( no private range)
+- format x.x.x.x.x.x..x.( x is hexadecimal, range can be from 0000 to fffF)
+- examples:
+   2001:db8:333:4444:5555:6666:7777:8888
+   20001:db8:3333:4444:cccc:ddd:eeee:ffff
+   ::-> all 8 segmet are zero
+   2001:db8::-> the last 6 segments are zero
+   ::1234:5678--> the first 6 segments are zero
+   2001:db8:1234:5678--> the middle 4 segmetns are zero
+- IPV4 cannot be disabled for your vpc and subnets
+
+IPV6 in VPC:
+- you can enable ipv6 ( they are public ip addresses) to operate in dual-stack mode
+- your ec2 instances will get at least a private internal ipv4 and a public ipv6
+- they can communicate using either ipv4 or ipv6 to the internet through an internet gateway
+
+IPV4 Troubleshooting:
+- IPV4 cannot be disabled for your VPC and subnets
+- so if you cannot launch an EC2 instance in your subnet
+  - it's not because it cannot acquiure an IPV6( the space is very large)
+  - it's because there are no available ipv4 in your subnet
+- solution: create a new ipv4 cidr in your subnet
+
+Egress- only Internet Gateway
+- Used for IPV6 only
+- (similar to a NAT gateway but for IPV6)
+- Allows instances in your vpc outbound connections over IPV6 while preventing
+  the internet to initiate an IPV6 connection to your instances
+- you must update the route tables
+
+                      Internet
+initate connection from      cant initiate connection from internet
+both side          
+                igw         egres- only intergateway
+
+ publick subnet                 private subnet
+     instance                         instance 
+
+
+VPC Section Summary:
+
+- CIDR - IP range
+- VPC - virtual private cloud -- we define a list of iPV4 and IPV 6 cidr
+- subnets -tied to an AZ we define a cidr
+- internet gateway - at the vpc leavle, provide IPV4 and IPV6 internet access
+- route tables- must be edited to add routes from subnets to the IGW, VPC perringconnection, VPC endpoints
+- Bastion host- public ed instance to ssh  that as ssh connectivity to ec2  instances in private subnets
+- NAT instances- gives internet access to ec2 instances in private subnets. OLD must be setup in a public subnet  , disable source/destination check flag
+- NAT gateway- managed by AWS provides scalable internet access to private EC2 instances when the target is an IPV4 afftdress
+- Direct Connect- setup a virtual private Gateway on VPC and establish a direct private  connection to an aws direct connectlocation
+- Direct Connect Gatway- setup a direct connect to many VPCs in different aws regions
+- AWS privateLink/VPC endpoints services
+  - Connect services privately frmo your service VPC to customers VPC
+  - Doesnt need VPC peering public internet NAT gateway routetables
+  - must be used with network load balancer and ENI
+- ClassicLink- Connect EC2 classic EC2 instances privately to your VPC
+- Transit Gateway- Transitive peering connections from VPC,VPN and DX
+- Traffic Miroring- copy network traffic from ENI;s for further analysis
+- Egress only inetergateway- Like a NAT gateway but for iPV6 targets
+
+Networking Costs in AWS  Per GB - Simplified
+
+- Use private IP instead of public IP for good savings and better network perfromance
+- Use same AZ for maximum savings( at the cost of high availablity)
+
+
+-----------------------------------------      
+|Region                                                              Region
+|
+|   ______AZ________                AZ                                  AZ
+|   |
+|   |    ______
+|   |   |
+|   |   |
+|   |   |______
+|   |     | Free if using private IP 
+|   |     ______                                            &0.02
+|   |    |   -------------USING private ip$0.01------------------>       instance
+|   |    |_______                                           Inter-region 
+|   |_______________
+
+
+Minimizing egress traffice  network cost
+- Egress traffic: outbound traffic( from AWS to outside)
+- Ingress traffic: inbound traffic - from outside to aws
+- try to keeyp as much internet traffic withing AWS to minimize costs
+- Direct connect location that are co-located in the same AWS REGION RESULT IN LOWER COST FOR EGRESS
+  Network
+
+S3 Data Transfer  Pricing- Analysis for USA
+- S3 ingress: free
+- s3 to internet: $0.09 per GB
+- s3 transer acceleration: 
+    - Faster trasnfer times( 50 to 500% beter)
+    - additional cost on top of data transfer
+      priciing +$0.04 to 40.08 per GB
+- S3 to cloud front: $0.00 per GB
+- Cloud front to internet: $0.85 per GB ( slightly cheaper than s3)
+  - caching capability( lower latency)
+  - Reduce costs associated with s3 request pricing( 7x cheaper with cloud front)
+- s3 cross region replication: $0.02 per gb
+
+Pricing:
+NAT Gateway vs Gateway vpc endpoint
+Natgateway:
+- $0.045 NAT gateway/hour
+- $0.045 NAT gateway data processed /GB
+- $0.09 data transfer out to s3( cross-region)
+- $0.00 data transfer out to s3( same-region)
+
+VPC endpoint:
+No cost for using Gateway Endpoint:
+$0.01 Data transer in/out( same - region)
+
+Network Protection on AWS
+- To protect network on AWS, We have sen
+   - Network Access control list( NACLS)
+   - Amazon VPC security grouops
+   - aws WAF ( protect against malicious requests)
+   - aws shield  and aws shield advanced
+   - aws firewall manager ( to manage them across accounts0
+
+AWS Network Firewall:
+
+- Protect your entire Amazon VPC
+- From layer 3 to layer7 protection
+- Any direction you can inspect
+   - vpc to vpc traffic
+   - outbount to internet
+   - inbound from internet
+   - to/ from direct connect and site to site VPN
+- Internally the AWS network firewall uses the AWS gateway load balancer
+- Rules can be centrally managed cross-account by AWS firewall manager to apply to many vpc
+
+
+Why https:=?
+- https is encrypted connection of data
+
+How Https work?
+- At application layer , HTTPS works
+- at presentation layer, ssl/tls works
+- from local machine  using webbrowser using https protocal, it will process using ssl/tls to the destination end
+- ssl/tls simplete certificate, 
+
+
+SSL/TLS: SSL (Secure Sockets Layer) and TLS (Transport Layer Security)
+- to maintain  authenticity
+- privacy
+- integrity
+
+Ceritficate authory data
+CA signature
+trust store
+
+
+ssl sever public cert ,server public key                                            ssl sever public cert ,server private key 
+Session key                                             SSL/TLS
+client server  ------------------------------------------------------------------  Session key
+encyrt/decrypt                                                                          encyrt/decrypt
+                                                        network
+
+Using AWS CLI
+aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications Resource Type=vpc, Tags=[{Key=Name,Value=MyVPC}]a
+aws ec2 create-internet-gateway
+aws ec2 attach-internet-gateway --vpc-id vpc-xxxxxxx --internet-gateeway-id igw-xxxxxx
+aws ec2 create-subnet --vpc-id vpcc-xxxxxxxxxxx --cidr block 10.0.0.0/24 --availability -zone ap-south-1a
+aws ec2 create-route-table --vpc-id vpc-xxxxxxxxxx
+aws ec2 create-route --route-table-id rtb-xxxxxxx -destination-cidr-block 0.0.0.0/0 --gatway-id igw-xxxxxx
+aws ec2 associate-route-table --route-table-id rtb-xxxxxx -subnet-id subnet-xxx
+aws ec2 create-route-table --vpc-id vpc-xxxxx
+aws ec2 create-nat-gateway --subnet-id subnet--xxxxxx- allocatiuon-id eipalloc-xxxxxxx
+
+
+
+
+
+
+Next :::
+
+	Load Balancer 
+
 	
 
 				
