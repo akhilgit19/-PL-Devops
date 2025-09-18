@@ -2274,6 +2274,7 @@ Type    protocol port      source
    - remove http source 0.0.0.0/0
 
 
+- In the application attributes you can add stick configuration as well from target group
 
 
 
