@@ -2279,14 +2279,138 @@ Type    protocol port      source
 
 
 
+	
+#######################
+Day 41 : 18th Sep. 2025
+
+#######################
+
+
+- Cloud FRONT & Global Acceleartor:
+    - used as content delivery network
+    - improve the user experience
+    - they maintain edge locations in all most all the regions to store the used data to maintain user experince
+    - Content Delivery Network (CDN)
+    - Improves read performance, content is cached at the edge
+    - 216 point of presence globally ( edge locations)
+    - DDOS protection (because worlwide) integration with shield aws web application firewall
+
+Cloud front Geo Restriction
+ - You can restrict who can acess your  distribution
+ - Allow list: Allow your users to acces your content only if there in one of the countries on a list of approved countires
+ - Blocklist: Prevent your users from acessing  your content if theyre in one of the coutnries on a list of banned countries
+- The countr is determinted using a 3rd party Geo iP database
+- Use case:Copyright laws to control access to content
 
 
 
+Cloud Front - Pricing
+- Cloud Front Edge locations are all around the world
+- the cost of data out per edge location varies
+
+Cloud Front - Price classes
+- You can reduce the number of edge locations for cost reduction
+- Three price classes:
+  1. Price class all: all regions - best performance
+  2. Price class 200: most regions but excludes the most expensive regions
+  3. Price class 100: only the least expensive regions
+
+Unicast IP vs Anycast IP
+ Unicast IP: One server holds one iP address
+ Anycast IP: all servers hold the same IP addresses and the clent is routed to the nearrrest one
+
+??
+
+
+AWS Global accelerator:
+Work with elastic ip , ec2 instances, ALB, NLB, public or private
+-Consistent performance
+ - Intellingent routing to lowest latency and fast regional failover
+ - No issue with client cache ( because the IP doesnt change)
+ - Internal AWS network
+- Health checks
+ . global accelerator perform a health check of your applications
+ . helps make your application global (Failover less then i minute for unheealthy)
+ . great for disaster recovery
+- Security 
+  . Only 2 external IP need to be whitelister
+  . DDOS protection thanks to aws schield
+
+AWS Global Acceleartor vs Cloud Front
+
+- They both use the AWS global network and its edge locations around the world 
+- Both services integrate with AWS shiel fro DDOS protection
+
+CloudFront 
+ - Improves performacne for both cacheable content( such as aimages and videos)
+-  dynamic content ( such as API aacceleration and dynamic site delivery )
+- content is serverd ad the edge
+
+Global accelerator:
+- Improves performance for a wide range of applications over TCP or UDP
+- Proxying packets at the edge to applications running in one or more AWS regions
+- Good fir for non HTTPS use cases  such as gaming UDP lOT MQTT or voice over IP
+- good for HTTP use cases that require static IP addresses
+- good for HTTP use casses that required detemrinistic fast regional failover
+
+
+Amazon Cloud Front
+- Content Delivery Network CDN
+- Improves read performance, content is cached at the edge
+- improves users experience
+- 216 point of presence globally edge locations
+- DDOS protection ( because worldwide) integrations with shield, AWS weba pplications firewall
+
+Amazon Cloud watch Metrics
+
+-CloudWatch provided metrics for every services in AWS
+- Metric is a variable to monitor( CPUUtilization , neTWORKLN)
+- Metrics belong to namespace
+- Dimension is an attirbute of a metric( instance id, envnvironment, etc)
+- up to 30 dimensions per metric
+- Metric have timestamps
+- can create cloudwatch dashboards of metrics
+- can create cloudwatch custom metrics
+
+Cloud watch logs:
+- Log groups: arbitrary name, usually representing an application
+- Log stream instances withing application/log files/continaers
+- can define log expiration policies(never expire 1 day to 10 yearS)
+- Cloud watch logs can sent logs to:
+  -Amazon S3 exports
+  - Kinesis Data Streams
+  - Kinesis Data Firehose
+  - AWS Lambda
+  - OpenSearch
+- Logs are encrypted by default
+- Can setup KMS based encryption with your own keys
+
+
+Cloud Watch logs: -S3 Export
+- Log data can take up to 12 hours to become available for ex port
+- The API call is createExportTask
+- Not near- realtime or realtime us logs subscriptiones ininstead
+
+- while create a ec2, In advanced details. Detailed cloudwach monitoring is alwasy enabled
+  for basic level
 
 
 
+CloudWatch Alarms
+- Alarms are used to trigger notifications for any metric
+- Varous options (sampling % max,min ,etc)
+- Alarm States:
+   . OK
+   . Infufficent data
+   . alarm
+- Period
+   .Length of time in seconds  the evalute the metric
 
 
+Cloud watcha alarms targets
+- stop terminate reboot recover an ec2 instance
+- trigger auto scaling action
+- send notificatino to SN ( from which you can do pretty much anything)
 
 
 
