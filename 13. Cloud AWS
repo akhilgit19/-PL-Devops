@@ -2414,6 +2414,63 @@ Cloud watcha alarms targets
 
 
 
+EC2 instance recovery:
+Statuc check:
+  Instance status= check the EC2 VM
+  system status = check the underlying hardware
+  attached EBS status= check attached EBS volume
+             monitor                                              alarm
+ ec2 instance ----- cloud wathc alarm(status check failed_ssyttem -------SNS topi
+
+- Recovery: same private public elastic ip, metadata, placement group
+
+AWS Cloud trail:
+- provies governance, compliance and audit for your aws account
+- cloud trail is enabled by default
+- get an history of events /API calls made within your AWS account by
+  - console
+  - SDK
+  - CLI
+  - AWS services
+- can put logs from cloudtrail into cloudwatch logs or S3
+- a trail can be applied to all regions ( defualt) or a single region
+- if a resource is deleted in AWS, investigate cloudtrail first
+
+Cloud trail diagram:
+??
+
+Cloud trail Events Retention
+- Events are stored for 90 days in cloud trail
+- to keep events beyond this period log them to s3 and use athena
+??
+
+AWS Config
+- Helps with auditing and recording compliance of your AWS resouces
+- Helps record configurations and changes over time
+- Questions that can be solved by AWS config:
+   - is there unrestricted ssh access to my security groups
+   - do my bucket have any public access?
+   - how has my ALB configurations changes over time
+- you can receive alerst (sns notifications ) for changes
+- aws config is a per-region service
+- can be aggregated across regions and accounts
+- possibility of storing the configuration data into s3(analyzed by athena)
+
+Cloud Watch  vs Cloud Trail vs Config
+- ClouWatch:
+  - performance monitoring( metrics  CPU , network ,etc) and dashboards
+  - events and alerting
+  - log aggregation and analysis
+- Cloud trail
+   - Record API calls made within your account by everyone
+   - can define trails for specific resouces
+   - gloabl service
+- Config
+   - Record configuration changes
+   - Evaluate resources against compliance rules
+   - Get timeline of changes and compliance
+
+
 
 
 
