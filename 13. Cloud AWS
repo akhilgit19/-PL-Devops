@@ -2473,6 +2473,125 @@ Cloud Watch  vs Cloud Trail vs Config
 
 
 
+#######################
+Day 42 :22nd Sep. 2025
+#######################	
+
+
+Lambda Service :::
+
+	Serverless :::
+	
+		Users no need to manage any infra.
+
+Why AWS Lambad?
+ amazon ec2
+   - virtual servers in the clou
+   - limited by RAM and CPU
+   - Continuously running
+   - scaling means intervention to add /remove alerts
+
+amazon Lambda
+   - virtual functions - no server to manage
+   - limited by time- short executions
+   - run on demand
+   - scaling is automated
+
+Benefits of AWS Lambda
+- easy priciing
+   - pay per request and compute time
+   - free tier of 1000000 aws lambda request and 4000000 gbs of compute time
+   - Integrated with the whole AWS suite of services
+   - Integrated with many programming languages
+  -  Easy monitoring through AWS Cloud wach
+  -  Easy to get more resources per functions( up to 10 gb of RAM)
+  -  increasing RAM will also improve CPU and network
+
+ AWS Lambda language support
+ - node.js
+ - python
+ - java
+ - c#
+ - ruby
+ - custom runtime api
+ - lambda container image
+   - The container image must implement the lambada runtime PAI
+   - ECS/Fargate is preferred for running arbittrary docker images
+
+
+AWS Lamda Integrations Main ones
+ - api gateway
+ - kinesis
+ - dynamo db
+ - s3
+ - cloudfront
+ - cloudwach events eventbridge
+ - cloudwatch logs
+ - sns
+ - sqs
+ - cognito
+
+Example: serverless thumbnail creationg
+       
+                 trigger                                         |----> push -- New thumbnial ins s3
+ newimag in s3-----------> aws lambda function creates a thumnail|----> push -- Metadata in dynamobdb
+
+AWS Lambda pricing: exam[ple
+- you can find overall pricing information here
+https://aws.amazon.com/lambda/pricing/
+-pay per calls
+  - first 1,000,000 request are free
+  - $0.20 per 1 million request thereafter ($0.000000002 pre request)
+-pay per dutation ( in increment of 1 ms)
+  400,000 gb-seconds of compute time per month for free
+  ==400,00 seconds if function is 1 gb ram
+  ==3,200,00 seconds if function is 128 MB ram
+- After that  $1.00 for 6000,0000 gb-seconds
+- it is usually very cheap to run AWS Lambda so it's very popular
+
+AWS lambda limits to know - per region
+- execution
+  Memory allocation 128- MB- 10GB (1 MB increments
+  Maximum execution time: 900 seconds ( 15 minutes)
+  Enviromnet variables( 4kb)
+  Disk capacity in the function container ( in/tmp) 512 MB to 10 GB
+  Concurrency executions 1000 (can be increased)
+
+- Deployment
+ - lambda function deployment size( compressed. zip ) 50mb
+ - size of uncompressed deployment ( code + dependecnices) 250 mb
+ - can use the /mtp directoyr to load other files at start up
+ - size of envioment variables : 4kb
+
+
+- go to lambda in aws
+- choose - use a blue print
+- blueprint name - python helow world function- A starter aws lambda function
+- execution role- create a new role with basic lambda permissions
+- click on create function
+- you can see code, test,
+
+like this users can maintain theri function defination and test the funciton
+- go to monitoring option and you can check cloud watch metrics
+- in monitoring tab you can see view cloud watch log
+- it will automatically create iam role to access cloudwatch logs
+
+
+
+
+		SQS
+
+-
+		SNS 
+
+
+
+Next :::
+
+	Conti with Route53
+
+	Security
+
 
 
 - 
