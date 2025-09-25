@@ -2579,10 +2579,171 @@ like this users can maintain theri function defination and test the funciton
 
 
 
-		SQS
+SQS
+- queue are used to maintain data that transfer to external services
+- When we start deploying multiple applications, they will inevitably need
+  to communicate with one another
+- There are two patterns of application communication
 
+
+1 synchronos communications                      2 Asynchronos even based
+  (application to application)                   (application to queue to application)
+ 
+Buying               shipping                 Buying   queueu  shipping 
+service              service                  service           service  
+
+
+if there is sudden spike in the data we need queue to main the application
+
+what's queue?
+
+
+producwer                            |----------------------    consumer
+                                     |          poll messages
+producwer -----------------------sqs queue---------------------consumer
+                                     |
+producwer                            |-----------------------     consumer
+
+Limitations:
+- oldest offing( over 10 years old)
+- unlimited throughput, unlimited number of messabes in queue
+- default retention of messages 4 days maximum of 14 days
+- low latemcy(<10 ms of publish and receive)
+- limitation of 256kb per message sent
+
+- can have duplicate messages( at least once delivery, ocassionally)
+- can have out of order messages( best effor ordering)
+
+SQS Producing messages
+- Producer to sqs using the SDK (Send Message API)
+- The message is persisted in SQS until a consumer deletes it
+- Message retention : defualt 4 days up to 14 days
+
+- Example send an order to be processed
+  . order id
+  . cusotmer id
+  . any attributes you want
+- sqs standard: unlimited throughput
+
+
+
+SQS Consumer Messages:
+- Consumers( running on EC2 instances,servers or aws lambda)
+- poll sqs for messages( receive up to 10 messages at at tme)
+- Process the messages( example: insert the message into an RDS database)
+- Deletes the messages using the deleteMessageAPI
+
+QUEUE  ------POLL- --------CONSUMER------INSERT------AMAZON RDS
+ ^--------------------------|
+       DELETE MESSAGE
+
+
+SQS Multiuple EC2 instances consumers
+
+- consuemrs receive and process messages in parallel
+- at least once delivery
+- best-effort message ordering
+- cosumers delete messsages after processing them
+- we can scale consumers horizontally to improve throughput of processing
+
+
+Amazon SQS- Security
+- Encryption
+  - in flight encryption using https API
+  - At rest encryption using KMS keys
+  - client-side encruption if the client wants to perform encryption/decryption itself
+
+.Access controls: IAM Policies to regulate access to the SQS API
+
+.SQS Access policies( similart to S3 bucket policies)
+ . Useful for cross account acess to sqs queues
+ . useful for allowing other services( SNS,S3) to write to an SQS queue
+
+- In amazon , click on queues- click on create queue
+- queue name
+- configation
+- encryption- by defualt enableed
+- encruption key type- amazon sqs key
+- access policy
+choose method
+define who can send messages to the queue
+define who can receive messages from the queue
+- click on create queue
+- click on your queue, click on on send and receive message
+- you can send meessage now and you can click on poll message to see the message in receive end
 -
-		SNS 
+
+
+
+SNS - Simple notification service
+
+- click on sns- topic-create
+- choose standard
+- name
+- encryption
+- access policy
+- Delivery status logging
+-
+Amazon SNS
+- The event producer  only sends message to on SNS Topic
+- As many event receivers( subscriptions) as we want to listent to the  SNS to the SNS TOPIC 
+  notifications
+- each subscriber to the topic will get all the messages( not: new feature to filter  messsages)
+- up to 12,5000,000 subscriptions per top 
+- 100,0000 topics limit
+
+
+SNS------Publish--------sqs, lambda, kinesis data firehoue, emails, sms && mobile notificaitons, https endpoints
+
+Amazon SNS- Security
+- Encryption:
+  In fligh encryption using HTTPS API
+  At- rest encryption using KMS keys
+  client-side encryption if the cleint wants to perform encryption/decryption itself
+
+- Access controls: IAM policies to regulate access to the SNS API
+- SNS Acces polices ( similart to s3 bucket policies)
+  . useful for cross-account access to SNS topics
+  . useful for allowing other servies( s3) to write to an SNS topic
+
+
+Amazon Kinesis Data Streams
+- Collect and store streaming data in realtime
+
+Realtimedata:       
+          
+click streams         Producers:           amazon kinesis    consumers:
+IOT devices  ----     applications  ----     datastreams   -- application
+Metrics and logs      kinesis agent                          lambda
+                                                             amazon data firehose
+                                                             managed service of apache flink
+
+
+
+Route53:
+- a reliable way to route users to internet applications
+- What is DNS
+ - Domain name system which transaltes the human firendly hostnames into the machine iP addressed
+ - www.google.com--> 172.21.7.18.36
+ - DNS is the backbone of the internet
+ - DNS ueses hierarchical naming structure
+   .com
+  example.come
+www.example.come
+api.example.come
+-  DNS terminologies
+  Domain registrar: Amazon route53 ,go daddy
+  DNS records: A, AAAA, CNAME,NS
+  Zone file: contains DNS records
+  Name Server: Resolves DSN queries( Authoritative or Non - authoritative)
+  Top level Domain( TLD) com. us. in gove.org
+  Second Level Domain: ( SLD) amazon.com, google.com
+
+https://api.www.example.com- root
+prot  |  |   |- SLD  | - tld 
+      |  sub domain 
+      fully qualified domain name 
+
 
 
 
@@ -2592,6 +2753,237 @@ Next :::
 
 	Security
 
+#######################	
+
+Day 43 :23rd Sep. 2025
+#######################				
+			
+
+	Route53 
+	- High available, scalble, fully managed and authoritative DNS
+    - Authoritative= the customer can update the DNS records
+    - Route 53 is also a domain registrar
+    - ability to check the health of your resources
+    - the only AWS services wihch provides 1-00% availability SLA
+    - why route 53? 53 is a reference to the traditional DNS port.
+
+     Route53 - Record Types
+    A- maps a hostname to IPV4
+    AAAA - maps a hostname to IPV6
+    CNAME - maps a hostname to another hostname
+       . The target is a domain name which must have an A or AAAA record
+       . can't crete a CNAME record for the top node of a DSN namesapce( Zone
+           Apex)
+       . Example: you cant create for example.come. but you create for www.example.com
+
+     NS- Name servers for the hosted zone
+       . Control how traffice is routed for a domain 
 
 
+
+- Security
+
+	AWS Security & Encryptions ::::
+	
+		EC2 - SG 
+		
+		Subnet - NACL 
+		
+		Secured Key Pairs 
+		
+		SQS --> Encryption --> During Rest, On-Transit
+		
+		Security Certificates 
+		
+		AWS Key Vault : Credential Manager 
+		
+		Jenkins Credential Manager - 
+-  Why encrypton?
+      - data is encrypted before sending and decrypted after receiving 
+      - TLS certificates help with encryption( HTTPS)
+      - Encryption in fight ensures no MITM( man in the middle attack) can happned
+
+         username
+         passsword
+client                 tls encryption            tls descryption         https website
+
+- lets say for example in cient as a users i want to connect to the server with username and password
+- but when the data is travelling via internet , they might attack, in order to prevent such we encrypt the data
+- the encryption might be based on various protocaols , we ecnrypt the data via TLS encryption and decrypt the certifcate
+- the ceritificate helps with encryption (HTTPS)
+- at the server side encryption, encrypted before sending and decrupted after receiving tat  server side
+- for instance we use keypair which is maintained in local mahcine
+- in realtime scenaro keypairs are maintained in the server which users will have acess to read the path and they can use 
+
+AWS KMS( key management Service)
+- Anytime you hear encryption for an AWS service, it's most like KMS
+- AWS managed encryption keys for us
+- full integrated with IA for authorization
+- easy way to contrll access to your datat
+- able to audit KMS key usage using cloudtrail
+- Seamlessly integrate into most aws services( EBS S3,RDS,SSM)
+- Never ever store your secretes in plaintext, especially in your code
+  .KMS key encryption also available through API calls(SDK,CLI)
+   . Encrypted secrets can be store in the code/ enviromente variables
+
+
+KMS Key types:
+- KMS keys is the new name of KMS customer master key
+- Symmetric( AWS-256 keys):
+ . Single encryption key that is used to encrypt and decrypt
+ . AWS services that are integrated with KMS use symmetric CMKS
+ . you never get access to the KMS key unencrypted( must call KMS API to use)
+- Asymmetric( RSA & ECC key pairs):
+  . public ( encrypt and private key( decrypt) pair
+  . used for encrypt/decrypt or sign/verify operations
+  . the publick key is downloadable, but you cant access the private key unencrypted 
+  . use case: encryption outside of AWS by usrs who cant' call the KMS API
+
+AWS Secrets Manager
+- Newer service, meant for storing secrets
+- capability to force rotation of secrets every x days
+- automate generation of secrets on rotation( uses lambda)
+- integration with amazon rds( msql, postgre sql, aurora)
+- secrets are encrypted using KMS
+- mostly meant for RDS integration
+
+AWS Certificate Manager(ACM)
+
+- Easily provision, manage, and deploy TLS Certificates
+- provide in flight encryption for websites( HTTPS)
+- Supports both public and private TLS certificates 
+- Free of charge for public TLS certificates
+- Automati TLS certificate renewal
+- Integrations with ( Load TLS certificates on )
+   . Elastic load balancers
+   . cloud front distributions
+   . APIS on API gateway
+- cannot use ACM iwht EC2( cant be extraacted)
+
+
+AWS WAF- Web application firewall
+- Protect your web applications from common web exploits (layer7)
+- layer 7 is HTTPS( v layer 4 is TCP/UDP)
+- Deploy on 
+   application load balancer
+   api gateway
+   cloudfront
+   app sync graphql API
+   cognitor user POool
+
+
+AWS Shield: protect from DDOs attach:
+
+. DDos: Distributed Denial of service- many request at the same time
+. AWS shield standard
+. . Free service that is activated for every AWS customer
+. Provies protection from attacks such as SYN/UDP floods, reflection attacts and other
+ layer 3/layer 4 attacks
+. AWS shield advanced
+  . Optional DDos mitigation service( $3,000 per month per organization
+  . protect agains more sophisticated attack on Amazon EC2, Elastic load balancing( ELB)
+    AMAZON cloudfront, aws global acceleartor and route 53
+  . 24/7 access to AWS DDos response team ( DRP )
+  . Protect agains higher fees during usuag espikes due to DDOs
+  . Shield advanced automatic application layer DDos mitiagion automatically creates
+    evaluates and deploy AWS WAF rules to mitigate layer 7 attacks
+
+
+AWS Firewall Manager
+- Manage rules in all accounts of an AWS organization
+- security policy: common set of security rules
+   . WAF rules( application load balancer, api gateways, cloudfront)
+   . AWS shield advanced ( ALB,CLB,NLB,ELASTIC IP, CLOUDFRONT)
+   . Security groups for EC2, Application load balancer and ENI resources in VPC
+   . AWS network firewall ( VPC levl)
+   . Amazon rule 53 resolver DNS firewall
+   . policies are created at the region level
+. Rules are applied to new resources as they are created( good for compliance)
+   across all and future accounts in your organziation
+
+
+
+
+
+	Cloudformation :::
+	
+		Infra-Structure Provisioning - IAC tool
+			
+			Terraform - AWS/Azure
+				- Kubernetes
+				- Github 				
+		
+			AWS CLI config
+			
+				Script - CDK
+				
+					Python -> boto3 Libraries 	
+	
+		https://docs.aws.amazon.com/cli/latest/userguide/cli_iam_code_examples.html
+		
+		
+		aws configure 
+		
+			aws.tf :
+			
+				vpc,subnet,route_table,Route Table Asso, IGW, Sec Grp, EC2 
+				
+		CF Template : 
+		
+				s3 bucket!
+		
+				vpc,subnet,route_table,Route Table Asso, IGW, Sec Grp, EC2 
+
+
+
+AWS Cloud Formation:
+- Cloud Formation is a declarative way of outlining  your aws
+  infrastructure for any resources( most of them are supported)
+- for exaple, withing a cloudformation template, you say
+  . i want a security group
+  . i want two ec2 instances using this security group 
+  . i want an s3 bucket
+  . i want a load balancer( ELB) in fron of these machines
+. Then cloudformation creates those for you, in the right order with the exact configuration that you specify
+
+
+Benifits of AWS Cloud formation(1/2)
+
+- Infrastructe as code
+ - no resources are manually created which is execellent for control
+ - changes to the infrastructure are reviewed through code
+
+Cost:
+ - East resources within the stack is tagged with an indentifier so you can easily see how much aa stack scosts you
+ - you can estimate the costs of your resources using the cloudformation template
+ - savings strategy In dev you could automation deletion of template at 5 mp and recreated at 8 am safely
+
+Productvity
+- ability to destroy and re-create an infrastructe on the cloud on the fiy
+- automated generation of diagram for your templates
+- declarative programming( no need to figure out odering and orchestration)
+
+Dont re-invent the wheel
+ - levearage exisiting templates on the web
+ - leverage the documentation
+Supports (almost) all AWS resources
+ - eveything well see in this course is supported
+ - you can use custom resources for resources that are not supported
+
+
+- gotto cloudformatin
+- click on create stack
+- Choose build from infrastructure composer
+- click on create infrastcutre
+- you can drag and drop the resourcesss
 - 
+
+CloudFormation- service role
+
+- IAM role that allows cloud formation to create/update/delete stack resources on your behalf
+- give ability to users to create/update/delete the stack resources even if they dont have premissions to work with th eresources in the stackk
+- use cases
+  . you want to achieve the least privilege principle
+  . but you dont want to give thhe user all the required permissions to create the stack resources
+- user must have iam:PassRole permissions
+
