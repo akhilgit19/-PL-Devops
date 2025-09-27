@@ -1099,6 +1099,8 @@ Working with AWS VPC ::::
 
 -  AWS Infra-Structure  :
 
+Project1:
+===========
 - Create an AWS Infra Architecture Diagram
 
                    wwww internet
@@ -2055,16 +2057,74 @@ Day 40 : 16th Sep. 2025
       - in vpc, it has two az's which has public subnet and private subnet
       - wheneve end user try to access via internetgateway, the loadbalancer send the request to private subnets usingg
         roundrobin method
+
+External ELB( public facing)
+Region 
+                         igw      
+     vpc                                10.0.0.0/16
+
+            az1                         az2
+
+         public sub                  public sub
+
+            --------------LB----------------
+           |                                |
+           |                                |
+         private sub                    private sub
+             webserver                   webserber
+
+
      Internal LB: 
        - Within your vpc when internal private subnets applications want to communicate to 
          internal private subnets app2 we use internal loadbalancer
-     ??
+
+Internal ELB(Private facing)
+Region 
+                         igw      
+     vpc                                10.0.0.0/16
+
+            az1                         az2
+
+         private subnet               private subnet
+
+           web1 ---------     ----------------web2
+                         |   |
+         private sub     |   |          private sub
+                         |   |
+            --------------LB----------------
+           |                                |
+           |                                |
+         private sub                    private sub
+            app2                         app2
+
+
 
      Example Architecture:
    - The external (public facing) load balancer serves the traffic from the internet
    - The internal (private ) load balancer serves traffic from within the VPC eg We b server to apps servers
    - Load balancers works with Auto scaling group( ASG) enabling automatic scaling of the back end ec3 sintacnes
-      ??
+ 
+
+ VPC 
+                      v   ELB( Public facing)
+
+Availablity Zone                                Availablity Zone B
+
+ Auto scaling group 
+
+
+   ec2             ec2                           ec2           ec2
+
+
+                             ELB( private facing)
+
+ Auto scaling group 
+
+   ec2              ec2                          ec2             ec2
+
+
+
+
 
    Types of load balancer on AWS:
    - AWS has 4 kinds of managed load balancers
@@ -2083,7 +2143,17 @@ Day 40 : 16th Sep. 2025
 
 
  OSI Network layers
-??
+
+client                                server
+7 Applicatino  application loadB  https, https, https/2 grpc    7 Applicatino 
+6 Presentation      ssl/tls                                    6 Presentation
+5 session              ssl/tls                                 5 session
+4 Transport    networkloadbalance tcp ,udp                     4 Transport 
+3 Network      gateway load balancer   ip                      3 Network
+2 Datalink                                                     2 Datalink
+1 physical     electroni/light/raido signals via ehtern        1 physical
+               cable or optiocal fiber or ai
+
 
  Classic Load Balancer:
  - suports TCP ( Layer 4) , HTTP  & HTTPS( layer7)
@@ -2101,7 +2171,9 @@ client---------Listener--> clb------Internal---> EC
  - support for http/2 and websocket
  - support redirect ( from HTTP to HTTPS for example)
 
-??
+wwww<------------Route/user-|-                    ------> http-- targetgroups for users applications
+                            | external application loadbalancer
+wwww<------------Route/user-|                    ------> http-- targetgroups for users applications
 
   Application Load Balancer (V2)
   - Routing tables to different target groups:
@@ -2159,7 +2231,14 @@ Gateway load balancer
    .transparent netowkr gateway - single entry/exit for all traffic
    . load balancer- distributes traffic to your virtual applicances
 - uses the geneve protocol on port 6081
-???
+
+
+users-------routetable       -------> application
+                     |      |
+                        lb 
+               Targetgroups
+             ec2 ec2 ec2
+
 
 
 Sticky Session ( Session Affinity)
@@ -2172,20 +2251,44 @@ Sticky Session ( Session Affinity)
 
 
 Cross Zone load balance:
-??
 
 With Cross Zone load Balancing
 - each load balancer instance distributes evenly across all reistereed instances in ALL AZ
+                  client
+
+50 reuest                             50 request
+
+     lb                              lb
+
+
+10        10                          10       10   10        10
+ec2      ec2                          ec2      ec2  ec2      ec2
+                                      10       10    10      10
+                                      ec2      ec2  ec2      ec2
+
 
 Without cross zone load balancing
 - Request are distrbuted in the instances of  the node of the elastic load balancer
 
 
+                  client
+
+50 reuest                             50 request
+
+     lb                              lb
+
+
+25        25                         6.5       6.5   6.5      6.5
+ec2      ec2                          ec2      ec2  ec2      ec2
+                                      6.5      6.5    6.5      6.5
+                                      ec2      ec2  ec2      ec2
+
+
 
 	Working with Load Balancer!
-	
-Create a Load Balancer and Route Traffic to EC2 Instances thru Load Balancer.
-??
+
+Project2: Create a Load Balancer and Route Traffic to EC2 Instances thru Load Balancer.
+===========================================================================================
 - Let prepare the target serivce, then we shall setup the loadbalancer  to route
   the request and access the service
 - im going to execute two ec2 for web applications, end user can dicrectly toaccess to ec2 instances
@@ -2195,7 +2298,6 @@ Create a Load Balancer and Route Traffic to EC2 Instances thru Load Balancer.
 - and also we have a listener to listener the requests
 
 Load Balancer security groups
-???
 
 - end user will http/https request to use load balancer
 - whenever we create load balancer we should create load balancer security group
@@ -2273,7 +2375,6 @@ Type    protocol port      source
    - type http source customm  PL-DemoALB-SG1
    - remove http source 0.0.0.0/0
 
-
 - In the application attributes you can add stick configuration as well from target group
 
 
@@ -2317,9 +2418,20 @@ Cloud Front - Price classes
 
 Unicast IP vs Anycast IP
  Unicast IP: One server holds one iP address
+
+ client
+
+12.3.456.78        98.72.54.32
+
+
+
  Anycast IP: all servers hold the same IP addresses and the clent is routed to the nearrrest one
 
-??
+
+client
+
+12.3.456.78  12.3.456.78 
+
 
 
 AWS Global accelerator:
@@ -2436,13 +2548,11 @@ AWS Cloud trail:
 - a trail can be applied to all regions ( defualt) or a single region
 - if a resource is deleted in AWS, investigate cloudtrail first
 
-Cloud trail diagram:
-??
 
 Cloud trail Events Retention
 - Events are stored for 90 days in cloud trail
 - to keep events beyond this period log them to s3 and use athena
-??
+
 
 AWS Config
 - Helps with auditing and recording compliance of your AWS resouces
@@ -3063,7 +3173,7 @@ Migrate Db2 for LUW to Amazon EC2 by using log shipping to reduce outage time:
 
 
 
-Project-		AWS - create Infra-Structure to deploy 2-tier application
+Project3 -		AWS - create Infra-Structure to deploy 2-tier application
 ===================================================================================
 Aruchitecture and High Level steps:
 
@@ -3226,7 +3336,7 @@ Step6 - setup public in DSN
 
 
 
-Projet 2 enahancment with LB and multi AZ setp:
+Projet 4 enahancment with LB and multi AZ setp:
 =====================================================
 
 
