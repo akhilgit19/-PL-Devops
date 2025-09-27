@@ -2987,3 +2987,295 @@ CloudFormation- service role
   . but you dont want to give thhe user all the required permissions to create the stack resources
 - user must have iam:PassRole permissions
 
+
+				
+#######################
+Day 44 :25th Sep. 2025
+#######################	
+
+	- Open-Source DevOps 
+
+	- AWS DevOps Services :::
+	
+		- AWS CodeCommit		==> GitHub/Gitlab/BitBucket / S3 Buckets
+
+		- AWS CodeBuild/CodeDeploy/CodePipelines	==> Jenkins 
+		
+			- Build Pipelines 			==> CodeBuild			==>		CI
+			
+			- Release Pipelines 		==> CodeDeploy			==>		CD - Prod Release 
+			
+			- CodePipelines				==> CodeBuild + CodeDeploy	==> CICD Workflow 
+			
+			
+		- AWS 		--> Infra-Structure/Platform as Service 
+		
+		- Azure 	-->	Infra-Structure/Platform/Software as Service 
+					-->	Azure DevOps Services!
+					
+					
+	- Open-Source DevOps 
+	
+	- Azure DevOps Services
+		- Azure Boards 
+		- Azure Pipelines
+			- Build Pipelines
+			- Release Pipelines
+		- Azure Repositories 
+		- Azure Artifacts 
+		- Azure Test 
+		
+	- GitHub == used for Open-Source Projects
+		Jenkins
+		
+	- Github Actions => jenkins/AzPipelines/Gitlab-ci 
+	
+	- Docker/Kubernetes
+	
+	
+
+	Az Admin - az-104(az sys admin asso.)25hrs. certification  
+	
+	=>  az-400(Az DevOps)
+	
+	
+	AWS - create Infra-Structure to deploy 2-tier application
+		
+		- implementation
+		
+		- interview 
+
+	
+	1. vpc  
+	2. ASG / load balancer?
+	3. webservice 		user-request1,2 - 
+	4. mysql - az1, az2 = read relication?
+
+
+Converting a DB instance to a Multi-AZ deployment for Amazon RDS:
+	https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.Migrating.html
+
+
+
+Migrate Db2 for LUW to Amazon EC2 by using log shipping to reduce outage time:
+	https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/migrate-db2-for-luw-to-amazon-ec2-by-using-log-shipping-to-reduce-outage-time.html
+
+
+
+
+Project-		AWS - create Infra-Structure to deploy 2-tier application
+===================================================================================
+Aruchitecture and High Level steps:
+
+Route53 
+hosted zone -------------------- WWW Internet
+                                     |
+                                     |                        AWS Mumbai region
+|---------------------------------------------------------------------
+|region
+|
+|    ---------------------------InternetGateway--------------------
+|    |  VPC                                                        10.0.0.0/16
+|    |    AZ1                                                AZ2
+|    |           public subnet                           public subnet        destination    | Target
+|    |               webserver ec2                                          10.10.0.0/16      local
+|    |     10.10.0.0/24                                  10.10.1.0/24        0.0.0.0/0         igw-xxxxx
+|    |
+|    |           private subnet                          private subnet       destination    | Targ
+|    |
+|    |             mysql                                                      10.10.0.0/16     local
+|    |     10.10.11.0/24                                      10.10.12.0/24
+|      
+|________________________________________________________________________________
+
+Steps
+1-  Using VPC wizard, create a new VPC, an internetgateway, 2 public subnets,2 private subnets
+    and corresponding routetables
+2. launch an EC2 instance in the public subnet and connect over SSH
+3. Create MYsql RDS database in the private subnet
+4. Install a web server on EC2 and configure the web application to connect to RDS database
+5. Access web applicatino using EC2 public ip add data from the application screen and verify that data is tored into the backend mY SQL dtabase
+
+Step1- Create VPC, Subnets and routetables
+- go to vpc console- your vpc -- create vpc
+  a. VPC settings- select vpc and more
+  b. name tage: webapp
+  c. IPV4 CIDR: 10.10.0.0/16
+  d. Number of availability zones( AZ's): 2
+  e. Number of public subnets: 2
+  f. Number of private subnets: 2
+  g. cusotmize subnets CIDR blocks
+     a. public subnet CIDR in availablity zone1: 10.10.0.0/24
+     b. public subnet CIDR in availablity zone2: 10.10.1.0/24
+     c. private subnet CIDR in availablity zone1: 10.10.11.0/24
+     d. private subnet CIDR in availablity zone2: 10.10.12.0/24
+   h. NAT gateways: None
+   i. VPC endpoints: none
+   j. Create VPC
+
+Step2- Launch an Ec2 instance and connect
+ 1. launch ec2 instance in newly created public subnet
+   a. go to ec2 serices- ec2 dahboard- launch instance
+   b. Name: webserver
+   c. select AMI: Amazon linux(default) [ by default it should select Amazon linux 2023 AMI- Free tier elgigble]
+   d. slect instance type: t2.micro( default)
+   e. select key pai: ,key-pair that you had created earlier.
+        a. if you dont see the key pair in the dropdown then check if you are using the correct AWS  region in which 
+           you had
+        b. if you still dont see key-pair, then cancel the ec2 creation flow and first create a new key pair as described
+           in the prerequistites section
+   f. Network setting-. edit- select your VPC( webapp-vpc) and your a public subnet in availabilty zone
+   g. Auto-assign public ip: enable
+   h. firewall-> create secruity group
+          a. name: webapp-ec2-sg
+          b. add inbound security group rule: ssh(port22)  for source CIDR 0.0.0.0/0
+          c. Add inbount security group rule: http( port80) for source CIDR 0.0.0.0/0
+   I configure storage-> 18 gib ,gp3 default
+   j. launch isntance
+   k. go to sintance page-> select the instance you just launched- see the details- cipuy public ipv4  adress
+
+    l.
+      ssh -i pathtokey ec2-user@publicipaddressofec2
+
+step3. Create a RDS databse
+ 1. go to RDS console
+ 2. create db subnet group
+    a. select subnet groups from the left panel- create DB subnet group
+    b.Name: webapp-db-subnet-group, Description: DB subnet group  
+    c.VPC: select webapp-vpc
+    d.Add subnets: availablity zones: select a and b
+    e. subnets: select 10.10.11.0/24 for AZ a and 101.1010.12.0/24 for AZ b
+    f. create
+3. go to databases- create database
+   a. select standard create
+   b. engine options: select my sql
+   c. templates: select free tier
+   d. db cluster identifier: webapp-db
+   e. credential setting-> master username: admin, master password:,password of your choice>  confirm master password
+   f. connectivyt 
+        a. virtual private cloud VPC: Select webapp-vpc
+        b. db subnet group: select webapp-db-subnet-group
+        c. public access: No
+        d. VPC securty group( firewall) - create new- name: webapp-db-security-group
+        e. database authentication: password authentication
+        f. additional configuration- intial database name: corp
+        g. create database and wait for database to be fully created
+
+4. update db security group to allow inbound traffic form VPC CIDR
+      a. select the database you just created - connectivy and security - click on VPC security group link( this should
+         open ec2 console with db security group seelected)
+      b. selec inbound rules- edit inbound rules- update the source to 10.10.0.0/16
+
+
+Step4- Install and configure webapp  on EC2
+1. Connect ec2 instance over the SSH using EC2 public ip
+2. Install Apache webserver and PGP packages
+   $sudo su
+   $dnf udpate -y
+   $dnf install -y htttpd php php-mysqli mariadb105
+   $systemctl start httpd
+   $systemctl enable httpd
+3. configure db connection setting
+  $cd /var/www   
+  $mkdir inc
+  $cd inc
+  create a new file called dbinfo.inc(using your favourte editor like vi or nanao] and add following 
+ content replace the values for the parameters based on your environment
+  <?php
+  define('DB_SERVER,'db,instance_endpoint');
+  define('DB_USERNAME,'admin');
+  define('DB_PASSWORD','master password');
+  define('DB_DATABASE','corp');
+  ?>
+4. create application file corp.php in /var/www/html directory
+   a. you can use the corp.php file from github repo:
+5. open your browser and hit the URL https://publicup/corp.php
+6. add few sample entries from the from on the website
+
+Step5 - Verify data in the database
+1. Install mysql client in the ec2 instnace
+     #install pip( amazon linux 2023 does not have on by default)
+     $dnf install -y pip 
+     # install dependencies
+     $dnf install -y mariadb105-devel gcc python3-devel
+     #install mysqlclient
+     $pip install mysqlclient
+2. connect to database and query the data
+      $mysql -h<database endpoint> -u admin -p
+      $MySQL[(non)] > connect corp
+      $MySQL[crop]>select*from EMPLOYEES;
+3. Add more data from the web page and see if changes reflect. optionally insert the data into the e  ddtabase table
+   directly and see if webpage displays the data
+     MySQL[corp]>insert into EMPLOYEES values('2',Loksai,'32','Cheanni');
+     Query OK, 1 row affected(0.003 sec)
+
+
+Step6 - setup public in DSN
+1. Setup the public DNS for your webapplication
+ a. assuming you have already got the public domain name and you have created route53 public hosted szone as described
+    . in the pre-requiste section  you cant proceed with follwing steps in you hvaent
+       done those steps
+ b. Go to route 53 console-> hosted zones - click your domain name
+ c. created record
+   a. record name: leave blank
+   b. recourd typeL A- Routes traffic to an IPV4 address and some AWS resouces
+   c. value: enter the value of PUBLIC ip of ec2 instance
+   d. create records
+2. verify DNS
+   a. open browser and access your website using http://YOUR_DOMAIN_NAME/corp.php
+
+
+
+Projet 2 enahancment with LB and multi AZ setp:
+=====================================================
+
+
+Route53 
+hosted zone -------------------- WWW Internet
+                                     |
+                                     |                        AWS Mumbai region
+|---------------------------------------------------------------------
+|region
+|
+|    ---------------------------InternetGateway--------------------
+|    |  VPC                                                        10.0.0.0/16
+|    |    AZ1                                                AZ2
+|    |         public subnet                              public subnet
+|    |
+|    |            ------------------- ALB- ----------------------
+                   |                                            |
+|    |             |                                            |
+|    |      10.10.0.0/24                                10.10.1.0/24   
+                   |                                             |
+                   |                                             |
+|    |           private subnet                           private subnet        destination    | Target
+|    |               webserver ec2                           webserver ec2      10.10.0.0/16      local
+|    |     10.10.13.0/24                                  10.10.14.0/24         0.0.0.0/0         igw-xxxxx
+|    |
+|     
+|    |           private subnet                          private subnet       destination    | Targ
+|    |
+|    |             mysql  ----------------------------------mysql              10.10.0.0/16     local
+|    |     10.10.11.0/24                                  10.10.12.0/24
+|      
+|____________________________________________________________________________
+
+
+1. Stop the webserver and create an AMI. you need AMI because we will now launch webservers in private subnets
+2. create 2 additional private subnets for websevers
+3. launch 2 webservers in respective private subnets and create ALB aacross 2 public subnets as show. configure ALB & target group to sent
+ HTTP traffic to webserers
+4. Modify database setting and make it multi AZ
+5. Modify route53 DNS to point to ALB DNS
+ access website using your http://domainname/copr.php
+6. update ALB listener to https. create a new TLS certificate for your domain in ACM and associte with HHTTPS listener
+   se if you need to change anything else for HTTPS
+7. Access website using your https://domainname/corp.php
+
+
+
+Next :::
+
+	- Azure Cloud - Certification Modules - az-104 
+	
+	
