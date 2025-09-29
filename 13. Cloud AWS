@@ -2318,8 +2318,8 @@ Type    protocol port      source
 - instance type
 - key pair
 - SG-
-  allot http traffice from intern
-  allow ssh traffic from 
+  allot http traffice from internet
+  allow ssh traffic from myvpc
 - advanced details
 
 	#!/bin/bash
@@ -2359,7 +2359,7 @@ Type    protocol port      source
   health check protocol - http
   health check path /
 - click on next
-- Register gargets
+- Register targets
   - select your instances in Az region
   - click on include
 - click on create target group
