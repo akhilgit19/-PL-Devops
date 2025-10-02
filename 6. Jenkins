@@ -284,6 +284,29 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 - When u install jenkins, it comes with defualt plugins, 
 
 
+root@ip-172-31-27-202:/var/lib/jenkins# pwd
+/var/lib/jenkins
+root@ip-172-31-27-202:/var/lib/jenkins# ll
+total 60
+drwxr-xr-x 10 jenkins jenkins 4096 Oct  2 04:29 ./
+drwxr-xr-x 41 root    root    4096 Oct  2 04:29 ../
+drwxr-xr-x  3 jenkins jenkins 4096 Oct  2 04:29 .cache/
+drwxr-xr-x  3 jenkins jenkins 4096 Oct  2 04:29 .java/
+-rw-r--r--  1 jenkins jenkins    0 Oct  2 04:29 .lastStarted
+-rw-r--r--  1 jenkins jenkins 1660 Oct  2 04:29 config.xml
+-rw-r--r--  1 jenkins jenkins  156 Oct  2 04:29 hudson.model.UpdateCenter.xml
+-rw-r--r--  1 jenkins jenkins  171 Oct  2 04:29 jenkins.telemetry.Correlator.xml
+drwxr-xr-x  2 jenkins jenkins 4096 Oct  2 04:29 jobs/
+-rw-r--r--  1 jenkins jenkins 1037 Oct  2 04:29 nodeMonitors.xml
+drwxr-xr-x  2 jenkins jenkins 4096 Oct  2 04:29 plugins/
+-rw-r--r--  1 jenkins jenkins   64 Oct  2 04:29 secret.key
+-rw-r--r--  1 jenkins jenkins    0 Oct  2 04:29 secret.key.not-so-secret
+drwx------  2 jenkins jenkins 4096 Oct  2 04:29 secrets/
+drwxr-xr-x  2 jenkins jenkins 4096 Oct  2 04:29 updates/
+drwxr-xr-x  2 jenkins jenkins 4096 Oct  2 04:29 userContent/
+drwxr-xr-x  3 jenkins jenkins 4096 Oct  2 04:29 users/
+
+
 -  jenkins --version 
 root@ip-172-31-29-205:~# jenkins --version 
 2.516.2
@@ -310,7 +333,7 @@ cd /var/lib/jenkins/plugins/
  
 
 - In available plugins, Maven Integration plugin, click on install
-- In available plugins, Publish Over ssh plugin, click on install
+- In available plugins, Publish Over ssh plugin, click on install, Restart is required
 
 
 
@@ -406,7 +429,7 @@ For example:
 - id -slave1_cred
 - User Name :devopsadmin
 - click on privatekey, click on add , now goto slave node - cat id_ecdsa
-- copy the entire private key and paste their
+- copy the entire private key and paste their in master node
 - click on add
 - now in the drop of credentials select slave1_cred
 - Host key verification strategy- manually trusted key verification strategy
@@ -851,7 +874,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM_Checkout from github repository'
-				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+				git 'https://github.com/akhilgit19/java-webapp-project'
             }
         }
         stage('Application Build') {
@@ -1177,6 +1200,7 @@ test sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat', transfe
 prod sshPublisher(publishers: [sshPublisherDesc(configName: 'QA-Tomcat_WAS', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
 
+
 pipeline {
     agent { label 'slave1' }
 
@@ -1184,7 +1208,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM_Checkout from github repository'
-				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+				git 'https://github.com/akhilgit19/java-webapp-project'
             }
         }
         stage('Application Build') {
@@ -1482,7 +1506,7 @@ Click Manage Account Settings
 
 MFA --> mobile#
 
-App Password = 16 bytes of App Password. vaufxdfsdf asdf ltzr
+App Password = 16 bytes of App Password. piad cvsr dpjl xqbv
 
 What ? window
 Which Appln - email		
@@ -1530,7 +1554,7 @@ pipeline {
             steps {
                 echo 'Perfomr SCM Check-Out'
 				echo 'Cloning Java Maven App Code'
-				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+				git 'https://github.com/akhilgit19/java-webapp-project'
             }
              post {
                 failure {
