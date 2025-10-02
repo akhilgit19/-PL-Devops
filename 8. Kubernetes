@@ -595,7 +595,7 @@ Day 22 : 14th August 2025
     worker-node1     Ready          <none>         46h       v1.29.15
     worker-node2     Ready          <none>         46h       v1.29.15
 - kubectl get pods
-- kubectl get pods -- all-namespaces (You will see all the name spaces s in the cluster)
+- kubectl get pods --all-namespaces (You will see all the name spaces s in the cluster)
 - kubectl get ns 
 - kubectl get pods -- all-namespaces -o wide
 
@@ -1795,7 +1795,7 @@ CICD Pipeline using Kubernetes :::
 - sudo i
 - kubectl get nodes 
 -  useradd devopsadmin -s /bin/bash -m -d /home/devopsadmin
--  su -devopsadmin
+-  su - devopsadmin
 - ssh-keygen -t ecdsa -b 521
 - cd .ssh/
 - ll
@@ -1909,6 +1909,8 @@ pipeline {
 - kubectl get svc
 - kubectl get pods -o wide
 
+
+http://3.84.227.65:32151/demo-1.0-SNAPSHOT/
 
 
 	Using Publish over SSH Plugin, Attach Kubernetes Master to Jenkins Master 
