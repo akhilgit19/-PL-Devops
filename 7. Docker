@@ -391,7 +391,7 @@ exit
 - create a new volume
 - docker volume create pl-vol1
 - if you list now you can see the volume
-	root@ip-172-31-3-184:# docker volume ist
+	root@ip-172-31-3-184:# docker volume list
  DRIVER    VOLUME NAME
 local       pl-vol1
 - docker volume inspect pl-vol1
@@ -473,7 +473,7 @@ Commands:
 				docker commit <existing_container_id> <dockerhub_repo_name>/New_Image_Name>:<tag_Name>
 				
 				docker commit 83d261074037 loksaieta/pl-mvn-env-img:v1.0
-
+                docker commit 56456904601a akhilpagadapoola/pl-mvn-env-img:v1.0
 				
 	- docker build :::
 	
@@ -511,7 +511,7 @@ Commands:
 			
 			docker push loksaieta/pl-mvn-env-img:v1.0
 
-
+            docker push akhilpagadapoola/pl-mvn-env-img:v1.0
 
 Creating build container in Slave Machine:
 ================================================
@@ -588,7 +588,7 @@ docker login -u akhilpagadapoola
 
 
 - once u run:  docker login -u akhilpagadapoola
-- you will be asked for token give the generated token- dcasdfsdsdfsdJY.
+- you will be asked for token give the generated token- dckr_pat_kdbNbaN7_znJD5BBX3chEmt7Hs4
 -
 	docker push loksaieta/pl-mvn-env-img1
 	docker push loksaieta/pl-mvn-env-img:v1.0
@@ -814,7 +814,7 @@ docker login -u akhilpagadapoola
 - Now go to manage jenkins, In security, credentials
 - click on global and click on add credential
 - kind - username and password
-- id - dockerlogind
+- id - dockerloginid
 - description -dockerloginid
 - username- loksaieta
 - password - personal access docker token-  dckr_pat_kdbNbaN7_znJD5BBX3chEmt7Hs4
@@ -843,7 +843,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM_Checkout from github repository'
-				git 'https://github.com/PL-DevOps-GenAI-0625/java-webapp-project.git'
+				git 'https://github.com/akhilgit19/java-webapp-project'
             }
         }
 		
