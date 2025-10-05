@@ -1272,26 +1272,35 @@ Destination         Target
 - click on create routetable
 -  Now in the routtalbe , click on subnet associations, click on edit routes
 - add private subnet -PL1-VPC-A-Private 
-- launch instance  name-PL- Test-Publick- SN1
+- launch instance  name-PL- Test-Private- SN1
 -  ami - amazon linux
 - keypair choose our vpc
 - subnet- private subnet PL1-VPC-A-Private 
 - SG- PL1-VPC-A-SG2
 - type ssh
-  source type custom  vpc cidr- 10.100.0.0/16 
+  source type custom  vpc cidr- 10.101.0.0/16
   type all ICMP- IPV4 ( ping from one instance to another instance withing your private network)
-  source type custom  vpc cidr- 10.100.0.0/16 
+  source type custom  vpc cidr- 10.101.0.0/16
 
 - Now connect to public instance 
 - ping parivate instanceip adress
 - you should see response as there in within a vpc and same az 
 - How to login to private instance
+
+do this step 
+scp -i my-new-key.pem my-new-key.pem ec2-user@3.88.179.2:/home/ec2-user
+
 - go to your public instance
 - vi key.pem
 - past the public key of private instance
 - chomod 400 key1.pem
 - ssh -i key1.pem ec2-user@privateipaddress 
 - Now you can connect to the private isntance
+
+Note:
+akhilpagadapoola@Akhils-MacBook-Air PL-TF-Project2 % curl -4 ifconfig.me
+
+49.43.218.111% 
 
 
 Terraform code:
