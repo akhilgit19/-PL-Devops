@@ -1100,7 +1100,7 @@ Working with AWS VPC ::::
 -  AWS Infra-Structure  :
 
 Project1:
-===========
+===================================================================================================================PROJECT 1
 - Create an AWS Infra Architecture Diagram
 
                    wwww internet
@@ -2297,7 +2297,7 @@ ec2      ec2                          ec2      ec2  ec2      ec2
 	Working with Load Balancer!
 
 Project2: Create a Load Balancer and Route Traffic to EC2 Instances thru Load Balancer.
-===========================================================================================
+===========================================================================================================================================PROJECT 2
 - Let prepare the target serivce, then we shall setup the loadbalancer  to route
   the request and access the service
 - im going to execute two ec2 for web applications, end user can dicrectly toaccess to ec2 instances
@@ -2387,6 +2387,204 @@ Type    protocol port      source
 - In the application attributes you can add stick configuration as well from target group
 
 
+Terraform code:
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.13.0"
+    }
+ 
+  }
+}
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAUNRZPCXQOFRGYEMO"
+  secret_key = "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"
+}
+
+
+
+# -----------------------------
+# 1. Security Groups
+# -----------------------------
+
+# ALB Security Group
+resource "aws_security_group" "alb_sg" {
+  name        = "PL-DemoALB-SG1"
+  description = "Allow HTTP/HTTPS traffic from internet"
+  vpc_id      = data.aws_vpc.default.id
+
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# EC2 Security Group
+resource "aws_security_group" "app_sg" {
+  name        = "PL-AppServer-SG"
+  description = "Allow HTTP from ALB only, SSH from VPC"
+  vpc_id      = data.aws_vpc.default.id
+
+  ingress {
+    description     = "Allow HTTP from ALB SG"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
+  }
+
+  ingress {
+    description = "Allow SSH from VPC CIDR"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.default.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# -----------------------------
+# 2. Data Source for Default VPC & Subnets
+# -----------------------------
+
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+# -----------------------------
+# 3. EC2 Instances (2 Web Servers)
+# -----------------------------
+
+resource "aws_instance" "web_server"{
+  count         = 2
+  ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 (update as needed)
+  instance_type = "t2.micro"
+  subnet_id     = element(data.aws_subnets.default.ids, count.index)
+  key_name      = "my-new-key"   # Replace with your key pair
+  security_groups = [aws_security_group.app_sg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y httpd
+              systemctl start httpd
+              systemctl enable httpd
+              echo "<h1>Hello! You are accessing web server - $(hostname -f)</h1>" > /var/www/html/index.html
+              EOF
+
+  tags = {
+    Name = "webapp_server_${count.index + 1}"
+  }
+}
+
+# -----------------------------
+# 4. Target Group
+# -----------------------------
+
+resource "aws_lb_target_group" "webapp_tg" {
+  name     = "PL-ALB-WebApp-TG1"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = data.aws_vpc.default.id
+  target_type = "instance"
+
+  health_check {
+    protocol = "HTTP"
+    path     = "/"
+    matcher  = "200"
+    interval = 30
+    timeout  = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+}
+
+resource "aws_lb_target_group_attachment" "webapp_targets" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.webapp_tg.arn
+  target_id        = aws_instance.web_server[count.index].id
+  port             = 80
+}
+
+# -----------------------------
+# 5. Application Load Balancer
+# -----------------------------
+
+resource "aws_lb" "app_alb" {
+  name               = "PL-DemoALB"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = data.aws_subnets.default.ids
+  ip_address_type    = "ipv4"
+}
+
+# Listener
+resource "aws_lb_listener" "http_listener" {
+  load_balancer_arn = aws_lb.app_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.webapp_tg.arn
+  }
+}
+
+# -----------------------------
+# 6. Outputs
+# -----------------------------
+
+output "alb_dns_name" {
+  description = "ALB DNS name to access web app"
+  value       = aws_lb.app_alb.dns_name
+}
+
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+alb_dns_name = "PL-DemoALB-1646741510.us-east-1.elb.amazonaws.com"
+
+
+Hello! You are accessing web server - ip-172-31-55-139.ec2.internal
+Hello! You are accessing web server - ip-172-31-92-234.ec2.internal
 
 
 	
@@ -3308,7 +3506,8 @@ Step4- Install and configure webapp  on EC2
   ?>
 4. create application file corp.php in /var/www/html directory
    a. you can use the corp.php file from github repo:
-5. open your browser and hit the URL https://publicup/corp.php
+5. open your browser and hit the URL https://publicip/corp.php
+
 6. add few sample entries from the from on the website
 
 Step5 - Verify data in the database
@@ -3342,6 +3541,62 @@ Step6 - setup public in DSN
    d. create records
 2. verify DNS
    a. open browser and access your website using http://YOUR_DOMAIN_NAME/corp.php
+
+akhilpagadapoola@Akhils-MacBook-Air PL-TF-Project3 % terraform output rds_password
+"K_q!QbtmZx5WR*#_"
+
+mysql -h webapp-db.c6bwyq2k8l2r.us-east-1.rds.amazonaws.com -u admin -p
+
+
+CREATE DATABASE corp;
+USE corp;
+
+CREATE TABLE EMPLOYEES (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  role VARCHAR(100)
+);
+
+INSERT INTO EMPLOYEES (name, role) VALUES
+('Alice', 'Engineer'),
+('Bob', 'Manager'),
+('Charlie', 'Analyst');
+
+
+sudo nano /var/www/html/corp.php
+
+
+<?php
+$servername = "REPLACE_ME_WITH_RDS_ENDPOINT";
+$username = "admin";
+$password = "REPLACE_ME_WITH_YOUR_RDS_PASSWORD";
+$dbname = "corp";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT id, name, role FROM EMPLOYEES";
+$result = $conn->query($sql);
+
+echo "<h1>Employee List</h1>";
+echo "<table border='1'><tr><th>ID</th><th>Name</th><th>Role</th></tr>";
+
+if ($result->num_rows > 0) {
+  while($row = $result->fetch_assoc()) {
+    echo "<tr><td>".$row["id"]."</td><td>".$row["name"]."</td><td>".$row["role"]."</td></tr>";
+  }
+} else {
+  echo "<tr><td colspan='3'>No data found</td></tr>";
+}
+echo "</table>";
+
+$conn->close();
+?>
 
 
 
@@ -3392,6 +3647,442 @@ hosted zone -------------------- WWW Internet
 7. Access website using your https://domainname/corp.php
 
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.13.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.4.0"
+    }
+  }
+}
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAUNRZPCXQOFRGYEMO"
+  secret_key = "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"
+}
+
+#################
+# Variables
+#################
+
+variable "vpc_cidr" {
+  default = "10.10.0.0/16"
+}
+
+variable "public_subnets" {
+  default = ["10.10.0.0/24", "10.10.1.0/24"]
+}
+
+variable "private_subnets" {
+  default = ["10.10.11.0/24", "10.10.12.0/24"]
+}
+
+variable "azs" {
+  default = ["us-east-1a", "us-east-1b"]
+}
+
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+variable "key_name" {
+  description = "EC2 key pair name"
+  type        = string
+  default     = "my-new-key"
+}
+
+variable "db_username" {
+  description = "RDS master username"
+  default     = "admin"
+}
+
+variable "domain_name" {
+  description = "Your domain name (e.g. example.com)"
+  type        = string
+  default     = "example.com"
+}
+
+variable "hosted_zone_id" {
+  description = "Route53 Hosted Zone ID for the domain"
+  type        = string
+  # default = "... fill your zone ID ..."
+}
+
+#################
+# Data & Random
+#################
+
+resource "random_password" "rds_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+"
+}
+
+data "aws_ssm_parameter" "amzn2_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+}
+
+#################
+# Networking
+#################
+
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "webapp-vpc"
+  }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "webapp-igw"
+  }
+}
+
+# Public subnets
+resource "aws_subnet" "public" {
+  count                   = length(var.public_subnets)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnets[count.index]
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "public-subnet-${count.index + 1}"
+  }
+}
+
+# Private subnets (for web servers + RDS)
+resource "aws_subnet" "private" {
+  count             = length(var.private_subnets)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnets[count.index]
+  availability_zone = var.azs[count.index]
+
+  tags = {
+    Name = "private-subnet-${count.index + 1}"
+  }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "webapp-public-rt"
+  }
+}
+
+resource "aws_route_table_association" "public_assoc" {
+  count          = length(aws_subnet.public)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
+#################
+# Security Groups
+#################
+
+# ALB security group
+resource "aws_security_group" "alb_sg" {
+  name        = "webapp-alb-sg"
+  description = "Allow HTTP/HTTPS from internet to ALB"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "webapp-alb-sg"
+  }
+}
+
+# Webserver private SG
+resource "aws_security_group" "web_private_sg" {
+  name        = "webapp-private-ec2-sg"
+  description = "Allow HTTP from ALB, optionally SSH"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description     = "HTTP from ALB"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
+  }
+
+  # Optionally add SSH from trusted IP or bastion
+  # ingress {
+  #   description = "SSH from admin IP"
+  #   from_port   = 22
+  #   to_port     = 22
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["YOUR_IP/32"]
+  # }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "webapp-private-ec2-sg"
+  }
+}
+
+# DB security group
+resource "aws_security_group" "db_sg" {
+  name        = "webapp-db-sg"
+  description = "Allow MySQL access from web servers"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description     = "MySQL from web servers"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web_private_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "webapp-db-sg"
+  }
+}
+
+#################
+# RDS (Multi-AZ)
+#################
+
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name       = "webapp-db-subnet-group"
+  subnet_ids = aws_subnet.private[*].id
+
+  tags = {
+    Name = "webapp-db-subnet-group"
+  }
+}
+
+resource "aws_db_instance" "mysql" {
+  identifier              = "webapp-db"
+  allocated_storage       = 20
+  storage_type            = "gp3"
+  engine                  = "mysql"
+  engine_version          = "8.0"
+  instance_class          = "db.t3.micro"
+  username                = var.db_username
+  password                = random_password.rds_password.result
+  db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
+  vpc_security_group_ids  = [aws_security_group.db_sg.id]
+  multi_az                = true
+  publicly_accessible     = false
+  skip_final_snapshot     = true
+  deletion_protection     = false
+  apply_immediately       = true
+  backup_retention_period = 0
+
+  tags = {
+    Name = "webapp-db"
+  }
+}
+
+#################
+# Web Servers (private)
+#################
+
+resource "aws_instance" "web" {
+  count                      = length(aws_subnet.private)
+  ami                        = data.aws_ssm_parameter.amzn2_ami.value
+  instance_type              = var.instance_type
+  subnet_id                  = aws_subnet.private[count.index].id
+  key_name                   = var.key_name
+  vpc_security_group_ids     = [aws_security_group.web_private_sg.id]
+  associate_public_ip_address = false
+
+  tags = {
+    Name = "webserver-${count.index + 1}"
+  }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y httpd php php-mysqli mariadb105 mysql
+              systemctl start httpd
+              systemctl enable httpd
+              mkdir -p /var/www/inc
+
+              cat <<EOT > /var/www/inc/dbinfo.inc
+              <?php
+              define('DB_SERVER', '${aws_db_instance.mysql.address}');
+              define('DB_USERNAME', '${var.db_username}');
+              define('DB_PASSWORD', '${random_password.rds_password.result}');
+              define('DB_DATABASE', 'corp');
+              ?>
+              EOT
+
+              curl -o /var/www/html/corp.php https://raw.githubusercontent.com/your-repo/corp.php
+              EOF
+}
+
+#################
+# ALB & Targeting
+#################
+
+resource "aws_lb" "web_alb" {
+  name               = "webapp-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = aws_subnet.public[*].id
+
+  tags = {
+    Name = "webapp-alb"
+  }
+}
+
+resource "aws_lb_target_group" "web_tg" {
+  name        = "webapp-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "instance"
+
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+
+  tags = {
+    Name = "webapp-tg"
+  }
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.web_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.web_tg.arn
+  }
+}
+
+# Optional HTTPS listener (requires an ACM certificate)
+# resource "aws_lb_listener" "https" {
+#   load_balancer_arn = aws_lb.web_alb.arn
+#   port              = 443
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = aws_acm_certificate.www_cert.arn
+#
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.web_tg.arn
+#   }
+# }
+
+resource "aws_lb_target_group_attachment" "web_attach" {
+  count            = length(aws_instance.web)
+  target_group_arn = aws_lb_target_group.web_tg.arn
+  target_id        = aws_instance.web[count.index].id
+  port             = 80
+}
+
+#################
+# DNS via Route53
+#################
+
+data "aws_route53_zone" "selected" {
+  name         = var.domain_name
+  private_zone = false
+}
+
+
+resource "aws_route53_record" "www_alias" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "www.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.web_alb.dns_name
+    zone_id                = aws_lb.web_alb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+
+
+#################
+# Outputs
+#################
+
+output "alb_dns_name" {
+  description = "ALB DNS name"
+  value       = aws_lb.web_alb.dns_name
+}
+
+output "alb_zone_id" {
+  description = "ALB zone ID"
+  value       = aws_lb.web_alb.zone_id
+}
+
+output "db_endpoint" {
+  description = "RDS endpoint"
+  value       = aws_db_instance.mysql.address
+}
+
+output "rds_password" {
+  description = "RDS master password"
+  value       = random_password.rds_password.result
+  sensitive   = true
+}
 
 Next :::
 
