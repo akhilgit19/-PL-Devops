@@ -117,21 +117,144 @@ Day 46 :29th Sep. 2025
 #######################		
 	
 	Introduction to Azure Cloud Services ::::
+
+Azure Virtual Machines- key concepts
+
+Feature       Explanation
+=======      ================
+Image         choose operating system and software
+VM Family     choose the right family of hardware( General Purpose or compute/storage/memory optimized or GPU or HPC)
+VM Size       choose the right quanitiy of hardware( 2 CPUS 4 GB of memory
+Disks         attach virutal disks to VMS( Block storage)
+
+Availablity
+- Are the applications avaialbe when the users need them
+- Ex 99.99% availablity also called four 9's availablity
+
+Availablity table:           Downtime                 Comment
+-99.95%                         22 minutes          
+-99.99%(four 9's)               4 and 1/2 minutest     Most online apps aim for 99.99%
+-99.999%(five 9's)              26 seconds             Achieving 5 9's availaablity is tough
+	
+
+Azure app services- Infrastructure as service
+Container services- platform as a service --  Container Orchestration- Azure kubernetes service , azure service fabric
+
+
+Azure Service Name        Description
+======================================================================
+Azure VMS                   windows or linux VM( IAAS), Use VMS when  you need control over OS or you want to run custoom software
+                            you handle availablity, scalablity,load balancing,software/OS updates
+
+Azure App Service            Paas, Deploy web apps, mobile back ends and  RestfulAPI's quickly
+
+Azure Contienr Instances     Paas(CaaS) Run isollated containers without orchestartion. YOu do not need to provision and manage VMS's start containers in seconds
+
+
+Azure kubernetes service    Paas(CaaS), Managed kubernetes service. Provides container orchaestration
+
+Azure Service Fabric     Paas(CaaS). Microsoft container orchastertor. packag, deploy and manage scalable and reliable microservices
+                         Run anywhere- on premises and in the cloud
+
+Azure Functions         Serverless(FaaS) compute for event driven apps
+
+
+Azure Compute Services- Scenarios
+===================================
+Scenario                                                 Solution
+
+You want to run function in reponse to events                       Azure Functions
+You wnat to deploy a Python application using a                     Azure app services
+managed service 
+	
+You want to quickly deploy a container                               Azure container instances
+You want to setup a complex micorservices architecture in Azure      AKS or service fabric
+Your application needs cutomized OS and custom software installed    Azure VMS
+
+
+Axure Storage:
+- Managed Cloud Storage Solution
+  - High available , durable and massively scalable
+- Core Storage Services
+  - Azure Disks: Block storage( hard disks) for Azure VMS
+  - Azure Files: File shares for cloud and on premises
+  - Azure Blobs: Object store for text and binary data
+  - Azure Queeus: Decouple applications using messaging
+  - Azure Tables: No SQL store( Very Basic)
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+Premium Storage Account: For high performance
+ Standard General- Purpose storage accounts: Recommened for most scenarios
+ . what we have looked at until now!
+high performance: what if you need very high performance?
+ . Premium storage account: Usses solid- state drives( SSDS) for low latency
+   and high throughput
+ . Contstraint: Fewer Redundancy options( LRS ZRS)
+ . Supported Premium Account types: 
+      Premium block blobs- Blob Storage, Data Lake Storage
+      Premium file shares: Supporting both SMB and NFS File shares
+      Premium page blobs
+
+Database Terminology: RTO and RPO
+RPO (Recovery point objective): Maximum acceptable period of data loss
+RTO( Recovery time objective) Maximum accpetable downtime
+
+
+Databases- Summary
+
+Database Type       Azure Services                            Description
+
+Relation OLTP       Azure SQL database, azure                 Transactional usecases needing predefined
+databses            database for Mysql, azure database        schema and very stong transactional capablities
+                    for postgreSQL etc
+
+Relation OLAP     Azure Synapse Anlytics                      Cloumnar Storage with rpedefined schema
+databsed                                                   Datawareshousing and big data workloads
+
+No SQL databases     Azure Cosmos DB                         Apps needing quickly evolving structure
+                                                            (schema-less)
+                                                            MongoDB(Dcoument ,cassandra(key/vaalue) and gremlin graph
+   
+In memory             Azure Cache for Redis                Applications needing microsencond responses
+databases/caches
+
+
+Database Scenarios
+=======================
+
+Scenario                                                     Solution
+A start up with qucily evolving schema( table structure)      Consmos DB
+
+Single-digit millisecond response times for global            Cosmos DB
+application with millions of usrs 
+
+Transactional local databse processing thousands               Azure SQLdatabase or Azure Database for My SWL or AZURE DATABASE FOR pOSTGREsql
+of transactions per sond 
+
+Cache Data( from Database) for a web application               Azure Cache for redis
+
+Database for analytics processing fo petabytes of data           Azure Synapse ANlytics
+
+
+Azure Neworking Scenarios 
+Scenario                                                                 Solution
+You need to create  a secure, isolated network in the cloud              Azure Virutal Netowkr
+similar to your corportate network 
+
+You want to connect resources in different Virutal Network, potentially    Network peering
+in different regions 
+
+You need protection agains DDOSS attacks for your applications              Axure DDOS protections( Basic or standard)
+You want a managed network security service to control traffic across       Azure firewall
+multiple virutal network and subscription 
+
+You need to restrict traffic witing your virutual network using internal     Network Security groups
+firewalls 
+
+You need private access to azure PaaS service from witing your virutal Network   Azure Private Lnk and private endpiont
+
+
+
 #######################
 Day 47 :30th Sep. 2025
 #######################	
