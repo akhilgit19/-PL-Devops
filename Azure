@@ -259,33 +259,68 @@ You need private access to azure PaaS service from witing your virutal Network  
 Day 47 :30th Sep. 2025
 #######################	
 
-	Azure Cloud Services :
-	
-	
-	az-104 : Identity & Access Management
-	
-		
-	Azure Entra ID 
-	
 	Access Azure Portal ::
 	
 		- Free Service Account 		-- $200 
 			1 - Month
+
+
+Azure Cloud Services :
 	
-		- Budget Management 
-		
-		- Resource Group
-		
-		- Tenant ID -> Isolated Orgn. of Users and Profiles 
-		
-			- Users 
-			- User Groups 
-			
+-Azure Entra ID - 
 	
+
+- Resource Group
+ 		- Budget Management 
+            - resource group 
+		    - create budnget 
+            - action groups
+
+
+Cloud Identiy:
+- A cloud identity is an account that's defined only in Microsoft entra id
+-
+Synchronized Idently:
+- Directory-sunchronized identities are defined in an onprem active directoyr  and synchronized into Entra id
+
+Guest user accounts:
+- Defined outside of Azure
+
+Exam TIP
+Cloud identities: are defined only in entra ID and can be for user accoutns defined in the entra ID organization or in an external Entra ID
+
+Directory-synchronized identities: are defined in an on-prem AD and synchronized into Entra ID.
+
+Guest user accounts are defined outside of azure and are used when  external vendors or contractors need access to internal azure resources
+
+
+Micorosoft Entra ID:
+
+Microsoft Entra ID( Previsoulsy Azure Active Directory AAD is microsoft azure cloud-based identity and access management service
+- Authentication( employees sign in to access resrouces)
+- single sign-on (SSO)
+- Application management
+- Business to Business( B2B)
+- Business to customer(B2C) identity services
+- Device management
+
+Azure Active directory domain services:
+- Provides managed domain services
+- Allows you to consume domain services without the need to patch and maintain domain 
+  controllers on IAAS
+- Domain join group policy LDAP kerberos, NTLM all supported
+- Gain the benifit of cloud based domain services without managing domain controllers
+- run legacy applications (that acnt use modern auth standards) in the cloud
+- automatically synch from auzre AD
+
+
+
+az-104 : Identity & Access Management
 	Identity & Access Management ::
 	
 		Tenant :
-		
+				- Tenant ID -> Isolated Orgn. of Users and Profiles 
+
 		Multiple Tenants : 
 		
 			- Dev-Teams 			
@@ -304,6 +339,6 @@ Day 47 :30th Sep. 2025
 	Create User/Group ::::
 	
 	
-	
+	56:42 
 	
 	
