@@ -1,0 +1,168 @@
+
+Subscriptions:
+===================
+- click on home, click on subscriptions in the seachbar , you will get the amount limit of your account 
+
+
+Resource groups:
+===================
+Basics:
+
+- click on home, click on resource group in the serach bar, 
+- subscription- azure subscritpino1
+  resource group name- BOFA_DEV_RG
+  Region:  Austrialia EAST
+Tags:
+- Name :      value             Resource
+ application: BankofAmerica  
+ Owner      : Davic Maclarean
+ Enviroment : Dev
+ type       : FrontEndResources
+
+- click on create resource group
+
+
+VM
+===
+Project details
+subscription: Azure subscription 1
+  Resource group: BOFA_DEV_RG
+Instance details
+Virtual machine name: PLL-VM
+Region:   Austrialia EAST
+Availablity option 
+ - No infrastructure redundancy required 
+    I  use this option when i dont want azure to maintain multiple copies or  bakcups of VM
+    I  use this option when i dont want Azure to  take care of my VM
+    I use this option for  low level enviroments[ Ex: Dev, QA, Staging, Demo..
+    if i use this option then i will get less billing
+    8GB RAM 2 VCPU's & 127 GB O/S disk>>>9000/month
+ - Availablity set
+    I  use this option when i  want to azure to maintain multiple copies or  bakcups of VM
+    I  use this option when i  want Azure to  take care of my VM
+    I use this option for  high level enviroments[ Ex: prod 
+    if i use this option then i will get high billing
+    8GB RAM 2 VCPU's & 127 GB O/S disk>>>15000/month
+    AS will support or protect our VM within in the datacenter failures
+      if there is short circuit happened 
+ - Availablity zone
+    I  use this option when i want azure to maintain multiple copies or  bakcups of VM
+    I  use this option when i  want Azure to  take care of my VM
+    I use this option for  high level enviroments[ Ex: prod
+    if i use this option then i will get high billing
+    8GB RAM 2 VCPU's & 127 GB O/S disk>>>20000/month
+     it az will protet your vm even in the situations where the complete  data center  gets collapsed
+     
+ - virtual machine scale set
+      These are high availability
+
+- if you select availablity set  in the availablity options   you need select below 
+
+     fault domain(FD) : The network supply, power supply and cooling supply will ber provided thru common channel(single wire)
+     
+     update domina( UD):  The network supply, power supply and cooling supply will ber provided thru independentchannel(single wire)
+     
+
+- if you select availablity zone  in the availablity options   you need select below 
+     zone 1,2,3
+
+- if you select virutual mahcine sacla  in the availablity options   azure wil create new vm automatically which is autocscaling
+
+
+-security: standard
+          trusted lanunch virtual mahcines
+          confidental virutal mahcines
+
+- Image:  OS
+- VM architecture x64
+- size   - standard 
+- Adminsitrator account 
+    username 
+    password
+
+-Inbout port rules
+
+select inbound ports  RDP
+                    SSH
+                    HTTPS
+                    HTTP
+
+Disks:
+
+-OS disk size
+-OS disk type
+-delet the VM
+-key manangment
+-enable ultra disk compatiblity
+
+Networking:
+
+-Virtual network
+-subnet
+-public ip
+- NIC network security group
+- public inbound ports
+- seelct inboutn ports
+
+Managment
+
+- identiy
+- Microsoft entra id
+- Auto shutdonw
+- bakcup
+- siterecovery
+- alerts
+
+Advanced
+
+
+- Then click on connect, clikc on download RDP file, click on connect
+
+vertical scaling or scale up is when you are making changes in your existing VMS That ic alled  vertical scaling
+whatever the changes is or whatever the changes that your are making
+
+Business case scenario 1:
+8GB RAM 2 VCPU's & 127 GB SSD Hardisk
+16GB RAM 4 VCPU's & 127 GB SSD Hardisk
+- click on PLLVM, click on size,select the size, click on resize
+
+
+Business case scenario 2:
+Add the data disk
+
+- clikc on PLLVM - clic on data disk
+- disk name, storage type- SSD, size -400 
+- click on apply, click on connect to VM
+- click on diskmanagment
+- right click on disk1
+- click on new simple volume and click next next next and clikc on referesh,you will see
+
+
+Business case scenario 3:
+Increase the size of current data disk to 900 gb
+- click on new volume , click on right click and click on extend volume
+
+
+
+Business case scenario 4:
+
+shrink the unutilized size
+- click on new volume , click on right click and click on shrink volume
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
