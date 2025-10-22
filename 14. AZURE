@@ -155,10 +155,24 @@ shrink the unutilized size
 
 
 
+ARM templates
+
+- go to template specs
+- click on create new template spec
+- In basics, name: MyVMdeploymentUsingARM
+- Subscription- Azure Subscription1 
+  resourcegroup bofa_dev_rG
+  Location japanEast
+  first version
+  version- 0.0.1
+- clic on next
+- copy your template in edit template
+- click on create
+- click on deploy
 
 
 
-
+1:03:20
 
 
 
