@@ -172,8 +172,34 @@ ARM templates
 
 
 
-1:03:20
+Custome VM:
+- go to the vm
+- click on server manager
+- click on add roles and features
+- click on next and add websever ias and click on next
 
+CPATURE THE CUSTOME IMAGE:
+- iN pllvm , Go to the disks
+- click on OS disk
+- click on the disk of vm, click on create snapshot- 
+- You can choose the resource group
+- instance details 
+Basics
+  name - PLLVMdisksteup
+  storage tup - Premium SSD
+Encryption
+Networking
+Advanced
+tags
+review+create
+
+- now go to the snapshot, click  no ccreate a disk 
+- disk details
+- disk name
+ - region
+ - availablity zone
+ - source type
+  
 
 
 
