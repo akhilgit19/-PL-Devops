@@ -347,9 +347,74 @@ Note:
 
 
 
+Premum SA:
+
+Yesterday we have deployed Blob/Standard SA
+Today will see how we can deploy Premium SA
+99.95.. ONLY Just one extra clikcyou  have to for the premium SA.
+
+In bloc/Standard SA you are getting all 4 different stoarge offerrings
+In premium SA you are supposed to choose what storage offering you want
+
+Performanc: Premium
+Premium account tyope ; page blobs
+
+- You will see only one storage account for premium
 
 
 
+- click onn blob storage service in the storage account
+- click on add containers
+- name
+- click on create
+- now click on the created container
+- click on switch to acces key
+-  click on upload
+- click on browse for files
+- you can upgrade from block blob from page blob while uploading, page blob is from unstructured data
+- for apend blob. you can go to any resource click on acitvity log and download the .csv file
+- now go to the storage acccount , go to the created coontainer, click on apend blob and upload the.csv file
+
+-for user access
+- clickon the file, click on generate SAS
+- Permissions
+  Read,add,create,writee,delete,permanent delte,tags
+- start and expirday dat
+- allowed ip address
+- allowed protocols
+     choose https and http
+- click on Generate SAS token and URL
+- copy Blob SAS URL , past that in the browser , You can see the file
+You can change the access level on the container by clickin on the 3 options , container levle, blob level.private level access
+
+
+
+-In File share
+
+- click on file share
+basic
+- click name- plfs
+- access tier - transaction optimized, hot ,cool
+- performance
+- 
+backup
+revidw + create
+- click on create file share 
+- now got one of the file share, click on browse
+- upload the files
+
+Block blob>> that files can be accessed via browser with URL
+page blob
+append blob
+
+Fileshareblob->> the files cannot be accessed via browser using URL
+ Inorder to access the files inised the fileshare we have to host this fileshare on top of a server and this server we called\
+it as file share serer.
+
+)How to host the fileshare on top of a server will see this after the break.
+- 
+
+1:23:04
 
 
 
