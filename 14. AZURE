@@ -202,6 +202,169 @@ review+create
   
 
 
+ARM templates
+Custome template deployment
+- click on build your own template in editor
+- click on edit template
+- click on load file
+
+
+Creation of AZure linux VM:
+- Click on create new resource group
+- basiccs
+  subscription azure subscript1
+  resource goup name- IRG
+  region: austria east
+
+- tags
+- review + create
+- clikc on VM
+basics
+- subscript
+- vm name
+- region
+- avaialblity options
+- security tyupe
+- image
+-vm architecture
+- size
+- adminstattor acount
+- username and password
+-Inbound ports rules
+ select inbound porst http 80 , https 443, ssh22
+- now click on create and open cloud shell to lgoing into ubunut
+- click on bash
+- click on mount storage account
+- select we will create a new storage account
+- now u will see deployment is in progress
+
+- now connecto ssh -i public key ubuntu@ipaddress
+- mkdir frutis
+
+
+
+When ever we want to upload or keep the data in cloud computing then we use,we create storage accounts.
+Storage account or storage services is one of means of uploading the data or keep the data in cloud computing.
+Storage accounts will accept any type of data... what ever the data is it will accept all types of dtaa
+
+
+Structured Data[ Ex: Fix no of rows and colunnds.. CSV, Excel..etc]
+Semi-Structured Data[ Ex: HTML., ARM templates, XML, YAML..etc]
+Un- Structured Data[ Ex: Videos, Images, PDF files, Word, vision diagrams..etc]
+
+Broadly we are having 3 different types of storage  acconts(A)
+Standard/Blob SA is having 4 different types of storage offerings
+
+ 1) Blob Storage Services>> again divided into 3 different types of blobs
+  i) Page Blob
+      Here will upload the unstructured data. Videso Images, VM disk, Database backup files, Master database filess..etc]
+  ii)Append Blob
+      Here will upload the  Resources logs, Historical datam, Structured  data
+  iii)Block Blob
+      Here will upload the general data, lke project related documents[ words, excel, pdf, images, HTML,ARM templates..etc]
+
+
+2) File share storage services
+     Here will upload flat files, raw files and even other general project relateed documents[ words, excel, pdf, images, HTML,ARM templates..etc]
+
+
+3) Table Storage Services
+     Here  we can upload the data which is in the  form a table[ Rows and column]
+
+4) Queue Storage Services
+
+     Here we can upload the data which is in the  form of a text messages
+    [Exlike SMS, Promotional Messages, notifications etc]
+
+    Flipkart:
+
+
+
+- Create new resource group
+- create new storage accounts
+- click on on create new storage accounts
+- subscriptions
+  Resource group IRG
+  Storage account name: pllsa4712
+  region: australi East
+  preferred AZURE BLOB STAORAGE  or Azure data lake storage Gen2
+
+  performance standard
+  redundacny -  LRS LOCALLY REDUNDANT STOARGE - WITIING A SINGLE DATA CENTER IN ONE REGION
+                ZRS- Across 3 avaiabllity zones in the same region
+                GRS- Replicates ayynchronouosly to another region
+                RA-GRS- Read access                 Same
+                        geio redudntadnt storage 
+
+ Advanced
+ securiyt
+ - require secure transfer for REST API operation
+- allow enabling anonymous access on individual containers
+- enable stoarge account key access
+- default to microsoft entra authorization in athe azure portal
+- Minimum TLS version - version 1.2
+- Permitted scop for copy opertaion -from any storage account
+
+Hierarchical Namescpace
+Blob storage:
+ Allow cross tenant replication
+ access tier 
+    hot
+    cool 
+
+
+Networking:
+
+publick network  access  - enable
+                           disable
+                           secure by permiter
+public network access scope- enable form all network
+
+
+
+You have uploaded some 200 files inside your SA, and nnow some 40 files you have deleted after 3 days or 5 fays
+you realizes that the files were important and you want the files back
+then ins this scenarios and sitautions the data protection tab is ehelpful
+
+- data protection
+  - enable soft delete for blobs
+    ddays to retain the deleted blobs
+  - enable soft delte for containers
+    days to retain delted containers
+  -enalb soft delte for file shares
+
+Tracking
+
+- eanble versioning for blobs
+- enable blobo change feed
+
+Encryptuon type-  microsf managkey keys 
+                  customer managedkey
+Note:
+-By default Storage acccount is crate is standard storage account
+- blobs-files
+- containre- folders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
