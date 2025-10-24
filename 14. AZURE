@@ -411,11 +411,35 @@ Fileshareblob->> the files cannot be accessed via browser using URL
  Inorder to access the files inised the fileshare we have to host this fileshare on top of a server and this server we called\
 it as file share serer.
 
-)How to host the fileshare on top of a server will see this after the break.
-- 
+To host a file share on top of a server we have be opening an SMB services on the  network on which our srver is hosted
+the port no for SMB services is 445
 
-1:23:04
+Once we host the file share on top of a server then this file share will becomes part of the server
 
+Now qyuiclky deply a server.
+- click on vm
+- resource group -IRG
+- image0 window 22
+- size -8 g bram
+- username and password
+- inbound ports http 80, https 443 ,rdp 3389
+- login to the server
+- open this pc
+- right click on network, click on map network drive
+- pass the folder details of storage account fileshareblob url, click on that fileshareblob
+- click on connect ,click on window ,select any drive letter, coipy the script
+- copy the root path in the double quotes and paste in the folder path
+- it'ask for 
+- azure\pllsa4712 (storage account name)
+- for passwrod, go to accesskey in pllsa4712 and copy the key and paste itas a password
+
+
+
+
+Go to the storage account, click on table storage servcids
+- click on table
+- click on table name- employees Infor,
+- clikc on ok
 
 
 
