@@ -485,6 +485,24 @@ vm nmamew
 
 
 
+In  Network Security Group( NSG) will implement the inbound and outbound traffice for our VM
+Here ins Network security group NSG will decide our VM should talk to which services and 
+networksecuritygroups
+
+vnets
+subnets
+
+
+
+loadbalancers
+-
+i f we want lb to balance network traffic between the VM then the VM should be in 
+same RG
+same network
+same region
+saem avaialblity set also the vm sshould not have an ip address
+we are adding vm isnide the LB not lb inside the vm
+
 
 
 
