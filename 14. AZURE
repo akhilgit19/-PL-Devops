@@ -439,10 +439,48 @@ Now qyuiclky deply a server.
 Go to the storage account, click on table storage servcids
 - click on table
 - click on table name- employees Infor,
-- clikc on ok
+
+Using this software we can insert the data inside the table storage services
+- click on storage account, click on open in exploreere
+-  download the the app from the link and open
+
+- click on the plug, click on subscription, choose azure
+- give your maild id
+- login and click on open in explorere
+- click on plugin again, click on storage account or service
+- choose account name and key
+- for storage key , in storaage account, click on acess keys copy the key and poaste in account key
+- for storage account name you can check and provide from storage account 
+- click on next and click on connect
+- to detach old storage account from this explorer service, selct and clic kon deetach
+- now click on our storage pllsa4712 acount click on tables
+-  you can insert the data
 
 
 
+Inside the storage account we are having 4 different types of storage offerning
+  Blob storage sercie
+  file share storage service
+  table storage srevice
+  queue storage service
+
+
+Queses
+- go to stroage acocunt, clck on queus
+- click add message
+- '
+
+
+Virutal Network
+- Basics
+subs
+resource group
+region
+vm nmamew
+- security
+- ip address
+- tags
+- review + create
 
 
 
