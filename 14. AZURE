@@ -504,6 +504,54 @@ saem avaialblity set also the vm sshould not have an ip address
 we are adding vm isnide the LB not lb inside the vm
 
 
+VNET Peering
+- Cretae 2 vnets with multiple subnets in different regions 
+- click on create resource group
+- subc
+  resource group name
+  region
+  review+create
+- go to virtual networks
+  click on create 
+  subscription
+  vnet name
+  region
+  ip addressed
+  click on defulat
+  subnet name subnet-1
+  cliic on create
+  review+create
+- now do it for second vnet
+- now deploy 2 vm on eac vnet
+  create virtuma machine
+  vm name
+  region
+  availablitu option no infrascture
+  image
+  username
+  password
+  ibound rules
+  disks
+  networking
+  - check vnetname it should second vnetname
+  review+create
+- now connect to both the vms
+- now in first vm
+  open the command prompt
+- now go back to virtualnetworks
+- open one of the vnet click on peering
+- perring link name
+- virutal network - second vnet name
+- remote virtual network peering setting
+  allow myvnet 1 to mynet2
+  allow myvnet1 to receive forwarde traffic from myvnet2
+-  local virutal network smmary
+    peering linkname
+- local virtual netwokr peering setting
+  allow mynet1971 to access  myvnet1973
+  allow my net1971 to receied forwarded traffic from myvnet1973
+- give the firewall rule
+- now try ping to vm2 it will work
 
 
 
