@@ -553,9 +553,82 @@ VNET Peering
 - give the firewall rule
 - now try ping to vm2 it will work
 
+Basically at the time of VM creation we are having some basic  provisioning of  ports[ HTTPS, HTTPS, SSH, RDP]
+If we want to open/deny apart from this 4 services we use network security group [RDP,SMTP]
+If we want to have the complete control on our VM and even teh control of  network traffic inside the VM THEN WE CAN MAKE US OF aZURE FIREWALLS.
 
 
-
+- Create resource group
+  subscription
+  resrouce group
+  region
+  revew + create
+- click on virtual network
+  subscription
+  resource grpu
+  vnetname-firewallvnet
+  region
+  in ipaddress
+  192.168.0.0  /16
+  click on defualt
+   name auzresubnet
+   in subnet purpose- choose azure firewall
+   ipuv4 address range-10.0.0.0/16
+  now click on add a subnet
+  click on defualt
+    name vmsubnet
+    in subnet purpose- choose azure firewall
+   ipuv4 address range-10.0.2.0/24
+  click on defualt
+    subnet prupose name FIREWALLMANAMENT(forced runneling
+    in subnet purpose- choose azure firewall
+   ipuv4 address range-10.0.0.0/16
+- click on reivwe+create
+-Create vm
+- click on create vm
+- vm name- FWVM
+- region
+- avaiablity zone - no infstarcuture redundancy required
+- security type -standard
+- username
+-password
+- public inbound ports- none
+- clic on next
+- networking - 
+  virtual network firewallvnet
+  subnet - myvmsubnet
+  network security group - basic
+- clickn no reveiw +create
+- click on firewalls
+- sub
+ resource group
+ name-MyFW
+ region- 
+ FIRewall SK - standar
+ firewall managment- use fireall rules
+ choose a virtual network- use exisiting
+ virtual network- FWVnet( MyRG)
+ public -  click  on new and give myfwip
+ manament public ip addres- clic on new,  name- MyIp
+ click on new tags
+ review + create
+-Now connect to vm, how is that posisblie, now click on n
+ firewall, click on myfw-ip, copy Ipaddres
+- it will not allow as we have put inbound port non you inorder to enable
+- go to firewalls, click on settings, click on rules,.
+  clck on add nat rule collection, 
+- name= RDPconnection
+- prioty 1452
+ name- RDPConnection 
+ protocal- TCP
+ source type- ip address
+ source *
+ destination address 192.168.10.0 (firewall ip
+ destination port  3389 (rdp PORT NO
+ translated addres - private IP of the VM
+  translated VM- 8080
+- Go to firewalls, in PLLFW, click on public ip configuration
+- copy ip address and put that in Remote desktip connection
 
 
 
