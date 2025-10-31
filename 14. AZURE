@@ -631,7 +631,69 @@ If we want to have the complete control on our VM and even teh control of  netwo
 - copy ip address and put that in Remote desktip connection
 
 
+23-OCT-2025:
+Azure Bastion Service:
+=======================
 
+Create A VirtualNetwork:
+------------------------
+-click on  virtual networks
+-click on create
+-subscritipon - Azure subscriptoin1
+-resource grup - IR-MG 
+-virtual network name- BastionVnet
+-region - East Asia
+- Ipaddress
+  - click on defualt 
+  - Name- subnet-1 for VM
+  - click on add
+  - click on add subnet
+  - clik on subnetpurpose azure bastion subnet
+  - name-AzureBastionSubnet
+  - click on add
+- click on next
+- click on review_+ creeate
 
+Create Bastions:
+-------------------
+- click on Bastion
+- subscritipon - Azure subscriptoin1
+- resource grup - IR-MG 
+- name - PLLBastion
+- region- Australia East
+- Availablity zone - zones 1,2,3
+- Tier- standard
+- instance count -2
+- virutal network- choose - BastionVnet
+- subnet- choose AzureBastionSubnet
+- publick ipv4 address- choose create new
+- public ip address name- Bastion-IP
+- In advanced
+  choose copy and paste
+- click on review +create
 
- 
+Create a Virtual Machine:
+----------------------------
+-subscritipon - Azure subscriptoin1
+-resource grup - IR-MG 
+- Virtual Machine name- BastionVM
+- Region- Australia East
+- Availablity options- No infrastructure redudndancy required
+- security tupe -standard
+- image
+- size - 8 hgp ram 2 vcpus
+- username
+- password
+- inbond port rules - http 80
+                      https 443 
+                      rdp 3389
+- In disks, click on next
+- In networking
+- virtual network- BastionVent(IR-MG)
+- Subnet- subnet-1
+- click on review +create
+- now go to BastionVM
+- click on connecti via Bastion
+- authentication tupe- VM password
+- username- bastionVM
+- VMPassword- 
