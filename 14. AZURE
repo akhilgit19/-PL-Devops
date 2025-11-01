@@ -684,12 +684,11 @@ Create a Virtual Machine:
 - size - 8 hgp ram 2 vcpus
 - username
 - password
-- inbond port rules - http 80
-                      https 443 
-                      rdp 3389
+- inbond port rules - none
+
 - In disks, click on next
 - In networking
-- virtual network- BastionVent(IR-MG)
+- virtual network- BastionVnet(IR-MG)
 - Subnet- subnet-1
 - click on review +create
 - now go to BastionVM
