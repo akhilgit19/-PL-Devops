@@ -696,3 +696,14 @@ Create a Virtual Machine:
 - authentication tupe- VM password
 - username- bastionVM
 - VMPassword- 
+
+
+Load Balancer will balance the network traffice between the server(webserver1 and webserver2)
+Traffic manager profile will balance the network traffic between websites
+
+1:19
+
+
+
+
+
