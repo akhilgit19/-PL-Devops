@@ -701,7 +701,151 @@ Create a Virtual Machine:
 Load Balancer will balance the network traffice between the server(webserver1 and webserver2)
 Traffic manager profile will balance the network traffic between websites
 
-1:19
+
+Websever1/Bangalore@1234>>Australia East
+Wevserver2/Bangalore@123>> Australia Centrail
+
+Load Balancer:
+================
+Create a Virtual Machine1:
+----------------------------
+-subscritipon - Azure subscriptoin1
+-resource grup - PLLRG
+- Virtual Machine name- Webserver1
+- Region- Australia East
+- Availablity options- No infrastructure redudndancy required
+- security tupe -standard
+- image
+- size - 8 hgp ram 2 vcpus
+- username
+- password
+- inbond port rules - Allow selected ports
+                      HTTP(80), HTTPS(443), RDP(3389)
+
+- In disks, 
+- OS disk size- Image defualt(127 GB)
+- OS disk type- Premium SSD( Locally- redundant storage)
+- click on next
+- In networking
+- virtual network- defualt
+- Subnet-  defualt
+- click on review +create
+
+Create a Virtual Machine 2:
+----------------------------
+-subscritipon - Azure subscriptoin1
+-resource grup - PLLRG
+- Virtual Machine name- Webserver2
+- Region- Australia Central
+- Availablity options- No infrastructure redudndancy required
+- security tupe -standard
+- image
+- size - 8 hgp ram 2 vcpus
+- username
+- password
+- inbond port rules - Allow selected ports
+                      HTTP(80), HTTPS(443), RDP(3389)
+
+- In disks, 
+- OS disk size- Image defualt(127 GB)
+- OS disk type- Premium SSD( Locally- redundant storage)
+- click on next
+- In networking
+- virtual network- defualt
+- Subnet-  defualt
+- click on review +create
+
+- Now go to virtual machine
+- got to webserver1
+- click on connect
+- cick on download RDP file, enter your credentials
+- same way connect to webserver2
+
+Creating webpage in Webserver1:
+----------------------------------
+- Now in server manager dashboard, In webserver1
+- In configure this local server, click on add roles and fetures
+- click on next 
+- choose webserer IIS,
+- click on next, click on install
+- Now go to this pc, got to windows C,
+- clikc on inetpub,click on wwwroot, There you create a new file 
+- In that file wirte as  This is indigo.com
+- save as index.html
+- Now go to Virtualmachines
+- click on webserve1
+- in network settings, copy the public ip address and open in the browser
+- you will see the page
+
+Creating webpage in Webserver2:
+-----------------------------------
+- Now in server manager dashboard, In webserver2
+- In configure this local server, click on add roles and fetures
+- click on next 
+- choose webserer IIS,
+- click on next, click on install
+- Now go to this pc, got to windows C,
+- clikc on inetpub,click on wwwroot, There you create a new file 
+- In that file wirte as  This is indigo.com
+- save as index.html
+- Now go to Virtualmachines
+- click on webserve2
+- in network settings, copy the public ip address and open in the browser
+- you will see the page
+
+DNS configruations:
+----------------------
+- Now click on webserver1
+- In settings, click on DNS no required
+- In DSN name label- pllservies
+- click on save
+- Now you will see the DSN configured
+
+- Now click on webserver2
+- In settings, click on DNS no required
+- In DSN name label- pllservies
+- click on save
+- Now you will see the DSN configured
+
+
+Traffice manager:
+----------------------
+- click on create
+- subscription- Azure subscription1
+- resource group- PLLRG
+- Name- pLLTMP1545
+- Routng method- Priority
+- click on review + create
+
+Endpoints:
+-------------
+- click on add
+- type- Azure endpoints
+- name- p1
+- enable endpoint 
+- target resource webserver1-ip
+- priority-1
+- Health checks- enable
+- 
+
+- click on add
+- type- Azure endpoints
+- name- p2
+- enable endpoint 
+- target resource webserver2-ip
+- priority-1
+- Health checks- enable
+- 
+
+
+
+
+
+
+
+
+
+
 
 
 
