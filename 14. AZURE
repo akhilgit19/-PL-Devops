@@ -837,9 +837,87 @@ Endpoints:
 - Health checks- enable
 - 
 
+24-octo-2025
+Table Storage
+====================
+
+Resourccegroup:
+- click on resourcegroup
+- click on create
+- subscription - Azure susbscription1
+- Resource group name- PLL-RG
+- region Austrial East
+
+Storage account:
+- click on  storage accounts
+- click on create
+- subscription - Azure susbscription1
+- Resource group name- PLL-RG
+- storage account name- srcsa1948
+- region Austrial East
+- Preferred storage type- Azure blob storage or azure data lake storage gne2
+- Primary workload- High performance computing HPC
+- Performance- standard
+- Redudancy- Geo redundant storage GRS
+- In advanced
+- choose require secure transfer for REST API operations
+- choose allow enabling anonymous access on individual containers
+- choose enable storage account key access
+- choose default to microsft entra authoriazation in the azure protal
+- minimum TLS version - version 1.2
+- click on revew+create
+
+table service:
+- After deployment is completed, click on resource
+- click on table service
+- click on table
+- table name- Employeeinof
+- click on table
+- table name- Salesinfo
+
+microsfo azure storage explorer:
+- In microsfo azure storage explorer, click on plugin
+- click on subscription, choose azure
+- sign in
+- again In microsfo azure storage explored, clic on plugin
+- click on storage accoutn or services
+- choose account name and key
+- click on next. You will see connect to azure storage page
+- In srcsa1948 storage account, search for access keys click on access keys,
+- copy the keys and insert in account key  of  connect to azure storage page
+- account name- srcsa1948
+- click on conect
+- Now in azure storage explorer, click on on srcsa1948(key)
+- click down arroa, click on tables, you will see tables employeeinfor and salesinfo
+- In Employeeinfo, click on add, 
+- In add entity
+  PropertyName      type   Value
+  Partition key     string madhav
+  Rowkey                   jha
+  FullName                 MadhavJha
+  Techonology              Azure Cloud enginerr
+  Location                 Banaglore
+  Salry                    40000
+- click on insert
+- Now you will see the row in the table
+
+Note: iF you want to add the data in table storage services then for sure you have to user Azure storage explorere
+
+query:
+- click on query
+- selection location     value hyderabad, click on run You will see the data as per your request
+export:
+- click on export, choose export selected
+- save the employeeinfo file. you will see the file in the desktipo
+- click on customize columnns and make changes
+import:
+click on import,click on 3 dots, copy the file path in the filename tabe
+- select the file , click on ioepn
+- it will show the columnds name and new names if you want to change 
+- click on import
 
 
-
+42:23
 
 
 
