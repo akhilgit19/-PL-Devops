@@ -919,8 +919,82 @@ click on import,click on 3 dots, copy the file path in the filename tabe
 
 42:23
 
+Creating one more storage account
+Storage account:
+- click on  storage accounts
+- click on create
+- subscription - Azure susbscription1
+- Resource group name- PLL-RG
+- storage account name- srcsa1949
+- region Austrial East
+- Preferred storage type- Azure blob storage or azure data lake storage gne2
+- Primary workload- High performance computing HPC
+- Performance- standard
+- Redudancy- Geo redundant storage GRS
+- In advanced
+- choose require secure transfer for REST API operations
+- choose allow enabling anonymous access on individual containers
+- choose enable storage account key access
+- choose default to microsft entra authoriazation in the azure protal
+- minimum TLS version - version 1.2
+- click on revew+create
+
+- Now got to srcsa1949 
+- In overview, click on file services
+- click on file share
+-  name- plfs
+-  click on next
+-  uncheck enable backup
+-  click on create
+-  in plfs , click on upload , and updload the files
+- 
 
 
+- Now got to srcsa1948
+- In overview, click on Blob storage service
+- click on container
+- name- srccon
+- click on create
+- click on srccon
+- click on upload
+- and upload the files
+
+
+Praveen>>srcsa1948>Blob Storage srvice>>3 files
+Sunil>>srcsa1948> File services>> 2 files
+
+Every Storage account is having a uniqueue key and connection string
+Once you shared the key or the connection string of the SA then the user will get the  admin access  to your Stroage account
+
+- In srca1948, serach for access,, click on access keys, Give the acces keys to prrvaee
+-  Now praveen praveen has to select account name and key see below process
+- again In microsfo azure storage explored, clic on plugin
+- click on storage accoutn or services
+- choose account name and key (Same way you can do it for connection string and shared access signature URL)
+- you need to give account name srcsa 1948
+- account key
+
+
+Note:Same way you can do it for connection string and shared access signature URL
+
+
+
+To signing out on storage account: right click on it and you will see 
+
+You have to give the access to the user also at the same time you hvae to ensure that  the user should not delete or modkfy tyour data or files inisde the SA
+In this case we use an another approach called shared access signatures
+
+- Now got to srcsa1948
+- search for sas, click on shared access signature
+- you will option to set the signatures
+- In allowed services- choose blob
+- In allowed resource tyep- choose service and container
+- In allowed permission, choose read, write, deltete ,list ,add create
+- Blob versioning permissions
+ choose enalbes deletion of versions
+- In allowed blob index permissions
+  choose read/write and filter
+ - now come to Microsoft azure storage explored, select shared acess signature
 
 
 
