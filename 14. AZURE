@@ -997,6 +997,54 @@ In this case we use an another approach called shared access signatures
  - now come to Microsoft azure storage explored, select shared acess signature
 
 
+27.oct.2025
+------------
+
+
+Azure cloud services is been divided into 3 categories
+
+IAAS>> Virtual mahcines>> Web apps developments, build, deploments, sever maintenance, configurations
+PAAS>> App service>> Web application development, build and deployment
+SAAS
+
+Here we are learing how we are hosting/migrating the web app which is  in my laptiop to azure cloud computing services.
+
+
+PAAS Service:
+
+- First open the code in visual code
+- click on build 
+- now run the code 
+-  click on solution explorer
+-  right click on the project
+- cilck on publish
+- click on azure, click on azure app service
+- click on next 
+- after singin
+- target- azure subscripton1
+- app service - clickon create new instances
+- Name- PLLWebapp1548
+- Subscription name- Azure Subscription 1
+- Resource group- MyRG
+- Hosting plan
+   LOCATION
+   SIZE
+- click on ok
+- click on create
+
+
+39:23
+
+
+- create a resource group
+- subscription
+- resource group name -= PLL-RG
+- region - Austrualia East
+- click on review create
+
+- In azure, serach for app services
+- click on appservices
+- click on create
 
 
 
