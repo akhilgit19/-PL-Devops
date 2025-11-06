@@ -1010,6 +1010,15 @@ SAAS
 Here we are learing how we are hosting/migrating the web app which is  in my laptiop to azure cloud computing services.
 
 
+
+- create a resource group
+- subscription
+- resource group name -= PLL-RG
+- region - Austrualia East
+- click on review create
+
+
+
 PAAS Service:
 
 - First open the code in visual code
@@ -1031,23 +1040,20 @@ PAAS Service:
    SIZE
 - click on ok
 - click on create
-
-
-39:23
-
-
-- create a resource group
-- subscription
-- resource group name -= PLL-RG
-- region - Austrualia East
-- click on review create
+- You will see an app service PLLWebapp1548 will be created in the MYRG folder
+- click on close, click on oka,
+- app will be published
 
 - In azure, serach for app services
 - click on appservices
-- click on create
+- you will see PLLWebapp1548
+- copy the url you will see the webpage in the browser
 
 
-
+- After editing the code on live.
+-  right click on the project
+- cilck on publish
+1:10:18
 
 
 
