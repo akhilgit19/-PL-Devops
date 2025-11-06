@@ -920,6 +920,7 @@ click on import,click on 3 dots, copy the file path in the filename tabe
 42:23
 
 Creating one more storage account
+--------------------------
 Storage account:
 - click on  storage accounts
 - click on create
@@ -1002,7 +1003,7 @@ In this case we use an another approach called shared access signatures
 
 
 Azure cloud services is been divided into 3 categories
-
+------------------------------------------------------------------------------
 IAAS>> Virtual mahcines>> Web apps developments, build, deploments, sever maintenance, configurations
 PAAS>> App service>> Web application development, build and deployment
 SAAS
@@ -1010,17 +1011,8 @@ SAAS
 Here we are learing how we are hosting/migrating the web app which is  in my laptiop to azure cloud computing services.
 
 
-
-- create a resource group
-- subscription
-- resource group name -= PLL-RG
-- region - Austrualia East
-- click on review create
-
-
-
 PAAS Service:
-
+----------------
 - First open the code in visual code
 - click on build 
 - now run the code 
@@ -1053,7 +1045,79 @@ PAAS Service:
 - After editing the code on live.
 -  right click on the project
 - cilck on publish
-1:10:18
 
 
+
+Azure kuberntest cluster is a combination of multiple node pools
+Each node  pool can have a different O/S Windows or linux]
+Node pool is a combination of multiple nodes
+Node is nothing but a server/VM
+Each node can have multiple pods in it
+This pods we can also called a containers
+On top of this pods we are hosting our applications
+
+
+
+AKS Implementations:
+--------------------------
+- create a resource group
+- subscription-AzureSubscription1
+- resource group name -= MyResourceGroup
+- region - Austrualia East
+- click on review create
+
+- go to kubernete services
+- click on kubernetes cluster
+- Subscruption- AzureSubscription1
+- Resource group- MyResourceGroup
+- Cluster preset configuration- Dev/Test
+- Kubernetes Cluster name- aksdemo1
+- Region- Australia East
+- Fleet Manager-  none
+- AKS pricing tier- Free ( The cluster managment is freem but you will be 
+   chareded for VM, storage and menetworking usaged. Best for experimenting learning simplet etesting or workloads with fewer tthant 10 nodes)
+
+-  kuberbetes version
+-  Automatic upgrade- Enabled with path (recommemended) 
+     automatic updgrade scheduler  Every week on sunday (recommend)
+-  Node security channel type- Node image
+    Security channel scheduleer- Every week on sunday (recommend)
+- Authententication and Authorization - Local accounts with kuberntes RBAC
+
+In Node Pool
+- click on defualt node pool
+- node pool name - Linuxnodepoo;
+- availablity zone- choose zone1,2,3
+- node size- 2 vcpus 8 gb memory
+- scalae method - auto scaled recommendd
+- Mininum node count- 2
+- Maximum node count -3
+-  Enable virutal node- chose
+In Networking
+- defualt
+In Integrations
+- defualt
+In Monitoring
+- chooose enalbe container logs
+- log anatlytics workspace- choose default
+In security
+- choose default
+In Advanced-
+ - choose default
+- click on review _ create
+
+- Once it is deployed, click on aksdemo1
+- click on cloud shell on top right
+- choose bash
+- choose your subscription
+- choose we will crate s storage account for you
+- click on next
+Command to connecto AKS Cluster
+- az aks get-credentials --resource-group MyResourceGroup --name aksdemo1
+- kubectl get nodes
+- kubectl get nodes -o wide
+- kubectlt get namespaces
+- clear command
+- kubeclt get pods --all-namespaces
+graphaically you can see nodepools, nodes
 
