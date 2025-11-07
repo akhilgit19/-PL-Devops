@@ -1121,3 +1121,15 @@ Command to connecto AKS Cluster
 - kubeclt get pods --all-namespaces
 graphaically you can see nodepools, nodes
 
+Installing AKS CLI direclty in our local laptop to connecti to kubernetes cluster:
+----------------------------------------------------------------------------------------
+- In our terminal give az login
+- it will navigate to you to the deployed cluster
+- login
+
+
+
+
+
+3 NOV 2025
+35:54
