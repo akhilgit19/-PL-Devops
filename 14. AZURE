@@ -1132,4 +1132,144 @@ Installing AKS CLI direclty in our local laptop to connecti to kubernetes cluste
 
 
 3 NOV 2025
-35:54
+------------
+In the world of docker container instance image is nothing but webapp/website
+
+Demo1: directly i am hosting my webapp on top of docker container instance
+      Here in demo1  some other developers has build and deploy the image(website)
+      direcly im using this image to host on top of docker container instances.
+
+ Resource group:
+
+- cick on resource group
+- subscription- Azure subscription1
+- resource group name- PLL-RG
+- Region - Australia eat
+- click on review+create
+
+Container Instance
+- click on Container Instance
+- click on create
+- subscription- Azure subscription1
+- resource group name- PLL-RG
+-container name-  plldci
+-Region - austrial east
+- sku- standard 
+- image source- other registry
+- image- ashfaque9x/my-html-website
+- os type- linxu
+- size-  1vcpu,1.5 gib 0 gpus
+Networking
+- dns name lable- paperlivelearingservices
+- dns name lables scope resue tenant
+Monitoring- default
+advanced - default
+- click onrewivew+create
+- now got to plldci copy the ip address and open in the browser
+
+DeMo2: Here in Demo2 also we are using the webapp/image direclty and hosting obn top of docker container
+ instance but this time the image will take from microsoft container rregistry (MCR)
+
+ Resource group:
+
+- cick on resource group
+- subscription- Azure subscription1
+- resource group name- PLL-RG
+- Region - Australia eat
+- click on review+create
+
+Container Instance
+- click on Container Instance
+- click on create
+- subscription- Azure subscription1
+- resource group name- PLL-RG
+-container name-  pllmridci
+-Region - austrial east
+- sku- standard 
+- image -mcr.mcirosoft/azuredocs/aci-helloworld:latest
+- os type- linxu
+- size-  1vcpu,1.5 gib 0 gpus
+Networking
+- dns name lable- paperlivelearingservices
+- dns name lables scope resue tenant
+Monitoring- default
+advanced - default
+- click onrewivew+create
+- now got to plldci copy the ip address and open in the browser
+
+
+Demo3: Here we are customizing the webApp  on our own then will store this webapp in docker container
+registry , will pull this webapp from docker container registry do docker container instance to host on top fo CI
+
+
+container registry:
+
+- go to container registry
+- subscription
+- resuorce group- PLL-RG
+- registry name plldccr
+- Domain name lable scop - unsecure
+- Registry domain name- plldcr.azurecr.io
+- click on create+review
+
+- GO TO HOME
+- click on cloudshell
+- click on bash
+- choose mount storage account
+- click on subscriptoin
+- choosse we will create a storage account for you
+- git clone https://github.com/Azure-Samples/aci-helloworld.git
+- ls
+- cd aci-helloworld/
+- code .
+- it will ask to swtich ,click on ok
+- change the code
+-  az acr build --resource-group PLL-RG --image demo/custom-image-demo:v1 --registry plldcr --file Dockerfile .
+
+Now 
+
+- go to container registry
+- cilck on access control  IAM
+- click on add role assigment
+- click on priviledged admiinstroator roles
+- choose owner, lcik on next
+- in Members, click on members
+- choose the user which u have logged in with 
+- clickn on next, click on select roles and principles or choose allow users to asign all roels (highly privileged)
+-After the repository is deployed demo/custome-iumage-demo
+
+- got to plldccr, search for access keys
+- check the block for admin user
+- go to plldccr, click on repositories
+
+Container regitry name: plldcre
+Repository  Name: demo/custom-image-demo
+
+- az acr repository show-tags --nane plldcr -- repository demo/custom-image-demo
+
+- az acr login -n plldcr --expose-token
+
+- az acr repository list --name plldcr --output table
+- az acr repository show --name plldcr --repository demo/custom-image-demo --output table
+
+Container Instance
+- click on Container Instance
+- click on create
+- subscription- Azure subscription1
+- resource group name- PLL-RG
+-container name-  pllmycusotmizeddci
+-Region - austrial east
+- sku- azure container registry 
+- registry -plldccr
+- image -demo/custom-image-demo 
+- image tag c1
+- os type- linxu
+- size-  1vcpu,1.5 gib 0 gpus
+Networking
+- dns name lable- paperlivelearingservices
+- dns name lables scope resue tenant
+Monitoring- default
+advanced - default
+- click onrewivew+create
+- now got to plldci copy the ip address and open in the browser
+
