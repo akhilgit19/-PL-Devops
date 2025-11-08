@@ -1273,3 +1273,66 @@ advanced - default
 - click onrewivew+create
 - now got to plldci copy the ip address and open in the browser
 
+4 Nov:
+------
+
+ We are learning how we can create , deploy and SqL DB's server, sql artifacts in  cloud conputing
+
+SQL DB's SQL server>> cloud computing [ public cloud]
+local lpatop >> On - prem [ private cloud ]
+1 we should have at least 1 sql server to deploy sql databased
+2. if we are not having and sql server then we cannot deploy sql DB
+3. on top of 1 sql sever we can deploy multiple sql databases
+4. if you want to connect cloud sqldb from your on prem then you have to enabled firewall ports
+5. if you want to connect cloud sql db from your lpatop (on prem then compulsory  you hsouldh have  s
+   sql server and  SSMD installed in your lpatops
+
+- search for sql databases
+- click on azure sql datbases
+- click on create
+- subscription - azure subscription1
+- resrouce group - PLL-RG
+- database name SQLDBinAzuer
+- server- click on createnew-  sqlserverinazure1917
+- location Japan est
+- authentication method- choose use both sql and microsoft entra authentication 
+- set microsoft entr aadmin- click on set admin- select the usser gareth@micorofot.com
+- server admin login  Gareth
+- password
+- confirm password
+- click on ok
+- database name SQLDBinAzuer
+- server- click on createnew-  sqlserverinazure1917 (japaest)
+- want to user sql elastic pool - no
+- workload enviroment- development
+- compute + storage- click on configure database
+- service tier- select standard
+- DTUS- Choose 20
+- Data max size GB- 40
+- Backup storage redundancy - choose locally-redundant backup storage
+- In networking 
+- connectivity method- public endpoint
+-  firewall rules
+- allo azure services and resoiurce to access this server - yes
+- add current client ip address- yes
+- connection policy
+- choose defulat uses redirect policy for all clent conneciton origination isidfe of azure
+- In encrupted connections
+- TLS version- tls1.2
+- In security - default
+-In additional setttins
+- use exsting datat - non
+- datbase collaton
+- collation - sql latin1_General CPI1_CIA-AS- Defualt
+- tags
+-click on review +create
+
+40:55
+
+
+
+
+
+
+
+
