@@ -1783,3 +1783,78 @@ Im claiming that if i give the acccess to the  group then what all the user who 
 - search for group name- PLL_Students_Reader_Access
 - Descritpion - Provid reader access to the group DL
 
+
+10 Nov
+--------
+Till now we were learning https://portal.azure.com
+
+VM's
+Vnets
+LB's
+TMP
+SA's
+RSV
+Backups..etc
+
+Now we are going to learn https://dev.azure.com>>
+
+Azure Boards
+Azure Repo's
+Azure CI/CD pipelines
+
+Any work that you are doing in your project is considered as a workitem
+
+Epics: This is a work item of big size to complete this work item we may need some 4-5 days
+Issues: This is also work item of medium size to complete this work item we may  need some 1-2 dats
+Task:This is alos work item of small size, to complete this work item we may  need some 4-5 days
+
+
+
+
+Now we are going to learn https://dev.azure.com>>
+
+- click on new organization
+- Name your azure devops organiaztion - dev.azure.com/ PLL8PMBatch
+- In PLL8PMBatch organization
+- Project name- MyFirstProj
+- Descriptioni- Creating this project for Paperlive Learning Students
+- click on create project
+
+- click on  PLL8PMBatch organization
+- click on organization settings
+- click on users
+- click on add user
+- In users you can provide the gmail id's
+- add to projects- MyFirstProj
+- choose send emails
+
+
+- go to boards
+- click on boards
+- in right top  choose epic, click on new item
+- type- applying for home loans, click on add top
+- click on title of the work item-applying for home loans
+- click on the user to assign
+- select the user and click on save and close
+
+- click on applying for home loans
+- you can state, description
+
+- go to boards
+- click on boards
+- in right top  choose issues, click on new item
+- type- login funcationaliy, click on add top
+- click on title of the work item-login funcationaliy
+- click on the user to assign
+- select the user and click on save and close
+
+1:09:00
+
+
+
+
+
+
+
+
+
