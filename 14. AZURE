@@ -1636,3 +1636,150 @@ All the above activities has been captured in azure monitor by default nothing h
 - Aggregation -avg
 - you can save to dashboards
 
+
+
+
+7 Nov:
+------
+What all the resources that we have created till now
+
+Azure Active Directory(AAD
+Servers
+storage accounts
+resrouc groups
+load balancer
+virtual networks ..etc
+
+10 Members
+1) Firstly will learn how we can onboard the users in microsoft entra ID
+2) I made a login to azure portal with the same user  id
+3) we have just onboarded the user , we have not provided any access to  any of th eresources
+   in azure cloud computing to the user theats why when the user logged in with his  credentials he is not able to see 
+  any of the resources
+4) will impletemnt identiy acces managemtn ( IAM) WITH ROLE BASED ACCESS control)
+5) to upgrade roles
+6) If i want to know one particular user is having what all access
+7) If i want to know one particular user is having what all accesses
+8) Bcoz we have not provided the access to the user at RG level  we have provided  access at VM level
+9) for 1 vm it is fine you can easily give the acess what if there are 50 vms, 100 vms, 1500 vms
+10)
+There are 400 users  whom you have to give access to the weserver1
+
+For some users 150 you need to give reader access
+For some users 120  you need to tive contributor access
+For some users 130  you need to give owner access
+
+
+microsoft entra id:
+--------------------
+- serach for microsoft entra id
+- click on users
+- click on new users
+-  user prinicpal name- 
+- display name
+- password
+- account enabled
+- In properties
+- first name0
+- lastname
+- usertype
+- authorization info
+- Job infrormation
+- contact ifnormation
+- click on review + create
+
+- Now i will create on server
+- Now create a VM
+- Subscription- azure subscription-1
+- resource group - PLL-RG-2
+- Virtual machine name- Webserver1
+- region - centrial idia
+- availblity options- no infrastructure redundancy required
+- security type- stadard
+- image- windows 2025
+- admintstartor
+  username VM1
+  password Bangalore@123
+- public inbound ports- allow selected ports
+- inbound rules - RDP(3389)
+                  HTTPS(443)
+                  HTTP(80)
+- Click on review + create
+- Now click on  Webserver1
+- In  IAM , clik on add role assignment
+- search for reade, click on next
+- In memebers- choose assign access to user group or sercie prinicpal
+- click on select members
+- sercch for the user 
+- description- Provind reader access to Niranjan 
+- clickn on review+create
+
+- Now click on  Webserver1
+- In  IAM , clik on add role assignment
+- click on privileged administrator roles
+- select contributor
+- In memebers- choose assign access to user group or sercie prinicpal
+- click on select members
+- sercch for the user 
+- Now the user can restart stop or updated the machine
+
+If i want to know one particular user is having what all access
+
+- if u go to micosoft entra id, click on users, click on user
+- click on azure role assignemnts
+
+If i want to know one particular user is having what all accesses
+Bcoz we have not provided the access to the user at RG level  we have provided  access at VM level
+
+- In Resource manager
+- click on PLL-RG-2
+- Click on access control IAM
+- click on add role asssignment
+- search for reade, click on next
+- In memebers- choose assign access to user group or sercie prinicpal
+- click on select members
+- sercch for the user 
+- description- Provind reader access to Niranjan 
+- clickn on review+create
+
+ for 1 vm it is fine you can easily give the acess what if there are 50 vms, 100 vms, 1500 vms
+
+ 40 vms belongs to PLL-RG
+ 50 VMS belogns to awamo-rg
+ 10 vm belongs to MyRG
+
+if user forgot the password
+- cick on  microsoft entra id
+- click on users
+- click on user
+- click on reset password
+
+There are 400 users  whom you have to give access to the weserver1
+
+For some users 150 you need to give reader access
+For some users 120  you need to tive contributor access
+For some users 130  you need to give owner access
+
+Im claiming that if i give the acccess to the  group then what all the user who are part of the group will get the access to azure resources automatically
+
+
+- clikc on microsoft entra id
+- click on groups
+- click on new group
+- group type- security
+- group name0 PLL_Students_Reader_Access
+- Group Description- creating this group to provider reader access to paaperlive learing students
+- click on no owners slected- choose users
+- click on no members selected- search  bhavana
+- click on create
+- In resourge Manager
+- click on PLL-RG-2
+- click on IAM, click on add role assignemnt
+- click reader
+- click on next
+- In members 
+  assign acces to users group or servide prinicpal
+  click on seelct membewrs
+- search for group name- PLL_Students_Reader_Access
+- Descritpion - Provid reader access to the group DL
+
