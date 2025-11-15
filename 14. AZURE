@@ -2034,6 +2034,10 @@ Azure Pipelines:
 
 Project:
 ----------
+When we are deploying our webapp on top of Azure Vm;s then that is considered as IAAS
+When we are deploying our webapp on top of app services then that is considered  as pAAS
+
+
 
 
 - In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
