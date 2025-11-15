@@ -1947,6 +1947,81 @@ Azure Pipelines:
 - open git bash termin in PLL8PMBatch,
 - git init
 - dotnet new mvc
-- 
+- git add .
+- git commit -m "created a new project"
+- git push --set-upstream repourl master
+- In PLL8PMBatch, click in pipelines,click on azure repos git, click on myfirstrepo
+- click on APS.NET
+- clikc on save and run
 
-32:11 
+
+
+- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
+- Now in the local repository, click on new filder create-PLLWebAppProj,
+- open git bash termin in PLLWebAppProj,
+- git init
+- git add .
+- git commit -m "created a new project"
+- git push --set-upstream repourl master
+- In PLL8PMBatch, click in pipelines, select the repo,click on use the classic editor
+- click on asp.net
+- clikc on save and run
+- now go to deployment groups in PLL8PMBatch
+- deployment gropu nem Dev-DG
+- Description - Creating this deployment group to deploy the webapp project in  Dev envirionments
+-click on create
+- check the box an dclick on copy script to the clipboard
+
+
+
+- Now create a VM
+- Subscription- azure subscription-1
+- resource group - PLL-RG-2
+- Virtual machine name- PLL8PMBatch
+- region - centrial idia
+- availblity options- no infrastructure redundancy required
+- security type- stadard
+- image- windows 2025
+- size 8gm 2 vcpus
+- admintstartor
+  username dev
+  password Bangalore@123
+- public inbound ports- allow selected ports
+- inbound rules - RDP(3389)
+                  HTTPS(443)
+                  HTTP(80)
+- Click on review + create
+
+- now go into dev vm
+- click on connect
+- click on download RDP file
+- give the credentials
+- click on connect
+- in the windows power shell
+-  paste the script and enter ( to establish a connection between azure ciicd and vm)
+-  now go back to PLL8PMBatch, click on deployment groups, you will see statu as online
+-  click on released , click on new pipeline
+- clic on add an artifact
+- source- PLL8PMBatch-ASP.NET-CI
+- click on add
+- click on stage
+- search of iis website deployment
+- click on apply
+- stage name- dev, click on k
+- click on 1 job 2 task link now in dev
+- website name- PLLWebAppProj
+- click on add bindings
+- port 81
+- click on ok
+- deployment group- Dev-DG
+- Timeout-15 m, job cancel time-15
+- choose allow scripts to access the OAuth taken
+-  click on ISS wb app manage  and enalbe IIS
+- click on  ISS Web app deploy
+- click o nsave
+- comment- Designing of my release pipeline completed
+- click on ok and click on create release on top
+- click on create
+- you will sucessfull the webpp on your VM
+
+
