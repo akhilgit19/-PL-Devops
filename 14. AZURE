@@ -1972,7 +1972,7 @@ Azure Pipelines:
 -click on create
 - check the box an dclick on copy script to the clipboard
 
-
+- Now using IAAS
 
 - Now create a VM
 - Subscription- azure subscription-1
@@ -2000,7 +2000,9 @@ Azure Pipelines:
 - in the windows power shell
 -  paste the script and enter ( to establish a connection between azure ciicd and vm)
 -  now go back to PLL8PMBatch, click on deployment groups, you will see statu as online
--  click on released , click on new pipeline
+
+
+- click on release , click on new pipeline
 - clic on add an artifact
 - source- PLL8PMBatch-ASP.NET-CI
 - click on add
@@ -2022,6 +2024,134 @@ Azure Pipelines:
 - comment- Designing of my release pipeline completed
 - click on ok and click on create release on top
 - click on create
-- you will sucessfull the webpp on your VM
+- you will sucessfull webpp on your VM
+
+
+
+
+14th Nov:
+-----------
+
+Project:
+----------
+
+
+- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
+- Now in the local repository, click on new filder create-ElearningProj,
+- open git bash termin in ElearningProj,
+- git init
+- git add .
+- git commit -m "Pushing Elearning Project to Azure Devops"
+- git push --set-upstream repourl master
+- In PLL8PMBatch, click in pipelines, click on Azure repo's git ,select the repo-ElearningProj,
+- click on run
+
+- Create a resource group
+- search for resource group
+- click on create
+- subscription - Azure subscription1
+- Resource group name- PLL-RG
+- Region - Australia East
+- click on review + create
+
+- In the home, click on app services
+-  click on create
+- subscription - Azure subscription1
+- Resource group name- PLL-RG
+- name- ElearningProj
+- publih - code 
+- runtime stack Node 22 LTS
+- Region Austrial East
+- Linux plan - click on reate new- ElearningProj-Plan
+- Database - defualt
+- Deployment - defualt
+- Networking - defualt
+- Monitor+secure - defualt
+- click on revew+create
+
+- In ElearningProj, click on defualt domain , you will see deafult web page
+-  Now go to intra id, click on app registrations
+- clic on new registrations
+- Name- ServiceConnectionToAzureDevopsProject
+- click on add certificate or secret
+-  click on new client secret
+- description - AzureDevopsConnect
+- click on add
+- copy the secret id and paste it
+
+
+- click on azure subscription 1 , click on check access, give your id to check if you have contricutor access
+
+- click on  IAM, CLICK ON ADD role assigment
+- click on privileged adminitrator tools, serach for contributor, click on next
+- In members, In Assign access to , choose user group or servcie prinicpal
+- Members - click on select members
+- search for ServiceConnectionToAzureDevopsProject, click on select
+- click on next
+- clik on rewview+assign
+- now come back to azure devops
+- click on PLL8PMBatch,click on project setting
+- In pipeline, click on service connections
+- choose azure resrouce manager
+- click on next
+- ident type- choose app registraction or managed idently
+- credential- secret
+- Enviromet- Azure cloud
+- subscription id ( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
+- subscruiption1 - Azure subscription
+- application clien id( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
+- directory client id ( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
+- client secret
+- click on verify
+- select greant permission to all the piplines
+- click on verify and save
+
+- now click on releases in PLL8PMBatch
+- click on add an aritifacti
+- source ElearningProj
+- click on add
+- click on stage
+- select azure app service deployment
+- click on apply
+- stage name- Dev
+- click on 1 job , 1 task
+- click on tasks, in azure subscriptions- select connectingtoElearningProject)
+- app type web appy on linux
+- app service name- ElearningProj
+- click on deply azure app service
+- package or folder click on 3 dots, 
+- click on e learning proj build, click ok
+- click on save on top and click on ok
+- click on pipeline
+- click on continous deployent trigger
+- enalbed the option for creates a release every time a new build available
+- click on save , click ok
+- comment- - Desingin the release piplienes, click onk
+- come to our local project drive path, 
+- make some chanbes in server.js
+- git init
+- git add .
+- git commit -m "Applied the webapp URL form Azure as PAAS services"
+- git push --set-upstream Elearningrepo url master
+- now go to releases, click on edit
+- click on create releases
+- click on create
+
+- Now go to appservices
+- click on  ElearningProj
+- click on Development tools
+- click on advanced tools, click on go
+- sign in
+-  cd site
+- cd wwwroot
+- cd drop
+- ls
+- mv /home/site/wwwroot/drop/* /home/site/wwwroot
+- ls
+- cd ...
+- rm -rf drop
+- ls
+- now go to ElearningProj in appservices, clkck on restart
+
 
 
