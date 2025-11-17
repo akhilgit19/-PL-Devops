@@ -1921,8 +1921,16 @@ Merge
 13th Nov
 ----------
 
+Pipelines is one of the main services of Azure Devops projects
+When we create an azure devops project then for sure will get this services
+in pipelines we are implementing CI/CD
+
+
+
 Azure Pipelines:
 --------------------
+
+If no permission you will get error as bellow
 - In the PLL8PMBatch organization, click on MyFirstProj
 - click on pipelines
 - click create pipelines
@@ -1930,47 +1938,60 @@ Azure Pipelines:
 - click on PLLRepo1 
 - click o ASP.NET
 - Clikc on save and run
-
 - fill the form from the url after getting error
 
+If permission granted  your build  will get succeeded  as bellow
 
-
-
-
+Creating build for MyRepoSimpleSignature Project:
+---------------------------------------------
 - In PLL8PMBatch organization
 - Project name- PLL8PMBatch
 - Descriptioni- Creating this project for Paperlive Learning Students
 - click on create project
-- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
-- repository name0 MyFirstRepo, click on create
-- Now in the local repository, click on new filder create-PLL8PMBatch,
-- open git bash termin in PLL8PMBatch,
+- In PLL8PMBatch project, click in repos, click on PLL8PMBatch, click on new repository
+- repository name MyFirstRepo, click on create
+- Now in the local repository ,
+- open git bash termin in MyRepoSimpleSignature
 - git init
 - dotnet new mvc
 - git add .
 - git commit -m "created a new project"
 - git push --set-upstream repourl master
-- In PLL8PMBatch, click in pipelines,click on azure repos git, click on myfirstrepo
+- In PLL8PMBatch, click in pipelines,click on azure repos git, click on myfirstrepo, click on showmmore option
 - click on APS.NET
-- clikc on save and run
+- click on save and run
+- Build will suceeded.
+- if there is any changes, click on PLL8PMBatch project, click on MyFirstRepo,
+- In the master, click on down arrow, click on new branch, branch name- PLL-B1
+- click on create
+- In the HomeController.cs you can make some changes, click on commit
+- comment- updated the commit, click on commit
+- click on create pull request, click on create, click on approve, click on complete
+- click on complete merge
+- Now come to your pipeline in PLL8PMBatch 
+- you can see build status
 
 
 
-- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
-- Now in the local repository, click on new filder create-PLLWebAppProj,
+WebAPPProject- mcv5 appproject
+------------------------------------
+- First will open the webapp project
+- Will build the webapp project in our local laptop using VS 2022 Enterprise edit
+- Once the build is succeeded then will run this project in our local laptop
+- Will push this webapp project to our server repo
+- Will do the build again in azure devops
+
+- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository, name PLLWebAppProj
+- Now in the local repository, click on new filder create-PLLWebAppProj, copy the source code of  mcv5
 - open git bash termin in PLLWebAppProj,
 - git init
 - git add .
-- git commit -m "created a new project"
+- git commit -m "pushing the project to Azure Devops repo"
 - git push --set-upstream repourl master
-- In PLL8PMBatch, click in pipelines, select the repo,click on use the classic editor
-- click on asp.net
-- clikc on save and run
-- now go to deployment groups in PLL8PMBatch
-- deployment gropu nem Dev-DG
-- Description - Creating this deployment group to deploy the webapp project in  Dev envirionments
--click on create
-- check the box an dclick on copy script to the clipboard
+- In PLL8PMBatch, click in pipelines, click on new pipeline ,click on use the classic editor
+- repository -PLLWebAppProj, click on continue
+- click on asp.net, click on apply, click on save and queue 
+- click on save and run
 
 - Now using IAAS
 
@@ -1992,6 +2013,12 @@ Azure Pipelines:
                   HTTP(80)
 - Click on review + create
 
+- now go to deployment groups in PLL8PMBatch
+- deployment gropu nem Dev-DG
+- Description - Creating this deployment group to deploy the webapp project in  Dev envirionments
+- click on create
+- check the box andclick on copy script to the clipboard
+
 - now go into dev vm
 - click on connect
 - click on download RDP file
@@ -1999,11 +2026,12 @@ Azure Pipelines:
 - click on connect
 - in the windows power shell
 -  paste the script and enter ( to establish a connection between azure ciicd and vm)
--  now go back to PLL8PMBatch, click on deployment groups, you will see statu as online
+-  now go back to PLL8PMBatch, click on deployment groups, you will see status as online
 
 
-- click on release , click on new pipeline
-- clic on add an artifact
+- click on release , click on new release pipeline
+- click on add an artifact
+- Project PLL8PMBatch
 - source- PLL8PMBatch-ASP.NET-CI
 - click on add
 - click on stage
