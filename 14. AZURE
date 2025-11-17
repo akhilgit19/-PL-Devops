@@ -1872,9 +1872,16 @@ Local repo:
      A simple foler
 
 
+Prerequiste:
+git software should be installed 
+tortise git software should be installled
+visual studion 2022 enterprise edition
+
+
+RepoCreation:
 - In the PLL8PMBatch organization, click on MyFirstProj
 - click on repos, on myfirstproj repo , click on down arrow, click on new repository
-- Repository typr- GIt, repository name- PLLRepo1 ,click on create, you will see clone to your computer git URL
+- Repository type- GIt, repository name- PLLRepo1 ,click on create, you will see clone to your computer git URL
 
 - open new folder  in the local repository
 - /e/PLL8PMBatch/MyPracticeRepo
@@ -1882,16 +1889,33 @@ Local repo:
 - dotnet new mvc ( to generate the project)
 - git add .
 - git commit -m "create new mv project"
-- git push --set-upstream url
-- git pull cloneurl 
+- git push --set-upstream  PLLRepo1 url master
 
 
+- create a new folder MyPracticeRepo1515 in the local repo
+- git init
+- git pull cloneurl of   PLLRepo1
+- git add .
+- git commit -m" added code in Homecontroller.cs file"
+- git push --set-upstream PLLRepo1 url master
+- refersh the page in the PLL8MBatch
 
-For branch
+
+For branch from server repo:
 - click on master down arrow,
-- name
+- name- PLL-B1
 - based on maser
 - click on create
+- edit the changes
+- click on create pull request
+- click on approve, click on complete
+-  in merget type- merge( no fast forward)
+   select complete associate  work items after merging
+   select delete PLL-B1 after merging
+          customize merge commit message
+- click on complete merge
+
+
 
 For file creation:
 - click on 3 dots of repo
@@ -1905,8 +1929,10 @@ To delete repo
 - go to PLLRepo1 
 - there you can delete rep
 
+For branch from slocal repo:
+- create a folder 
 - git init
-- git pull ulr
+- git pull PLLRepo1 url
 - git branch
 - git branch india
 - git checkout india
@@ -1916,6 +1942,32 @@ To delete repo
 
 Rebase
 Merge
+
+
+Merge no fast farword commit:- it will keep the history of feature branch and add a new branch in the master
+
+Master - a-b-c
+feature a-b-c-d-e
+master- a-b-c--f
+          d e
+
+squash commit :t will not keep the history of feature branch and add a new branch in the master
+Master - a-b-c
+feature a-b-c-d-e
+master- a-b-c--f
+
+
+Rebase and fastforward :
+here will append all commits history of the feature branch in the  front of the master 
+branch and her will not add extra dummy commit
+Master - a-b-c-f-g
+feature a-b-c-d-e
+master- a-b-c--f-g-d-e
+
+
+Semi-linear merge
+
+Mix of rebase and normal merge
 
 
 13th Nov
