@@ -2037,10 +2037,74 @@ Project:
 When we are deploying our webapp on top of Azure Vm;s then that is considered as IAAS
 When we are deploying our webapp on top of app services then that is considered  as pAAS
 
+Course-End Project-1:
+======================
+Implementing and automating the Azure Devops CI/CD Pipelines and a Project to host a ELearning web application for an Ed-tech company on modern cloud infrastructure for students, interns, university graduates and course completion students via Azure Devops CI/CD pipelines.
+
+Project Agenda: Hosting ELearning Web App on Azure App Services [PAAS] using Azure Devops CI/CD Pipelines
+===============
+
+Description:
+======================
+PLL technologies is one of the reputed Ed-tech who are offering variety of different online/offline course for Students, Interns, University Alumni to offer variety of different courses for cutting edge technologies, The Ed-tech is based in the south Asian countries like (India, China, Singapore, Australia, Taiwan... Etc). The Ed-tech is helping students, interns and college alumni’s with different courses offerings as per their area of interest, the courses related to software’s development for cutting edge technologies (like: Cloud Computing, Devops, AI+ML, Cyber Security, IT Consulting, IT Infrastructure, Database Management, Azure Fundamentals, Azure Administration, Azure Devops, AWS cloud practitioners, AWS Solutions Architect…. etc).
+AnilIT Ed-tech IT department treats its Web App as mission-critical and wants it to be available all the time, as in its absence, they will not be able to give a best impression and experience for their customers of their products, which can result in business loss.
 
 
+Technical briefing of the Project:
+===================================
+This project will divide in multiple parts. i.e: Azure Repo’s, Build pipeline, Release pipeline & Azure App Services and in Build Pipeline if developers makes any change in Azure devops repository it will trigger the build pipeline automatically and pulls the code from its source repository and updates the code in Azure devops CI/CD pipelines.
+Release Pipeline will be automatically triggered and it will pull the artifact from the build pipeline and this image it will deploy on Azure App Services and hence will able to see the complete Web Application is been hosted on top of Azure App Services(Web App…PAAS).
 
-- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository
+
+Architectural Diagram of the Project/Workflow:
+===============================================
+
+Azure Devops REAL-TIME-END-END-PROJECT
+============================================           PipelineArtifact
+                                                             | 
+On-prem- devloper----------azure repo----------------- BuildPipeline---------------Release pipeline
+                                                                                       |
+                                                                                   AzureApp services
+Pre-requisites to develop this project:
+============================================
+
+Azure Active Subscription in both the below portals
+   (https://portal.azure.com & https://dev.azure.com )
+Granted approval for parallelism from Microsoft for CI/CD pipelines.
+Good Internet connection
+Laptop with an internet connection. (any configuration)
+
+In this project we are implementing:
+============================================
+-Resource Group(RG)
+-Creation of an Organization & Private projects  in Azure devops
+-Establishing service connection for App Services in Devops hosted in Azure portal
+-Fetching the code from the source system and pushing it Azure Repos
+-Verifying the CI/CD pipelines by making test commit
+-Building CI/CD pipeline in devops project for Azure Web App
+-Creating an App service in Azure portal
+-Releasing of CI/CD pipeline to Azure App service deployment
+-Access the application on web browser.
+-Build/Release of the pipelines(CI/CD pipelines) starts again as part of an automation.
+-Testing AnilIT technologies Ed-tech application in the browser
+-Finally verify the application on the web browser.
+
+
+Implementation Steps:
+Note: Recommended to implement this project in Azure paid subscription.
+Step 1: Create a repository (ELearningProj) in Azure Devops portal.
+Step 2: Come to the path where we have stored our project in our local laptop(On-prem)
+Step 3: Open git bash in the project repository
+Step 4: Push the project to Azure repo’s by following the below git commands
+git init
+git add .
+git commit -m "Pushing the ELearning Project to Azure Devops"
+git push –-set-upstream repo_url master
+Step 5: Build the project in Azure Devops portal by following the Step 6
+Step 6: Click on Pipelines>>Create Pipeline>>Azure Repo’s Git>>choose the Repo ELearningProj>>Run>>wait for some 8-10 minutes till the build gets succeeded and Artifacts gets generated.
+
+
+- In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository,name-ElearningProj,. click on create
 - Now in the local repository, click on new filder create-ElearningProj,
 - open git bash termin in ElearningProj,
 - git init
@@ -2049,6 +2113,20 @@ When we are deploying our webapp on top of app services then that is considered 
 - git push --set-upstream repourl master
 - In PLL8PMBatch, click in pipelines, click on Azure repo's git ,select the repo-ElearningProj,
 - click on run
+
+Step 7:  Come to Azure Portal[https://portal.azure.com/] and create Resource Group(RG)
+Step 8: In Azure Portal and provision Web App [PAAS] under App Services by following the details
+Subscription: 
+Resource Group:
+Name: ELearningProj
+Publish: Code
+Runtime stack: Node 22 LTS
+Operating system: Linux
+Region: Australia East(or any)
+Linux Plan: ELearningProj-Plan
+Pricing Plan: Free F1 (Shared infrastructure) [or any plan]
+Click on Next: Database>>Next: Deployment>>Next: Networking>>Next: Monitor + secure>>Next: Tags>>Next : Review + create>>Create
+Step 9: Wait for some time untill the App services gets deployed
 
 - Create a resource group
 - search for resource group
@@ -2059,32 +2137,57 @@ When we are deploying our webapp on top of app services then that is considered 
 - click on review + create
 
 - In the home, click on app services
--  click on create
+-  click on create web appp
 - subscription - Azure subscription1
 - Resource group name- PLL-RG
 - name- ElearningProj
 - publih - code 
 - runtime stack Node 22 LTS
+- Operation system- linux
 - Region Austrial East
-- Linux plan - click on reate new- ElearningProj-Plan
+- Linux plan - click on create new- ElearningProj-Plan
+- Priciing Plan - Free f1
 - Database - defualt
 - Deployment - defualt
 - Networking - defualt
 - Monitor+secure - defualt
 - click on revew+create
 
+
+
+Step 10: If we access the web App in browser from Azure portal then will see the default web page on our web App…our plan is to host the Ed-tech web application on our web App
+Step 11: Come to Microsoft Entra ID(in Azure portal)>>App registrations >>+New registration>>Name: ServiceConnectionToAzureDevopsProject>>Register>>click on Add a certificate or secret(right side for client credentials)>>+New client secret>>Description: AzureDevopsConnect>>Add>>immediately copy the value and paste it in a separate notepad(as this value will not be visible again if we change the window)
+Step 12: Goto Subscription>>Access control (IAM)>>Check access>>in search type meher.tech(here search the azure subscription mail id with which we are having an azure account)>>Click on the appeared mail id>>and ensure you should be having the below accesses(in this mainly contributor access is important) 
+	
+Step 13: goto subscription>>Access control(IAM)>>Add>>Add role assignment>>Privileged administrator role>>Contributor>>+Select member>>search ServiceConnectionToAzureDevopsProject(this application we have registered in Microsoft EntraID)>>click on it>>Select>>Next>>Review+Assign>>wait for some time refresh the Azure portal to update the access.
+Step 14: Come to Azure Devops>>click on the organization where your project is present (ex: MyProject9876)>>ElearningProj>>Project settings>>Service connections>>Create a service connection>>Azure resource manager>>Next>>For Identity type click the drop down and choose App registration or managed identity(manual)>>For credential click the drop down and select secret followed with other details as shown below
+	Identity type: App registration or managed identity(manual)
+	Credential: secret
+	Subscription ID: Pass the subscription ID accordingly
+	Subscription Name: pass the subscription name accordingly
+	Application(client)ID: Get this from EntraID where we have register Application as ServiceConnectionToAzureDevopsProject
+Directory(tenant) ID: Get this from EntraID where we have register Application as ServiceConnectionToAzureDevopsProject
+Client Secret: Get this from Notepad that we have saved and click on verify and this should get succeeded as shown below
+	
+	Service Connection Name: ConnectingToELearningProj
+	Check the box for Grant access permission to all pipelines
+	Finally click on Verify and save
+
+
 - In ElearningProj, click on defualt domain , you will see deafult web page
--  Now go to intra id, click on app registrations
-- clic on new registrations
+- Now go to microsoft intra id, click on app registrations
+- click on new registrations
 - Name- ServiceConnectionToAzureDevopsProject
-- click on add certificate or secret
--  click on new client secret
+- click on register 
+- Now in ServiceConnectionToAzureDevopsProject, 
+  In client credentialsclick on add certificate or secret
+- click on new client secret
 - description - AzureDevopsConnect
 - click on add
-- copy the secret id and paste it
+- copy the secret id and paste it inyour notepadd
 
 
-- click on azure subscription 1 , click on check access, give your id to check if you have contricutor access
+- click on azure subscription 1 , In Access control IAM, click on check access, give your id to check if you have contributor access
 
 - click on  IAM, CLICK ON ADD role assigment
 - click on privileged adminitrator tools, serach for contributor, click on next
@@ -2093,25 +2196,73 @@ When we are deploying our webapp on top of app services then that is considered 
 - search for ServiceConnectionToAzureDevopsProject, click on select
 - click on next
 - clik on rewview+assign
+
+
 - now come back to azure devops
 - click on PLL8PMBatch,click on project setting
 - In pipeline, click on service connections
 - choose azure resrouce manager
 - click on next
-- ident type- choose app registraction or managed idently
+- identity type- choose app registraction or managed idently
 - credential- secret
-- Enviromet- Azure cloud
-- subscription id ( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
-- subscruiption1 - Azure subscription
-- application clien id( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
-- directory client id ( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject)
-- client secret
+- Environment- Azure cloud
+- subscription id ( click on azure subscription 1 and copy the subscription ID)
+- subscription name- Azure subscription 1
+- application client id( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject ,copy the application ID)
+- directory client id ( proviced from entra id, path- intra id, app reegistrations, click on ServiceConnectionToAzureDevopsProject,copy the directory ID)
+- client secret (PASTe the secret which u have save in nodepad)
 - click on verify
 - select greant permission to all the piplines
 - click on verify and save
 
+
+
+Step 15: Click on Release (under pipeline)>>click on New pipeline>>close the window right side>>Add an artifact>>For 
+Source (build pipeline): Here select the latest build carefully and choose the latest   build of this project only>>click Add finally.
+Step 16: Click on +Add a stage>>Select Azure App Service deployment >>click on Apply>>Stage name: Dev(or any)>>close the window.
+Step 17: click on 1 job, 1 task>>click for Azure subscription drop down
+	Azure Subscription: ConnectingToELearningProj
+	App type: Web App on Linux
+	App service name: ELearningProj
+Step 18: click on Deploy Azure App Service(as shown in image below)>>move the cursor towards right>>scroll down a little>>click on 3 dots of Package or folder(as shown in image below)>>a window open(as shown in image below)>>click on  ELearningProj(Build) folder>>Ok>>finally click on Save>>Ok
+
+Step 19: Click on Pipeline(shown below)>>click on continuous deployment trigger>>Enable the option to Create a release everytime a new build is available>>close the window @ the top>>click on Save>>Ok
+
+Step 19: come to our local laptop>>go to the path where we have saved  the project(Ex: E:\ELearning-CourseEndProj\ELearning-CourseEndProj)>>right click on server.js file>>Edit in Notepad>>come to Azure portal>>goto App services>>ELearningProj>>copy the default domain URL(as shown in image)>>Paste it in a server.js file prefix with https://(as shown in image below)>>click on File(at the top)>>Save
+
+Step 20: Come to the folder in our local laptop where we have save the project(Ex: E:\ELearning-CourseEndProj\ELearning-CourseEndProj)>>Open git bash>>execute the below commands to push the latest code changes we have done in the server.js file.
+Git init
+Git add .
+Git commit -m “modified code in the file”
+Git push –-set-upstream RepoURL master
+Step 21: The Build will get start here automatically as it is the nature of devops(if not then we can also start the build manually after the code changes by clicking on Run pipeline>>Run)>>wait for some 8-10 minutes for the build to be completed.
+Step 22:  click on Releases (under pipelines)>>Edit>>Create release>>create(to deploy the latest build(CI) to release(CD) again)
+Step 23: Come to Azure portal>>App services>>Development tools(left side under Web App)>>Advanced Tools>>Go>>choose the right subscription in which we have deployed our Web App>>click on Bash>>type below commands
+ls>>hit Enter [with this command listing the No of folders and files]
+cd site>>hit Enter [with this command getting inside the site directory]
+ls>>hit Enter [with this command listing the No of folders and files]
+cd wwwroot>>hit enter [with this command getting inside the wwwroot directory]
+ls>>hit Enter [with this command listing the No of folders and files]
+cd drop>>hit Enter [with this command getting inside the drop directory]
+ls>>hit Enter [with this command listing the No of folders and files]
+mv /home/site/wwwroot/drop/* /home/site/wwwroot>>hit Enter 
+ls>>hit Enter [with this command listing the No of folders and files]
+cd ..>>hit Enter [here coming out of drop folder]
+ls>> hit enter [with this command listing the No of folders and files]
+rm -rf drop>>hit Enter  [here with this command we are deleting drop folder]
+ls>>hit Enter  [here we are verifying the drop folder is been deleted now]
+
+Screen shot below:
+
+
+Step 24: Come to Azure portal>>Web App>>Restart the web App>>refresh the browser multiple times>>wait for some time>>click on Browse>>and here will see our web application is been hosted on top of Azure App Services.
+Step 25: Browse the website in the URL and we can navigate here to different pages of the website as per the need of our requirements for browsing.
+
+Hence, we have developed the project by fetching the code from local repo by creating a service connection in Azure Devops and hosted the project on top of Azure PAAS services.
+
+
 - now click on releases in PLL8PMBatch
-- click on add an aritifacti
+- click on add an aritifact
 - source ElearningProj
 - click on add
 - click on stage
@@ -2119,15 +2270,15 @@ When we are deploying our webapp on top of app services then that is considered 
 - click on apply
 - stage name- Dev
 - click on 1 job , 1 task
-- click on tasks, in azure subscriptions- select connectingtoElearningProject)
-- app type web appy on linux
-- app service name- ElearningProj
+- click on tasks, in azure subscriptions- select connectiontoElearningProject)
+- app type web app on linux
+- app service name- ElearningProj, click on save
 - click on deply azure app service
 - package or folder click on 3 dots, 
-- click on e learning proj build, click ok
+- click on elearning proj build, click ok
 - click on save on top and click on ok
 - click on pipeline
-- click on continous deployent trigger
+- click on continous deployemt trigger( looks lik thunder button)
 - enalbed the option for creates a release every time a new build available
 - click on save , click ok
 - comment- - Desingin the release piplienes, click onk
@@ -2137,6 +2288,7 @@ When we are deploying our webapp on top of app services then that is considered 
 - git add .
 - git commit -m "Applied the webapp URL form Azure as PAAS services"
 - git push --set-upstream Elearningrepo url master
+
 - now go to releases, click on edit
 - click on create releases
 - click on create
@@ -2146,7 +2298,8 @@ When we are deploying our webapp on top of app services then that is considered 
 - click on Development tools
 - click on advanced tools, click on go
 - sign in
--  cd site
+- click on bash in the Azure appservices
+- cd site
 - cd wwwroot
 - cd drop
 - ls
@@ -2156,6 +2309,10 @@ When we are deploying our webapp on top of app services then that is considered 
 - rm -rf drop
 - ls
 - now go to ElearningProj in appservices, clkck on restart
+- now copy the defulat domain You will see the web application.
+
+
+
 
 
 
