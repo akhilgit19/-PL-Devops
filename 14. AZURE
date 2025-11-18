@@ -1827,18 +1827,22 @@ Now we are going to learn https://dev.azure.com>>
 - In users you can provide the gmail id's
 - add to projects- MyFirstProj
 - choose send emails
+- In MyFirstProj, click on project settings, click on teams 
+- click on MyFirstProj Team, click on add, give the maild's and click on save
 
-
+43:23
 - go to boards
 - click on boards
-- in right top  choose epic, click on new item
+- in right top  choose epic, Now in ToDo ,click on new item
 - type- applying for home loans, click on add top
 - click on title of the work item-applying for home loans
 - click on the user to assign
 - select the user and click on save and close
 
 - click on applying for home loans
-- you can state, description
+- you can state, description, area,, iteration, reason, attach links, planning, priority, start date end date
+  backlog, Todo,doing,done
+-
 
 - go to boards
 - click on boards
@@ -1850,8 +1854,15 @@ Now we are going to learn https://dev.azure.com>>
 
 1:09:00
 
-If you want to create an issue which dependent on  epics , click on login funcationaliy in doing list, click on 3 dots
+-If you want to create an issue which dependent on  epics , click on login funcationaliy mitem in doing list, click on 3 dots
 and click on issue. for tasks which depende on issues, you can add tasks.
+
+Sprints:
+- click on the backlogs
+- click on MyFirstProjTeam backlogs
+- click on issues on top, click on new sprint on bottom right
+- name, date, project
+- if you want to move some issues to another sprint, click on move to iteration on right click of issue
 
 
 11 Nov:
