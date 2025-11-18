@@ -1432,12 +1432,12 @@ RSV is region dependent, if the region
 
 6 nov
 -----
- In RSV how we can schedule the backup policies for our virtual machines
+In RSV how we can schedule the backup policies for our virtual machines
 
 Recovery services valult(RSV) can take the backups of the VMS's only when  the regions are common
 RSV region  and VM region are same then nly the backup is possible
 
-right now my VM1 is having only c drive if at all after 2 months if i  i attached 2 moer disks to my VM1 then the RSV will take
+right now my VM1 is having only c drive if at all after 2 months if i attached 2 more disks to my VM1 then the RSV will take
 the backup of this 2 new disks also.
 
 Now for vm2 backup we have to create another RSV in the australia east region  then only it is possible 
@@ -1502,7 +1502,7 @@ creating VM1:
 - In configure backup
 - policy sub type- enhanced
                    Multiple backups per day
-                  choose standard
+                   choose standard
                     once a day backup
 - backup policy0 click on create new policy
 - policy name- VM1BakPlcy
@@ -1511,7 +1511,7 @@ creating VM1:
 - retention range- at 4:50 am  for 12 days
 - retention of monthly backup point- week based
                                 On - fourth, day- friday, at 4:30 amn for 2 months
-- choose retnetion of yearly backup point
+- choose retention of yearly backup point
   choose week based
   in decmber on fourth, day -friday at 4:30 am for 2 years
 - In virtual machines
