@@ -1653,7 +1653,7 @@ virtual networks ..etc
 10 Members
 1) Firstly will learn how we can onboard the users in microsoft entra ID
 2) I made a login to azure portal with the same user  id
-3) we have just onboarded the user , we have not provided any access to  any of th eresources
+3) we have just onboarded the user , we have not provided any access to  any of the resources
    in azure cloud computing to the user theats why when the user logged in with his  credentials he is not able to see 
   any of the resources
 4) will impletemnt identiy acces managemtn ( IAM) WITH ROLE BASED ACCESS control)
@@ -1672,6 +1672,8 @@ For some users 130  you need to give owner access
 
 microsoft entra id:
 --------------------
+
+Creating User:
 - serach for microsoft entra id
 - click on users
 - click on new users
@@ -1688,6 +1690,7 @@ microsoft entra id:
 - contact ifnormation
 - click on review + create
 
+Creating resource VM:
 - Now i will create on server
 - Now create a VM
 - Subscription- azure subscription-1
@@ -1705,10 +1708,12 @@ microsoft entra id:
                   HTTPS(443)
                   HTTP(80)
 - Click on review + create
+
+Giving Access to the user by role based:
 - Now click on  Webserver1
 - In  IAM , clik on add role assignment
-- search for reade, click on next
-- In memebers- choose assign access to user group or sercie prinicpal
+- search for reader, click on next
+- In memebers- choose assign access to user group or service prinicpal
 - click on select members
 - sercch for the user 
 - description- Provind reader access to Niranjan 
@@ -1727,6 +1732,7 @@ If i want to know one particular user is having what all access
 
 - if u go to micosoft entra id, click on users, click on user
 - click on azure role assignemnts
+- you can see if the user is having reader access or contributor access
 
 If i want to know one particular user is having what all accesses
 Bcoz we have not provided the access to the user at RG level  we have provided  access at VM level
@@ -1735,10 +1741,10 @@ Bcoz we have not provided the access to the user at RG level  we have provided  
 - click on PLL-RG-2
 - Click on access control IAM
 - click on add role asssignment
-- search for reade, click on next
+- search for reader, click on next
 - In memebers- choose assign access to user group or sercie prinicpal
 - click on select members
-- sercch for the user 
+- search for the user 
 - description- Provind reader access to Niranjan 
 - clickn on review+create
 
@@ -1782,6 +1788,8 @@ Im claiming that if i give the acccess to the  group then what all the user who 
   click on seelct membewrs
 - search for group name- PLL_Students_Reader_Access
 - Descritpion - Provid reader access to the group DL
+- click on review+assign
+
 
 
 10 Nov
