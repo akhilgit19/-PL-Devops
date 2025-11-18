@@ -1135,7 +1135,7 @@ Installing AKS CLI direclty in our local laptop to connecti to kubernetes cluste
 ------------
 In the world of docker container instance image is nothing but webapp/website
 
-Demo1: directly i am hosting my webapp on top of docker container instance
+Demo1: Directly i am hosting my webapp on top of docker container instance
       Here in demo1  some other developers has build and deploy the image(website)
       direcly im using this image to host on top of docker container instances.
 
@@ -1245,10 +1245,8 @@ Now
 Container regitry name: plldcre
 Repository  Name: demo/custom-image-demo
 
-- az acr repository show-tags --nane plldcr -- repository demo/custom-image-demo
-
+- az acr repository show-tags --name plldcr -- repository demo/custom-image-demo
 - az acr login -n plldcr --expose-token
-
 - az acr repository list --name plldcr --output table
 - az acr repository show --name plldcr --repository demo/custom-image-demo --output table
 
