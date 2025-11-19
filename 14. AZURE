@@ -1,3 +1,84 @@
+6th OCT
+========
+
+Cloud Deployments Models:
+================================
+Public Cloud:
+--------------
+ex- aws,azure gcp, saleforce
+ex- gmail, outlook
+
+Private Cloud:
+--------------
+-infrascture/datcenters
+ VM's
+ Networks
+ Databases
+ NSG's
+ Loadbalancers
+ TMP,
+ Appservices,
+ AKS
+ Container services etc
+
+Hybrid Cloud:
+---------------
+-combination of public and private cloud
+
+
+7th OCT
+================
+Azure Cloud Computing is giving us 200+ services
+When the tech companies deploying or devlop web projects with below infrastructure
+
+On premises               
+--------------
+Applications
+Data
+Runtime
+Middleware
+O/S
+Virtualizations
+Servers
+Storage
+Networking
+
+IaaS( Infrascture as a service)            
+--------------
+Applications
+Data
+Runtime
+Middleware
+O/S
+Virtualizations--------------------Frome here cloud provider will take
+Servers
+Storage
+Networking
+
+PaaS( Infrascture as a service)            
+--------------
+Applications
+Data
+Runtime -------------------Frome here cloud provider will take care
+Middleware
+O/S
+Virtualizations
+Servers
+Storage
+Networking
+
+
+SaaS Software as a service
+----------------------------- Completely taken care by cloud
+Applications
+Data
+Runtime
+Middleware
+O/S
+Virtualizations
+Servers
+Storage
+Networking
 
 Subscriptions:
 ===================
@@ -12,12 +93,12 @@ Basics:
 - subscription- azure subscritpino1
   resource group name- BOFA_DEV_RG
   Region:  Austrialia EAST
-Tags:
+  Tags:
 - Name :      value             Resource
- application: BankofAmerica  
- Owner      : Davic Maclarean
- Enviroment : Dev
- type       : FrontEndResources
+  application: BankofAmerica  
+  Owner      : Davic Maclarean
+  Enviroment : Dev
+  type       : FrontEndResources
 
 - click on create resource group
 
@@ -55,7 +136,8 @@ Availablity option
      
  - virtual machine scale set
       These are high availability
-
+9th OCT:
+================
 - if you select availablity set  in the availablity options   you need select below 
 
      fault domain(FD) : The network supply, power supply and cooling supply will ber provided thru common channel(single wire)
@@ -80,7 +162,7 @@ Availablity option
     username 
     password
 
--Inbout port rules
+-Inboud port rules
 
 select inbound ports  RDP
                     SSH
@@ -89,10 +171,10 @@ select inbound ports  RDP
 
 Disks:
 
--OS disk size
--OS disk type
--delet the VM
--key manangment
+-OS disk size  - Image defualt 
+-OS disk type  - Premium SSD 
+-delet the VM  - default 
+-key manangment - default 
 -enable ultra disk compatiblity
 
 Networking:
@@ -102,7 +184,7 @@ Networking:
 -public ip
 - NIC network security group
 - public inbound ports
-- seelct inboutn ports
+- seelct inbound  ports
 
 Managment
 
@@ -115,22 +197,27 @@ Managment
 
 Advanced
 
-
 - Then click on connect, clikc on download RDP file, click on connect
 
-vertical scaling or scale up is when you are making changes in your existing VMS That ic alled  vertical scaling
+
+
+vertical scaling:
+--------------------
+vertical scaling or scale up is when you are making changes in your existing VMS That is called  vertical scaling
 whatever the changes is or whatever the changes that your are making
 
 Business case scenario 1:
+---------------------------
 8GB RAM 2 VCPU's & 127 GB SSD Hardisk
 16GB RAM 4 VCPU's & 127 GB SSD Hardisk
 - click on PLLVM, click on size,select the size, click on resize
 
 
 Business case scenario 2:
+--------------------------
 Add the data disk
 
-- clikc on PLLVM - clic on data disk
+- clikc on PLLVM - click on data disk, click on create and attach a new diks
 - disk name, storage type- SSD, size -400 
 - click on apply, click on connect to VM
 - click on diskmanagment
@@ -139,24 +226,24 @@ Add the data disk
 
 
 Business case scenario 3:
-Increase the size of current data disk to 900 gb
-- click on new volume , click on right click and click on extend volume
+--------------------------
+- Increase the size of current data disk to 900 gb bye click on disk1 in PLLVM, click on settings, click on size + performance, select the size
+  click on save
+- in the diskmanagment, click on new volume , click on right click and click on extend volume
 
 
 
 Business case scenario 4:
-
+--------------------------
 shrink the unutilized size
 - click on new volume , click on right click and click on shrink volume
 
 
+10 oct
+---------
 
-
-
-
-
-ARM templates
-
+ARM templates:
+-------------
 - go to template specs
 - click on create new template spec
 - In basics, name: MyVMdeploymentUsingARM
@@ -168,10 +255,14 @@ ARM templates
 - clic on next
 - copy your template in edit template
 - click on create
-- click on deploy
+- click on MyVMdeploymentUsingARM, click on deploy
+
+The NIC( Network Interface card) will be allotted to our VM by default also we can have 
+multiple nics attached to our VM
 
 
-
+Snapshots:
+==========
 Custome VM:
 - go to the vm
 - click on server manager
@@ -199,7 +290,10 @@ review+create
  - region
  - availablity zone
  - source type
-  
+
+
+13TH OCT
+===========
 
 
 ARM templates
@@ -210,6 +304,7 @@ Custome template deployment
 
 
 Creation of AZure linux VM:
+-----------------------------------
 - Click on create new resource group
 - basiccs
   subscription azure subscript1
@@ -241,7 +336,8 @@ basics
 - now connecto ssh -i public key ubuntu@ipaddress
 - mkdir frutis
 
-
+SA
+---- 
 
 When ever we want to upload or keep the data in cloud computing then we use,we create storage accounts.
 Storage account or storage services is one of means of uploading the data or keep the data in cloud computing.
@@ -279,7 +375,6 @@ Standard/Blob SA is having 4 different types of storage offerings
     Flipkart:
 
 
-
 - Create new resource group
 - create new storage accounts
 - click on on create new storage accounts
@@ -297,7 +392,7 @@ Standard/Blob SA is having 4 different types of storage offerings
                         geio redudntadnt storage 
 
  Advanced
- securiyt
+ security
  - require secure transfer for REST API operation
 - allow enabling anonymous access on individual containers
 - enable stoarge account key access
@@ -312,15 +407,12 @@ Blob storage:
     hot
     cool 
 
-
 Networking:
 
 publick network  access  - enable
                            disable
                            secure by permiter
 public network access scope- enable form all network
-
-
 
 You have uploaded some 200 files inside your SA, and nnow some 40 files you have deleted after 3 days or 5 fays
 you realizes that the files were important and you want the files back
@@ -340,6 +432,9 @@ Tracking
 
 Encryptuon type-  microsf managkey keys 
                   customer managedkey
+
+- click on review +create
+
 Note:
 -By default Storage acccount is crate is standard storage account
 - blobs-files
@@ -347,6 +442,8 @@ Note:
 
 
 
+14th OCT
+=========
 Premum SA:
 
 Yesterday we have deployed Blob/Standard SA
@@ -360,7 +457,6 @@ Performanc: Premium
 Premium account tyope ; page blobs
 
 - You will see only one storage account for premium
-
 
 
 - click onn blob storage service in the storage account
@@ -389,7 +485,7 @@ You can change the access level on the container by clickin on the 3 options , c
 
 
 
--In File share
+-In File share:
 
 - click on file share
 basic
@@ -484,7 +580,8 @@ vm nmamew
 
 
 
-
+Network Security Group( NSG) :
+-----------------------------------
 In  Network Security Group( NSG) will implement the inbound and outbound traffice for our VM
 Here ins Network security group NSG will decide our VM should talk to which services and 
 networksecuritygroups
@@ -495,6 +592,7 @@ subnets
 
 
 loadbalancers
+-------------------
 -
 i f we want lb to balance network traffic between the VM then the VM should be in 
 same RG
@@ -505,6 +603,7 @@ we are adding vm isnide the LB not lb inside the vm
 
 
 VNET Peering
+-------------
 - Cretae 2 vnets with multiple subnets in different regions 
 - click on create resource group
 - subc
@@ -557,12 +656,14 @@ Basically at the time of VM creation we are having some basic  provisioning of  
 If we want to open/deny apart from this 4 services we use network security group [RDP,SMTP]
 If we want to have the complete control on our VM and even teh control of  network traffic inside the VM THEN WE CAN MAKE US OF aZURE FIREWALLS.
 
-
+AZURE FIREWALLS.
+-----------------
 - Create resource group
   subscription
   resrouce group
   region
   revew + create
+
 - click on virtual network
   subscription
   resource grpu
@@ -584,6 +685,7 @@ If we want to have the complete control on our VM and even teh control of  netwo
     in subnet purpose- choose azure firewall
    ipuv4 address range-10.0.0.0/16
 - click on reivwe+create
+
 -Create vm
 - click on create vm
 - vm name- FWVM
@@ -599,6 +701,7 @@ If we want to have the complete control on our VM and even teh control of  netwo
   subnet - myvmsubnet
   network security group - basic
 - clickn no reveiw +create
+
 - click on firewalls
 - sub
  resource group
@@ -612,6 +715,7 @@ If we want to have the complete control on our VM and even teh control of  netwo
  manament public ip addres- clic on new,  name- MyIp
  click on new tags
  review + create
+
 -Now connect to vm, how is that posisblie, now click on n
  firewall, click on myfw-ip, copy Ipaddres
 - it will not allow as we have put inbound port non you inorder to enable
