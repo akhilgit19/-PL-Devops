@@ -397,7 +397,105 @@ resource "aws_default_security_group" "default" {
 				
 				
 				
-			
+			pipeline {
+    agent any
+
+    stages {
+
+        /* --------------------------- 1. SCM CHECKOUT --------------------------- */
+        stage('SCM Checkout') {
+            steps {
+                echo "Checking out source code..."
+                checkout scm
+            }
+        }
+
+        /* --------------------------- 2. BUILD APPLICATION ---------------------- */
+        stage('Application Build') {
+            steps {
+                echo "Building application..."
+                sh """
+                    mvn clean package          # Java example
+                    # or: npm install && npm run build
+                    # or: go build main.go
+                """
+            }
+        }
+
+        /* ------------------ 3. CREATE NEW TEST SERVER USING TERRAFORM ---------- */
+        stage('Create New Test Server (Terraform)') {
+            steps {
+                sh """
+                    cd infra/
+                    terraform init
+                    terraform apply -auto-approve \
+                      -var environment=test
+                """
+            }
+        }
+
+        /* ------------------ 4. CONFIGURE NEW TEST SERVER (ANSIBLE) ------------ */
+        stage('Configure New Test Server (Ansible)') {
+            steps {
+                sh """
+                    ansible-playbook -i inventory/test.ini configure_server.yml
+                """
+            }
+        }
+
+        /* --------------------------- 5. DEPLOY CHANGES ------------------------- */
+        stage('Deploy to New Test Server') {
+            steps {
+                sh """
+                    ansible-playbook -i inventory/test.ini deploy_app.yml
+                """
+            }
+        }
+
+        /* --------------------------- 6. AUTOMATED TESTING ---------------------- */
+        stage('Automated Testing') {
+            steps {
+                sh """
+                    pytest tests/automation/        # Python tests
+                    # or: mvn test
+                    # or: npm test
+                """
+            }
+        }
+
+        /* --------------------------- 7. NOTIFY USER ---------------------------- */
+        stage('Notify User') {
+            steps {
+                sh """
+                    echo "Sending notification..."
+                """
+                // Example: Slack notification
+                // slackSend(channel: '#devops', message: "Tests complete on test server!")
+            }
+        }
+
+        /* ---------------------- 8. DESTROY TEST SERVER (Terraform) ------------- */
+        stage('Delete New Test Server (Terraform Destroy)') {
+            steps {
+                sh """
+                    cd infra/
+                    terraform destroy -auto-approve \
+                      -var environment=test
+                """
+            }
+        }
+
+        /* --------------------------- 9. DEPLOY TO PROD ------------------------- */
+        stage('Deploy to Prod') {
+            steps {
+                sh """
+                    ansible-playbook -i inventory/prod.ini deploy_app.yml
+                """
+            }
+        }
+    }
+}
+
 			
 Next :::
 
