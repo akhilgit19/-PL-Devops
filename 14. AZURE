@@ -1,15 +1,37 @@
 6th OCT
 ========
 
+portal.azure.com/#home
+
+
 Cloud Deployments Models:
 ================================
 Public Cloud:
 --------------
+
+Public Cloud: Now the entire IT industry is moving and migrating their applications to Public cloud, 
+we are having many cloud vendors (ex; Microsoft Azure, AWS, GCP, Oracle cloud, Salesforce, IBM…etc.) 
+these cloud providers are offering their cloud computing platform with public cloud concept, till now
+the entire IT industry, the organizations/IT firms were having their own cloud (private cloud) and now 
+the public cloud is available for all. Public cloud means the platform is available and accessible for all,
+not our resources/services & data. We have to create an account/subscription in the vendors platform and then
+will get an identity & with authentication/authorization process will happen to login 
+to our subscription in the cloud platform then it will allow us to create the resources/services which all 
+we need as per our application and project requirements.
+
+
 ex- aws,azure gcp, saleforce
 ex- gmail, outlook
 
 Private Cloud:
 --------------
+Private Cloud/On-prem: Till now the entire IT industry(from decades), 
+the IT firms/Organizations were having their own cloud and that is called a private cloud,
+the IT firms were maintaining these infrastructure/Datacenters on their own expenses and responsibilities 
+and this was accessible only for them. And they are responsible and accountable if some misshaped/disaster 
+happened that is either natural disaster or manmade disaster have occurred.
+
+
 -infrascture/datcenters
  VM's
  Networks
@@ -23,13 +45,49 @@ Private Cloud:
 
 Hybrid Cloud:
 ---------------
+Hybrid Cloud: It is a combination of Public and Private cloud. (Ex : 
+let us say our frontend application servers are hosted in cloud as public and DB servers
+are in on-prem, now using VPN will connect from our back end server(i.e.. On-prem) to front 
+end server(ie. On cloud) this type of Setup/Scenarios is called Hybrid cloud)
+
 -combination of public and private cloud
+
+
+
+Advantages of Cloud Computing:
+1)24/7 availability & accessibility: It is available & accessible from anywhere & at any time we only need to have device and internet connectivity to access the Azure resources/services.
+2)Scalability: The face of transformation is very simple and ease in cloud computing (ex; resizing of resources/workloads/services…etc.) and that can be done just with click of a mouse.
+3)Security: it is using a very high security algorithms and Hash functions to protect our data & resources.
+4)Enhanced collaboration: Just in one platform(portal.azure.com) you are going to get all the resources/services that what you need for your project or application requirement. 
+5)Cost effective: It is very much cheap an economical as compared to private cloud or an old legacy system.
+6)Reliable: Cloud services are consistently good in quality with equal performance even if we perform multiple enhancements on them.
+
+
+
+Different cloud services/cloud service MODELS: 
+====================================================
+In cloud service model, the cloud providers gives it services in three different ways(i.e. IAAS, PAAS,SAAS)
+1)IAAS >>Infrastructure as a Service(Ex of IAAS is : VM, SA, Vnet, Entra ID…etc.)
+2)PAAS >>Platform as a Service(Ex of PAAS is : SQL DB, Cosmo DB, Web apps, App services, Azure Bastion host, Azure Firewalls, Logic Apps, Function Apps…….etc.)
+3)SAAS >>Software as a Service(Ex of SAAS is : Skype, Gmail, FB, WhatsApp…etc.)
+The difference between these 3 service models….is shown below.
 
 
 7th OCT
 ================
 Azure Cloud Computing is giving us 200+ services
 When the tech companies deploying or devlop web projects with below infrastructure
+
+
+Azure Resources/Services: Anything that you are creating/deploying as part of your application need or project requirement is called as Resources or services.
+Example of Resources/Services: 
+(i)Virtual machine>>IAAS (ii)Databases>>PAAS (iii)Storage Accounts>>IAAS
+(iv)Virtual Networks>>IAAS (v) Load Balancers>>IAAS 
+(vi)Docker Container instances>>PAAS (vii)Docker Container Registry>>PAAS (viii)NSG's>>IAAS
+(ix)App services>>PAAS (x)Azure Repo's>>PAAS (xi)Azure Pipelines>>PAAS
+(xii)Azure CI/CD>>PAAS
+
+
 
 On premises               
 --------------
@@ -55,7 +113,8 @@ Servers
 Storage
 Networking
 
-PaaS( Infrascture as a service)            
+Pa
+S( Platform as a service)            
 --------------
 Applications
 Data
@@ -80,6 +139,61 @@ Servers
 Storage
 Networking
 
+What is Microsoft Azure: 
+=================================
+Microsoft Azure is a cloud computing service created by Microsoft for building, testing, deploying, and managing applications 
+(Business Applications) and services through Microsoft-managed data centers.
+
+ Advantages/Features of Azure Cloud Computing:
+=================================================
+As It is a product of Microsoft as Microsoft has launched many frameworks, tools, IDE’s, languages for the applications development 
+and all the applications are doing great business from decades, hence clients in the market has got that faith & trust saying Microsoft 
+products are reliable, reasonable, efficient and even economical for software applications development.
+Compare to AWS the learning/working curve of Microsoft Azure Cloud Computing is small. Azure is easy to work, easy to learn, easy 
+to manage, there is no such pre-requisites required to learn Azure, no programming language understanding is required to work in Azure 
+cloud computing.
+Azure is cheap as compare to other cloud providers (4-12%)
+If you are making Azure as your cloud computing partner then it is offering you MS office, WPS office, Lync, skype, share point...etc. 
+and other platform available at cheaper cost which ultimately needed for our applications/project developments.
+As compared with other cloud providers Azure is offering you many regions/places to deploy/provisioning/creating your resources 
+(VM's, SA's, DB's, Vnet, NSG’s, Backup’s...etc.)for our software applications.
+Azure is using a very high security algorithms and Hash functions to protect your data and resources what all is been provisioned 
+in different regions.
+Azure is providing default encryption for all your services that you are provisioning in cloud computing platform, with which it 
+is not at all easy for any ethical hacker to hack / hijack the resources which are hosted in Azure Cloud Computing Platform.
+
+
+
+Azure Resources/Services:
+==============================
+A public cloud computing platform, Microsoft Azure offers infrastructure as a service (IaaS), software as a service (SaaS), platform as a service (PaaS), and a serverless model. A constant hybrid cloud, Microsoft Azure is growing in demand with approximately 90% of the Fortune 500 companies using Azure services.
+The Azure cloud services are trained and created to deploy and manage even complex apps, through virtual infrastructure. It supports various programming languages, devices, databases, operating systems, and extensive frameworks. Therefore, Azure services intended for the professionals and enterprises offer all-around alternatives to the traditional means of organizational processes, with top Azure services greatly improving the performance.
+(or)
+Azure Resources/Services: Anything that you are creating/deploying as part of your application need or project requirement is called as Resources or services.
+
+
+Example of Resources/Services: 
+(i)Virtual machine>>IAAS (ii)Databases>>PAAS (iii)Storage Accounts>>IAAS
+(iv)Virtual Networks>>IAAS (v) Load Balancers>>IAAS 
+(vi)Docker Container instances>>PAAS (vii)Docker Container Registry>>PAAS (viii)NSG's>>IAAS
+(ix)App services>>PAAS (x)Azure Repo's>>PAAS (xi)Azure Pipelines>>PAAS
+(xii)Azure CI/CD>>PAAS
+
+
+
+Azure Resource Groups & Configuration and management of Azure Resource groups for hosting Azure services:
+=========================================================
+It is a place holder/name/folder basically which hold all our resources in azure. It is a logical container which holds all our resources in Azure portal (or) in Azure resource manager, for each resource that you are creating in Azure must and should be in any of the resource group.  We cannot create a resource in Azure without a resource group.
+We can also move the resources from one resource group to another resource group (or) from one subscription to another subscription, but the tools & Scripts associated with moved resources will not work until we update them to use new resource ID’s.
+If there are plenty of resources or big size resources in resource group then it might lead a downtime (15-20 mins), so planning of moving resources should be down in non-business hours.
+If already an operation of moving resources is in-progress, then at the same time we cannot proceed to move further resources to move to the same resource group. We have to wait until this operation has been completed.
+If you are having 10 Resource Group(RG's)...you can take any RG to create your resources, but you should create one RG first before creating anything in cloud portal.
+we can create as many as RG's we want in Azure portal
+we can keep as many as resources we want in one RG.
+we create RGs to divide the cloud services logically....we are creating the infrastructure for applications and every application is having different environments....
+In Azure portal RG’s will not charge you any billing/amount the moment you start keeping the resources inside the RG’s then your billing will get started
+
+
 Subscriptions:
 ===================
 - click on home, click on subscriptions in the seachbar , you will get the amount limit of your account 
@@ -101,6 +215,25 @@ Basics:
   type       : FrontEndResources
 
 - click on create resource group
+
+
+What is a virtual machine(VM)/Cloud SERVER/Work loads: 
+==================================================================
+It is a software computer that runs an operating system(o/s) & applications in it. It also contains set of resources in it (ex : O/S disk, Storage disks, Network, IP’s, NSG, NIC… other supporting files, other networks….etc.)
+When we are creating a VM then the below components we have to consider broadly
+(i)Hardware 
+(ii)Subscription 
+(iii)Resource group 
+(iv)Network 
+(v)Storage account 
+(vi) O/s(windows or linux)
+(vii)Data Disk
+(viii)OS Disk
+(vii)Load Balancer (viii)VPN….etc.
+ When we are creating a VM via portal then we have to fill the below tabs.
+(i)Basics (ii)Disks(iii)Networking(iv)management(v)Advanced(vi)Tags(vii)Review+create.
+Note: 
+
 
 
 VM
