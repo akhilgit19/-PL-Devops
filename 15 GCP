@@ -1,9 +1,35 @@
 
 Cloud Computing:
-Offers, Servers, storage ,databases, priate networks, and numerous other services online,
-eliminating the need to own any hardware or build a data center
+==========================
+Offers, Servers, storage ,databases, private networks, and numerous other services online,
+eliminating the need to own any hardware or build a data center.
+
+Benefits
+=================
+Intial Cost Savings
+
+- No upfron investiment in hardware or infrastruce
+Flexibility
+- Choose from various platforms and services based on busines needs
+
+Automatic updates
+- Cloud providers handle software and security updates automatically.
+
+globally distributed
+- Design ensures low latency and high performance across regions
+
+pay as yo go mode
+- Only pay for the resources you use, optimizing cost
+
+high avaiablity and redundancy
+- Built in failover mechanisms ensure continious uptime
+
+Zeor Hardware Maintenance
+- No need to manage or replace physical hardware
+
 
 Use Cases:
+==============
 - Hosting websites
 - hosting entire IT environments
 - E- commerce
@@ -11,10 +37,11 @@ Use Cases:
 - DR sites and backuops
 - to host mobile app
 - big data/Data science
-- IOT
+- IOT (Internet of Things)
+
 
 Why GCP?
-
+============
 - Superior AI and Machine Learning
 - Best in class data analytics
 - Multi cloud and hybrid cloud flexibliity
@@ -23,5 +50,46 @@ Why GCP?
 - Security and Compliance
 - Kubernetes, Anthos, Vmware
 - sustainablility and carbon neutral cloud
+
+
+Deployment Models
+====================
+- Public 
+    - Application Services
+    - platform services
+    - Message services
+    - Compute servcies
+    - Storage services
+ 1.The most widely cloud model
+ 2.The data center is hosted at the cloud services
+ 3.Users can acess it via the internet
+ 4.The Public cloud is shared among multiple organizations
+ 5.They Cloud provider handles all aspects of  hardware and data center management
+ 6.it offers a cost effective solution with no hardeware mainteance  requuired
+ 7.operates on a pay as you use pricing model
+
+
+- Private
+ 1) A private cloud is a platform build and maintained by a single organization
+ 2) it can be hosted on premises and accessed thorough a private network.
+ 3) The organization owns both the hardware and software
+ 4) There are upfront investment and operations costs involved.
+ 5) Compared to the public cloud a private cloud offers greated hardware and enhanced security.
+
+Eg- HP, Oracle, SAP AHAN, CICO
+
+- Hybrid
+
+Private + Public
+
+- community cloud:
+  Community cloud is a private cloud model 
+  that allows multiple organizations to 
+  share the same platofrm
+
+eg- health care ,govt websites
+
+Service Models
+====================
 
 
