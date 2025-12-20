@@ -92,4 +92,62 @@ eg- health care ,govt websites
 Service Models
 ====================
 
+IaaS( Infrascture as a service)            
+--------------
+Applications
+Data
+Runtime
+Middleware
+O/S
+Virtualizations--------------------Frome here cloud provider will take
+Servers
+Storage
+Networking
+
+PaaS( Platform as a service)            
+--------------
+Applications
+Data
+Runtime -------------------Frome here cloud provider will take care
+Middleware
+O/S
+Virtualizations
+Servers
+Storage
+Networking
+
+
+SaaS Software as a service
+----------------------------- Completely taken care by cloud
+Applications
+Data
+Runtime
+Middleware
+O/S
+Virtualizations
+Servers
+Storage
+Networking
+
+
+GCP Interfaces
+================
+-GCP Console:
+- console.cloud.google.com
+
+Cloud SK and Cloud shell:
+- In console.cloud.google.com you will cloud sheel
+
+-API:
+
+-Goodcloud API
+
+
+
+.Google Cloud resource Hierarchy
+.Policy Inheritance
+.Identiy and Access Management( IAM)
+.IAM roles
+. Service accounts
+
 
