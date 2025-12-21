@@ -133,14 +133,11 @@ Networking
 GCP Interfaces
 ================
 -GCP Console:
-- console.cloud.google.com
-
-Cloud SK and Cloud shell:
-- In console.cloud.google.com you will cloud sheel
-
+  console.cloud.google.com
+-Cloud SK and Cloud shell:
+ In console.cloud.google.com you will cloud sheel
 -API:
-
--Goodcloud API
+-Goodcloud API:
 
 
 
@@ -149,5 +146,54 @@ Cloud SK and Cloud shell:
 .Identiy and Access Management( IAM)
 .IAM roles
 . Service accounts
+
+
+Organization:
+===================
+Root Node in the google cloud resource hierarchy
+Hierarchical ancestor of project resources and folders
+Organization adminstrators have central control of all resources
+An organization ID, Which is a unique identifier for an organzation
+
+
+Folders
+============
+
+-To sub-organiazations within the organization
+additional grouping mechanism and isolation boundaries between projects and  organization
+
+-Folders can be used to model different legal entitie, deparrtments adn teams  within a company
+
+-Each team folder could contain additional sub-folders to represent different  applications
+folders acts as a policy inheritance point for Cloud IAM and organization policies
+
+Projects
+============
+
+Project is the base-level organizin entity
+
+Two identifiers: Project ID and Project  number(read-only)
+One mutable display name.
+
+The lifecycle state of the project; for example, ACTIVE or DETELTE_REQUESTEDD
+Projects are linked to Billing Accounts
+
+
+- organization- dashboard- project info- go to project settings
+- project name - Paperlive-GCP
+- Project id 
+- Project number
+
+
+Organization--------- Example.come
+
+Folders-------
+     Human Resources      Engineering     Sales
+
+Projects
+    example-dev         example-prod       example-test
+
+
+19:35
 
 
