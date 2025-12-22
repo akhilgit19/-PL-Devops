@@ -999,7 +999,13 @@ email
 				 scp /home/devopsadmin/sourcefile.txt adminuser1@172.31.15.92:/home/adminuser1
 
 		
-		
+		To Add Any User to a Group:
+
+        usermod -aG <group_name> <user_name>
+
+        usermod -aG docker devopsadmin
+
+
 	- Process Automation(Shell Scripting) :::	
 	
 	
