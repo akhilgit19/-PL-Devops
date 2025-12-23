@@ -140,6 +140,7 @@ GCP Interfaces
 -Goodcloud API:
 
 
+ IAM RESOURCES AND ACCESS 
 
 .Google Cloud resource Hierarchy
 .Policy Inheritance
@@ -184,7 +185,6 @@ Projects are linked to Billing Accounts
 - Project id 
 - Project number
 
-
 Organization--------- Example.come
 
 Folders-------
@@ -193,7 +193,34 @@ Folders-------
 Projects
     example-dev         example-prod       example-test
 
+Google cloudl 
+services 
 
-19:35
 
+IAM-POLICY INHERITANCE
+- IAM Policies can be set the organization folder project and resource levels
+- A resource inherits policies from its parent resource.
+- if a policy is set at the organization level it is inheritedby all child  folders and projects
+- if a poilicy is set at the project elvel it is inherited by all child resources
+- They effective  policy of a resource is the combination of the policy set on the resource and the 
+  policies inherited  from its parent entities
+- Resources inheri policies from their project which in turn inherits policies form the organization
+- Organaiztion level policies also apply at the resource level
+
+
+- organization- dashboard- project info- go to project settings
+- project name - Demo-PaperLive
+- Project id 
+- Project number
+
+- You can go to IAM resource  IN the VIEW BY PRINCIPALS
+- You can see your id ,name and role-owner
+- you can provide access by click on grant access and ,
+  new prinicpals- mail id
+  role-   basic  you wil lhave owner,editor browser and viewer
+  
+
+IAM - WHO-  mail id
+      what - role- resource role
+      which- which resource
 
