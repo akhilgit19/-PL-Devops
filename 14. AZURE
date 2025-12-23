@@ -1130,23 +1130,24 @@ Premium account tyope ; page blobs
 - click on create
 - now click on the created container
 - click on switch to acces key
--  click on upload
+- click on upload
 - click on browse for files
-- you can upgrade from block blob from page blob while uploading, page blob is from unstructured data
+- you can upgrade from block blob from page blob while uploading by clicking on advanced, page blob is from unstructured data, click on upload
 - for apend blob. you can go to any resource click on acitvity log and download the .csv file
-- now go to the storage acccount , go to the created coontainer, click on apend blob and upload the.csv file
-
--for user access
+- now go to the storage acccount , go to the created coontainer, click on upload click on apend blob , browse and upload the.csv file
+  
+- for user access
 - clickon the file, click on generate SAS
 - Permissions
   Read,add,create,writee,delete,permanent delte,tags
-- start and expirday dat
+- start and expirday date
 - allowed ip address
 - allowed protocols
      choose https and http
 - click on Generate SAS token and URL
 - copy Blob SAS URL , past that in the browser , You can see the file
-You can change the access level on the container by clickin on the 3 options , container levle, blob level.private level access
+- You can change the access level on the container by clickin on the 3 options , container level, blob level,private level access,container level access, choose blob level 
+  the url is direclty accessable
 
 
 
@@ -1170,7 +1171,7 @@ append blob
 
 Fileshareblob->> the files cannot be accessed via browser using URL
  Inorder to access the files inised the fileshare we have to host this fileshare on top of a server and this server we called\
-it as file share serer.
+it as file share server.
 
 To host a file share on top of a server we have be opening an SMB services on the  network on which our srver is hosted
 the port no for SMB services is 445
@@ -1195,6 +1196,7 @@ Now qyuiclky deply a server.
 - for passwrod, go to accesskey in pllsa4712 and copy the key and paste itas a password
 
 
+Note: Download the AZURE  STORAGE EXPLORER SOFTWARE for Table Storage servcies
 
 
 Go to the storage account, click on table storage servcids
@@ -1213,7 +1215,7 @@ Using this software we can insert the data inside the table storage services
 - for storage key , in storaage account, click on acess keys copy the key and poaste in account key
 - for storage account name you can check and provide from storage account 
 - click on next and click on connect
-- to detach old storage account from this explorer service, selct and clic kon deetach
+- to detach old storage account from this explorer service, select and click on deetach
 - now click on our storage pllsa4712 acount click on tables
 -  you can insert the data
 
