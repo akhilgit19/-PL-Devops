@@ -1220,6 +1220,8 @@ Using this software we can insert the data inside the table storage services
 -  you can insert the data
 
 
+16-oct-2025
+===================
 
 Inside the storage account we are having 4 different types of storage offerning
   Blob storage sercie
@@ -1229,9 +1231,9 @@ Inside the storage account we are having 4 different types of storage offerning
 
 
 Queses
-- go to stroage acocunt, clck on queus
-- click add message
-- '
+- go to stroage acocunt, clck on queus, queue name
+- click add message, click on ik
+- 
 
 
 Virutal Network
@@ -1245,7 +1247,18 @@ vm nmamew
 - tags
 - review + create
 
+While designing our Vnet in cloud computing based upon the mask bits the No of IP address count will be dcided
 
+10.0.0/16>>
+
+The mask bit and ip counts are inversely proportionali to each other
+if you increase the mask bit no then ip counts will decrease in your vnet.
+if you decrease the mask bit no then iP counts will increase in your vnet
+How many resources tha tyou are having in your projects, depends upon the project size will will decide the iP
+
+
+17th OCT
+==============
 
 Network Security Group( NSG) :
 -----------------------------------
