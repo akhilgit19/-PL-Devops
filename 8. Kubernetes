@@ -123,7 +123,7 @@ Day 21 : 12th August 2025
      kubectl command    type       Name  flags
              create     pods
              get        deployment
-             desribe    replicaset
+             describe   replicaset
              logs       replicationcontroller
              exec       service
              edit       daemonset
@@ -136,9 +136,33 @@ Day 21 : 12th August 2025
 		
 			- Pods 					# Atomic Unit of Schedule
 			 						# Used to Execute Micro-Services 		
+            - We can have multi container deployment in the pod, which has main container and supportive/side carc container
+
 			- it has Inter and Intra Pod communication
             - Inter pod network can be communted by pod ip address with port of container
+                             Pod1                                                   pod 2
+
+Manifest -- API Server---Main container  Supporting container                 Main container 
+                         :8080            :3000                                  :7777
+                              10.0.30.50                                       10.0:30:60
+master                   cluster 
+
+                                                      pod network
+                          10.0.30.0.50:8080       10.0.30.50:3000               10.0:30:60:
+
             - Intra pod network can be communted by host machine/pod ip  which is in the pod to communicate
+
+
+                             Pod1                                                   
+
+Manifest -- API Server---Main container  Supporting container                
+                         :8080            :3000   
+                            |---local host---|
+                          |----- 10.0.30.50----|                                       
+master                   cluster 
+                                        pod network
+                          10.0.30.0.50:8080       10.0.30.50:3000               
+
 
 -
 
@@ -158,7 +182,12 @@ spec:
 
 
 kubectl create -f test-pod.yaml
-						
+
+
+Pod lifecycle
+- pending-- running-- succeeded-- failed
+
+
 			- Deployment Controller Objects :::
 			
 				- Replicaset				
@@ -595,9 +624,9 @@ Day 22 : 14th August 2025
     worker-node1     Ready          <none>         46h       v1.29.15
     worker-node2     Ready          <none>         46h       v1.29.15
 - kubectl get pods
-- kubectl get pods --all-namespaces (You will see all the name spaces s in the cluster)
+- kubectl get pods --all-namespaces (You will see all the name spaces  in the cluster)
 - kubectl get ns 
-- kubectl get pods -- all-namespaces -o wide
+- kubectl get pods -- all-namespaces -o wide ( you can see ip addresss of the pod and on which node it is running)
 
 
 - In master node kmaster node
@@ -659,7 +688,7 @@ nginx-pod   1/1     Running     0             72s     10.244.2.2   worker-node2 
 - Based upon kubeadm ip range that we have given as reference it's taking fgrom there to provide the ip for POD
 - kubectl get pods -o yaml  or kubectl get pods -o json( it will give actual manifest file that store in teh system)
 - it's the information from ETCD
-- 
+
 3. Test & Delete
 # To get inside the pod
 kubectl exec -it nginx-pod bash
@@ -958,7 +987,7 @@ nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s      10
 
 - kubectl get pods -o wide
 NAME                             READY   STATUS      RESTARTS       AGE       IP              NODE          NOMINATED NODE   READINESSGATES
-nginx-deploy-59cfff6f794-7tmhn   1/1    Running     0               73s      10.244.1.5     worker-node2   <none>             <none>
+nginx-deploy-59cfff6f794-7tmhn   1/1    Running      0               73s      10.244.1.5     worker-node2   <none>             <none>
 nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s      10.244.2.4     worker-node2   <none>             <none>
 nginx-deploy-59cfff6f794-lfpw9    1/1    Running     0               73s      10.244.1.2     worker-node1   <none>             <none>
 
@@ -1005,7 +1034,7 @@ nginx-deploy-59cfff6f794-7VL9W    1/1    Running     0               73s
 nginx-deploy-59cfff6f794-FZ2D6    1/1    Running     0               73s
 nginx-deploy-59cfff6f794-lfpw9    1/1    ImagePullBakoff    0               73s
 
--kubectl rollout undo deployment/nginx-deploy
+- kubectl rollout undo deployment/nginx-deploy
 - kubectl get deploy nginx-deploy -o yaml (it will query your etcd)
 
 
