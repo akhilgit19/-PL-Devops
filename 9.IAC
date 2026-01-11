@@ -67,7 +67,7 @@ _____Inventory file__
 
           - all the default configuration is defined in Ansible.cfg
           - inventory consits of all the targets ip adress
-          -  Ansible Engine/Controller/ Manager
+          - Ansible Engine/Controller/ Manager
           - using ssh we will establish connection between nodes and master. So from Master we can execute scripts different nodes
 
 		- Ansible Architecture Components
@@ -431,7 +431,7 @@ ssh ansibleadmin@172.31.38.32
 
 
 - chown -R devopsadmin:devopsadmin /etc/ansible
-
+- su - devopadmin
 #chmod 600 /home/ansibleadmin/.ssh/*
 
 
@@ -534,7 +534,7 @@ ansible testnodes -m setup -a "filter=ansible_distribution"
 
 ansible samplenode1 -m copy -a "src=/etc/ansible/file1.txt dest=/home/ansibleadmin"
 
-ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin bacup =yes"
+ansible samplenode1 -m copy -a "src=/etc/ansible/s1.txt dest=/home/ansibleadmin backup =yes"
 
 
 ## Transfers a file  Ansible  nodes to  Ansible Controller using FETCH module
@@ -544,9 +544,9 @@ ansible samplenode1 -m fetch -a "src=/home/ansibleadmin/filefrom _AN1.txt dest=/
 
 Ansible_Controller :
 
-	-- AN1 - Jenkins_Slave		== *.war
+	-- AN1 - Jenkins_Slave		== fetch *.war
 	
-	-- AN2 - Tomcat_Server 		== *.war
+	-- AN2 - Tomcat_Server 		==Copy *.war to Tomcat Server
 
 
 UseCase 1 :
@@ -673,7 +673,7 @@ ansible samplenode1 -m setup
 
 debug-
    msg  -used to print the constant  value and variable data
-   var - used to print only the fariable data
+   var - used to print only the variable data
 
 key: value pair
 
@@ -883,9 +883,6 @@ Loops :
 
 
 
-
-
-
 Loops :::
 
 ---
@@ -907,7 +904,7 @@ Loops :::
 
 
 #########################
-Day 27 : 23nd August 2025
+Day 27 : 25th August 2025
 #########################	
 
 Handlers :::
@@ -1035,7 +1032,7 @@ Ansible components:
 
 - Main obective of ansible componsents is organize, re-use and share
 
-- ansible-galazy init mysql ( it creates a new role based upon role name and in the root folder it maintans all the subfolders)
+- ansible-galaxy init mysql ( it creates a new role based upon role name and in the root folder it maintans all the subfolders)
 -
 my-playbook
   -playbook.yml
@@ -1048,6 +1045,19 @@ mysql
   - vars
   - defaults
   - meta
+
+mysql/
+├── tasks/
+│   └── main.yml
+├── handlers/
+│   └── main.yml
+├── vars/
+│   └── main.yml
+├── defaults/
+│   └── main.yml
+├── templates/
+├── files/
+└── meta/
 
 - /etc/ansible/ansible.cfg
 roles_path = /etc/ansible/roles  (defualt role path in ansible config file)
@@ -1162,7 +1172,7 @@ main.yml
         - start-nginx
 
 - cd ..
-- cd handlerts
+- cd handlers
 - vi main.yml
 
 ---
