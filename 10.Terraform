@@ -222,92 +222,97 @@ EC2 instance- security group- subnet- vpc- routetable- Internetgatewauy
 - click on open folder
 - pl-tf-project2
 - 
-Provider:
+#################################
+# Provider
+#################################
+provider "aws" {
+  region = "ap-south-1"
+}
 
-    provider "aws" {
-    region ="ap-south-1"
-    access_key = "dfasdfFKJDHF"
-    secret_key = "adsfhadkflhalkdfhaklsd"
-    }
-
-
-Create VPC
-
+#################################
+# VPC
+#################################
 resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = {
-    Name = "main"
+    Name = "main-vpc"
   }
 }
 
-
-Create subnet
-
-resource "aws_subnet" "main" {
-  vpc_id     = aws_vpc.main.id_address =true
-  subnet_id aws_subnet.mysubnet9.id
-  vpc_security_group_ids =[aws_security_group.mysg9.id]
-  key_name = "aws2025-keypair1"
+#################################
+# Subnet (Public)
+#################################
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "ap-south-1a"
+  map_public_ip_on_launch = true
 
   tags = {
-    Name = "Main"
+    Name = "public-subnet"
   }
 }
 
-InternetGateway
-
+#################################
+# Internet Gateway
+#################################
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "main"
+    Name = "main-igw"
   }
 }
 
-
-Routetable
-
-resource "aws_route_table" "example" {
-  vpc_id = aws_vpc.example.id
-
-  route {
-    cidr_block = "10.0.1.0/24"
-    gateway_id = aws_internet_gateway.example.id
-  }
+#################################
+# Route Table
+#################################
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.main.id
 
   route {
-    ipv6_cidr_block        = "::/0"
-    egress_only_gateway_id = aws_egress_only_internet_gateway.example.id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
   }
 
   tags = {
-    Name = "example"
+    Name = "public-route-table"
   }
 }
 
-Routable association
-
-resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.foo.id
-  route_table_id = aws_route_table.bar.id
+#################################
+# Route Table Association
+#################################
+resource "aws_route_table_association" "public_assoc" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public_rt.id
 }
 
-
-security grops
-resource "aws_vpc" "mainvpc" {
-  cidr_block = "10.1.0.0/16"
-}
-
-resource "aws_default_security_group" "default" {
-  vpc_id = aws_vpc.mainvpc.id
+#################################
+# Security Group
+#################################
+resource "aws_security_group" "web_sg" {
+  name        = "web-sg"
+  description = "Allow SSH and HTTP"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
-    protocol  = -1
-    self      = true
-    from_port = 0
-    to_port   = 0
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -316,17 +321,36 @@ resource "aws_default_security_group" "default" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "web-security-group"
+  }
 }
 
-      resource "aws_instance" "example" {
-         ami           = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
-         instance_type = "t2.micro"
-         associate_public_ip_address =true
-         subnet_id = aws_subnet.
-         tags = {
-          Name = "HelloWorld"
-          }
-      }
+#################################
+# EC2 Instance
+#################################
+resource "aws_instance" "example" {
+  ami                         = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.public.id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
+  associate_public_ip_address = true
+  key_name                    = "aws2025-keypair1"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+
+
+terraform init
+terraform validate
+terraform plan
+terraform apply
+
+
 
 	DevOps ::::
 	
@@ -443,6 +467,79 @@ resource "aws_default_security_group" "default" {
             }
         }
 
+
+[test]
+test-server ansible_host=PUBLIC_EC2_IP ansible_user=ec2-user
+
+
+---
+- name: Configure New Test Server
+  hosts: all
+  become: true
+
+  vars:
+    app_user: ec2-user
+    java_package: java-17-amazon-corretto
+
+  tasks:
+
+    #################################
+    # UPDATE OS PACKAGES
+    #################################
+    - name: Update all packages to latest
+      yum:
+        name: "*"
+        state: latest
+
+    #################################
+    # INSTALL REQUIRED PACKAGES
+    #################################
+    - name: Install Java, Git, Maven, and Docker
+      yum:
+        name:
+          - "{{ java_package }}"
+          - git
+          - docker
+          - maven
+        state: present
+
+    #################################
+    # CONFIGURE DOCKER
+    #################################
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to Docker group
+      user:
+        name: "{{ app_user }}"
+        groups: docker
+        append: yes
+
+    #################################
+    # CONFIGURE FIREWALL (optional)
+    #################################
+    - name: Allow HTTP traffic through firewall
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      ignore_errors: true
+
+    - name: Reload firewall
+      command: firewall-cmd --reload
+      ignore_errors: true
+
+    #################################
+    # FINAL CONFIRMATION
+    #################################
+    - name: Print server configuration done
+      debug:
+        msg: "Server configuration complete and ready for application deployment"
+
+
         /* --------------------------- 5. DEPLOY CHANGES ------------------------- */
         stage('Deploy to New Test Server') {
             steps {
@@ -451,6 +548,90 @@ resource "aws_default_security_group" "default" {
                 """
             }
         }
+
+[test]
+test-server ansible_host=PUBLIC_EC2_IP ansible_user=ec2-user
+
+
+---
+- name: Deploy Application to Test Server
+  hosts: all
+  become: true
+
+  vars:
+    app_name: demo-app
+    app_user: ec2-user
+    app_dir: /opt/demo-app
+    jar_file: demo-app.jar
+
+  tasks:
+
+    #################################
+    # CREATE APP DIRECTORY
+    #################################
+    - name: Ensure application directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+
+    #################################
+    # COPY APPLICATION JAR
+    #################################
+    - name: Copy application JAR to server
+      copy:
+        src: target/{{ jar_file }}   # Assumes Jenkins build outputs JAR to target/
+        dest: "{{ app_dir }}/{{ jar_file }}"
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+      notify: Restart application service
+
+    #################################
+    # CREATE SYSTEMD SERVICE
+    #################################
+    - name: Create systemd service for application
+      copy:
+        dest: "/etc/systemd/system/{{ app_name }}.service"
+        content: |
+          [Unit]
+          Description=Demo Java Application
+          After=network.target
+
+          [Service]
+          User={{ app_user }}
+          ExecStart=/usr/bin/java -jar {{ app_dir }}/{{ jar_file }}
+          SuccessExitStatus=143
+          Restart=always
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Restart application service
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reexec
+
+    #################################
+    # START AND ENABLE SERVICE
+    #################################
+    - name: Enable and start application service
+      service:
+        name: "{{ app_name }}"
+        state: started
+        enabled: yes
+
+  #################################
+  # HANDLER: RESTART SERVICE
+  #################################
+  handlers:
+    - name: Restart application service
+      service:
+        name: "{{ app_name }}"
+        state: restarted
+
 
         /* --------------------------- 6. AUTOMATED TESTING ---------------------- */
         stage('Automated Testing') {
@@ -495,6 +676,89 @@ resource "aws_default_security_group" "default" {
         }
     }
 }
+
+[prod]
+prod-server ansible_host=PROD_EC2_PUBLIC_IP ansible_user=ec2-user
+
+---
+- name: Deploy Application to Production Server
+  hosts: prod
+  become: true
+
+  vars:
+    app_name: demo-app
+    app_user: ec2-user
+    app_dir: /opt/demo-app
+    jar_file: demo-app.jar
+
+  tasks:
+
+    #################################
+    # CREATE APPLICATION DIRECTORY
+    #################################
+    - name: Ensure application directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+
+    #################################
+    # COPY APPLICATION JAR
+    #################################
+    - name: Copy application JAR to production server
+      copy:
+        src: target/{{ jar_file }}    # Jenkins workspace output
+        dest: "{{ app_dir }}/{{ jar_file }}"
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+      notify: Restart application service
+
+    #################################
+    # CREATE SYSTEMD SERVICE
+    #################################
+    - name: Create systemd service for production app
+      copy:
+        dest: "/etc/systemd/system/{{ app_name }}.service"
+        content: |
+          [Unit]
+          Description=Demo Java Application
+          After=network.target
+
+          [Service]
+          User={{ app_user }}
+          ExecStart=/usr/bin/java -jar {{ app_dir }}/{{ jar_file }}
+          SuccessExitStatus=143
+          Restart=always
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Restart application service
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reexec
+
+    #################################
+    # ENABLE AND START SERVICE
+    #################################
+    - name: Enable and start application service
+      service:
+        name: "{{ app_name }}"
+        state: started
+        enabled: yes
+
+  #################################
+  # HANDLER: RESTART SERVICE
+  #################################
+  handlers:
+    - name: Restart application service
+      service:
+        name: "{{ app_name }}"
+        state: restarted
+
 
 			
 Next :::
