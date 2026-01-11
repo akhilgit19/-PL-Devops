@@ -1043,23 +1043,24 @@ nginx-deploy-59cfff6f794-lfpw9    1/1    ImagePullBakoff    0               73s
 
 	- Kubernetes Services :::
 	
-		- Cluster-IP Service 			# Default Service!
-		- NodePort Services 
+		 - Cluster-IP Service 			# Default Service!
+		 - NodePort Services 
          - Load Balancer:
 
+   
 Node Port Service:
 
 https://192.168.1.1:31000
 Node Port:[30000 to 32767
-                  31000
+                  31000--------------------------> Node Port
 -----------------192.168.1.1-------------------->--Node IP
 |                                               |
 |                                               |
 |                                               |
 |                                               |
 |                                               |
-|                  80                           |
-|          | ---10.180.0.15-----|               |-----> Port
+|                  80                           |-----> Port
+|          | ---10.180.0.15-----|               |
 |          |  service: nodePort |               |
 |          | ___________________|               |
 |                                               |
@@ -1133,7 +1134,7 @@ ______________________________________________________________________Node1
 
 
 cluster ip
-
+============
                  31000
 _______________192.168.1.1__________________________________________________________Node1
 
@@ -1236,6 +1237,45 @@ ______________________________________________________________________Node1
 
 
 
+- Kubernets_Control_Plan/Master (VM)                  On Premisis
+
+ - Kubernets_Control_Plan/Master 1(VM)                  AWS
+
+  - Kubernetes_Cluster :                                  AWS  Region 1
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
+
+
+  - Kubernetes_Cluster :                                  AWS  Region 2
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
+
+
+  - Kubernetes_Cluster :                                  AWS  Region 3
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
+
+ - Kubernets_Control_Plan/Master 2(VM)                  AZURE
+
+  - Kubernetes_Cluster :                                  AWS  Region 1
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
+
+
+  - Kubernetes_Cluster :                                  AWS  Region 2
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
+
+
+  - Kubernetes_Cluster :                                  AWS  Region 3
+      - Kubernetes_WorkerNode1 (VM)
+      - Kubernetes_WorkerNode2 (VM)
+      - Kubernetes_WorkerNode3 (VM) 
 
 
 
@@ -1329,13 +1369,13 @@ Day 23 : 19th August 2025
 
 Purpose of docker container volumes:
 ---------------------------------------
--Throught out the life cycle of your container, If you want to maintain stateful applicatoins
-we will be using container volume, Even if we loose container we should not loose docker volume.
+- Throught out the life cycle of your container, If you want to maintain stateful applicatoins
+  we will be using container volume, Even if we loose container we should not loose docker volume.
 - Similarly in kubernetets we have different volumes
 
 
 - Kubernetes Volumes:
-        - Empty Dir  
+        - Empty Dir  (Defualt directory in kubernetes for volume)
 
         - Hostpath Volume # can be compared with docker volume     
                            (as like we created a volume in the host machine and that will be referereed in the containers, Here in POD)
@@ -1542,6 +1582,8 @@ Block storage, NFS, Ojbect sotrage , others
 
 
 Persistent Volumes and Persisten Volume claim:
+
+
 - Abstracts details of host storage is provided from how it is consumerd
 - Persistentt volume PV (Piece of storage in cluster) and Persistent volume clainm(PVC) ( Request for Storage)
 - It's responsible of storage administrators to create some storage in cluster for pod deployemnet
@@ -1556,6 +1598,31 @@ Persistent Volumes and Persisten Volume claim:
   - Once they user the request for how much is needed and what type of volume needed, it will created by admins
   - if the volume is available in the pools can be reserved for pod deployment.
   - if requested volume is not avialalbe, then it will use the storage class parameter  based up allocation dynamically
+
+
+Static PV      SSD      HDD      NFS   OBJECT
+
+
+Admin- Register PVs in Pool - 5GB 50 GB--- pv and Persistent volume pool
+
+
+
+Devloper - Claims PV from Pool
+           Reference clamin in pod
+           pod spec
+
+
+Dynamic  PV      SSD      HDD      GlusterFS
+
+
+Register Storage class- Fast  slow   distributed
+
+
+
+Devloper - Claims PV from Pool
+           Reference clamin in pod
+           pod spec
+
 
 
 - Login to kubernetes master
@@ -1705,7 +1772,8 @@ kind: StorageClass
 apiVersion: Storage.k8s.io/v1
 metadata:
   name: fast
-provisioner: kubernetes.io/gce-pd
+provisioner:
+
 parameters:
   type: pd-ssd
 
@@ -1760,6 +1828,7 @@ Eg.:
 	kubectl create namespace dev 
 	
 	kubectl get ns 
+    kubectl get pods --all-namespaces
 	
 root@kmaster-node:~/kubernetes# cat nginx-devpod.yaml
 apiVersion: v1
@@ -1836,10 +1905,11 @@ CICD Pipeline using Kubernetes :::
 - go to the file below root add this
  devopsadmin ALL=(ALL) NOPASSWD: ALL
 :wq!
-- 
+- su - devopsadmin
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
 - ls -a
 - you can see .kube file for debopsadmin 
 - Now give kubectl get nodes you can see the log
