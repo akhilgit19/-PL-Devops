@@ -83,7 +83,7 @@ AWS Services
 
   AMAZON AWS            MICROSOFT Azure        GCP
 =========================================================
-   S3                   Blog storage          storage
+   S3                   Blob storage          storage
    EC2                  Virtual machines      compute engine
    ec2 container serv    container service     kubernetes engine
    elastic beanstalk     cloud service         app engine
@@ -140,7 +140,7 @@ Next :
 	
 	
 ########################
-Day 34 : 5th Sep. 2025
+Day 34 : 4th Sep. 2025
 #########################		
 	
 	- IAM Services :
@@ -159,6 +159,24 @@ Day 34 : 5th Sep. 2025
       - users or groups can be assigned json documents called policies
       - These policies define the permission of the users
       - In AWS you apply the least privilege prinicple dont give more permission tha a user neede
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowListBucket",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::my-example-bucket"
+    },
+    {
+      "Sid": "AllowReadObjects",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-example-bucket/*"
+    }
+  ]
+}
 
     - IAM Policies structure
       - consists of 
@@ -193,6 +211,11 @@ Day 34 : 5th Sep. 2025
 			- AWS Cli 
 			    https://github.com/aws/aws-cli
                 https://docs.aws.amazon.com/cli/latest/userguide/cli_code_examples.html
+               - A tool that enables you to interact with AWS Services using your commandline-shell
+               - Direct Access to the public API's of AWS services
+               - You can develop scripts to manage your resources
+               - it's open sources
+               - Alternatie to using AWS management console
 			- AWS SDK
                - AWS software development kit( AWS SDK)
                - language speicfic API's ( set of libraries)
@@ -208,7 +231,14 @@ Day 34 : 5th Sep. 2025
            Lambda function roles
            roles for cloud formation
 
-    
+    - IAM Security Tools
+       IAM Credentials Report( Account-level)
+        . A report that lists all your accounts users and the status of the various credentials
+
+########################
+Day 34 : 5th Sep. 2025
+#########################	
+
 	- Create IAM User 
            - In aws console, Go to IAM, click on users, click on create user,username - plappuser1
            - choose (provide user access to the AWS Management console)
@@ -216,31 +246,32 @@ Day 34 : 5th Sep. 2025
            - console password  choose custom password
            - choose ( user must create a new password a next sign)
            - click on next
-           - In permissions options- attach policies direclty and you can choose admin access
+           - In permissions options- attach policies direclty and you can choose admin access( Administrator Access)
            - or
 	- Create User  Group 
-           -  you can choose add user to group 
+           - you can choose add user to group 
            - usergroup name -plgrp1 and choose admin access
            - select the group and  click on create user
            - download the .csv file
 	- Policies
 		   - click on policies, click on create policy, click on json and you can update and create policy 
-             or from visual you can use like s3  add all like read,write,
-             click on resource and you can add your specific resource
+             or from visual you can use like service s3  add actions all like read,write etc
+           - click on resource and you can add your specific resource
 	- Roles 
            - For roles, if user wants to login to ec2 and acces file through s3 buckets. IAM role is required here
-             - choose aws service, choose ec2, choose s3 fulladmin access
+             - click on create role,choose aws service, choose use case- ec2( it allows ec2 instance to user aws resources/servicecs,
+               click on next choose s3 fulladmin access
              - role name pl-ec2-s3-iam-role1
              - click on create role
              - now go to the ec2 instance dashboard, 
 
-    - Access the s3 bucket through EC2
-      - while creating EC2 instance Name
-      - AMI
-      - advanced details, IAM instance profile you should be seeing this role - pl-ec2-s3-iam-role1
+             - Access the s3 bucket through EC2
+             - while creating EC2 instance Name
+             - AMI
+             - advanced details, In IAM instance profile you should be seeing this role - pl-ec2-s3-iam-role1
          
 	- Security Credentials 
-	    - click on usee plappuser1, if you click on permission, you can see ppolicies
+	    - click on user plappuser1, if you click on permission, you can see ppolicies
           adminstrator access,awscodebuildadmin access, aws code commit full access, 
           aawscodedeployfullaccess,awscodpipelinefullaccess, iamuserchangepasswword
         - you can click on security credentials, you can see MFA and assign MFA  to the user
@@ -255,16 +286,18 @@ Day 34 : 5th Sep. 2025
        - free tier
        - pricing caluclator - based on container services, monitoring services, database  services
          - workload estimate like if you say if you a customer is approaching us to implement devops, we can give the estimate manpower  analysisi
-           but not the cloud service estimation it should be discussed with wendor and customer
+           but not the cloud service estimation it should be discussed by cusotmer with their  wendor.
     - Cost and usage analysis
     - aws well architectured tool
-      
+       To manage ec2
+       To manages databases, it will provide a summary what to be used as per our requireemnt.
+
 
 			
 	- Associate / 
 	
 	
-	- RBAC ::::
+	- RBAC (Role Base Access Control)::::
 	
 		Manager 		=> DevOps / Develop / Security / Storage / Networking 
 		
@@ -277,8 +310,8 @@ Day 34 : 5th Sep. 2025
    - ec2 -elastic compute cloud- infrastructre as a service
    - it mainly consits in the capability of
         - renting virtual machine ec2
-        - storing data on virtual dirves( ebs)
-        - distributing load across machines( elb)
+        - storing data on virtual dirves( ebs- Elastic block storage )
+        - distributing load across machines( elb- Elastic load balancer)
         - scaling the services using an auto - scaling group (ASG)
 -  EC2 sizing and configuration
   - operating system(os) linux windows or mac os
@@ -286,7 +319,7 @@ Day 34 : 5th Sep. 2025
   - how much random access memory (RAM)
   - how much storage space:  
        Network attached ( EBS and EFS)
-       Hardware( ECE instance sotre)
+       Hardware( EC2 instance store)
   - network card: speed of the card public ip address
   - firewall rules: security grouop
   - bootstap  script( configure a first launch EC2 user data
@@ -299,13 +332,14 @@ Day 34 : 5th Sep. 2025
        - installing software
        - downloading common files from the internet
        - anything you can think of
-  - EC2 user data script runds with the root user
+  - EC2 user data script runs with the root user
 - Ec2 instance types- Overview
   you can use different tpes of ec2 instances that are optimised for different use cases
+  (https://aws.amazon.com/ec2/instance-types/)
 - AWS has the following naming convention
-    m5.2* large
+     m5.2* large
      m: instance class
-     5: generalring
+     5: generation
      2*large: size within the instance class
     m class- general purpose - t2
                 - Great for a diversity of workloads such as webservers or cod repositories
@@ -321,7 +355,7 @@ Day 34 : 5th Sep. 2025
 
              memory optimized - R6g
                - for business intelligenece such as  memory datbases optimixed for BI
-               - applications performing real time processsing of gbig unstructured data
+               - applications performing real time processsing of big unstructured data
 
              accelerated computing 
                - 
@@ -359,7 +393,7 @@ Classic Ports to know
 22=  sftp (secure file transfer protocol) upload files using gssh
 80=  http (Acess unsecured websites)
 443= https- (access secured websites)
-3389= RDP(Remote desktop protocol) log inot windowns instance
+3389= RDP(Remote desktop protocol) log into windowns instance
 
 
 Ec2 Instances Purchasing options
@@ -373,6 +407,36 @@ Ec2 Instances Purchasing options
 - dedicated instances- no other customers willl shareyour hardware
 - capacity reservations- reserve capacity in a sepcific AZ for any duration
 
+EC2 on Demand
+- Pay for what you use
+    - Linux or Windows - billing per second,after the first minute
+    - All other operating systems- billing per hour
+- Has the highest cost but no upfront payment
+- No long-term commitment
+- Recommened for shortterm and un interrupted workload You cant predict how the application will behave
+
+Ec2 Reserver Instances
+ - Up to 72% discount compared to On-demand
+ - You reserve a specific instance attirbutes( Instance type, Region, Tenancy, OS)
+ - Reservation period- 1 year(+ discount) or 3 years (+++ discount)
+ - Payment options No Upgron(+), partial upfront(++) , All upfront(+++)
+ - Reserved Instance Scop- Region or Zonal( reserve capacity in an AZ)
+ - Recommeneded for steady-state usage applications( think database)
+ - You can buy and sell in the reserved Instance marketplace
+
+Ec2 Saving Plans
+- Get a discount based on long-term usage( up to 72% same as RI)\
+- Commit to a certain type of usage($10/hour for 1 or 3 years)
+- Usage beyond EC2 savings plans is billed at the on demand price
+
+EC2 Spot instance
+- Can get a discoutn of up to 90% compared to On-demand
+- Instance that you can lose at any point of time if your max price is less than
+  the current spot price
+- The most cost-efficient instance in AWS
+- Not suitable for critical jobs 
+
+
 
 
 #######################
@@ -384,11 +448,13 @@ Day 35 : 8th Sep. 2025
 		VM - Jenkins_Server 
 
 		AMI :	AMI contains the operating system, application server, and applications for your instance.
+
+         - You can choose from Quick start AMIS, MY AMIS, AWS Marketplace AMIS, Community AMIS
 		 - Create an AMI and Copy to any target Region.
 	     - select the instance, click on actions, click on image and templates
          - launch template name, template version , instance type, keypair, 
-         - network setting
-         - click on create image
+         - network setting, You can create versions of your instance by launch templates
+         - select the instance, click on actions, click on image and templates, click on create image
          - image name - PL-BS-AMI-1
          - Reboot instance by defualt
          - instant volumes , Size -8
@@ -402,9 +468,13 @@ Day 35 : 8th Sep. 2025
          - click on ec2 instance
        copy AMI
         - click on the ami, click on actions, click on copy ami
-        -  ami copy  name -PL-BS-AMI-1
+        - ami copy  name -PL-BS-AMI-1
         - destination region  asia pacific (singapore)
         - choose copy tags
+
+Note: i want to transfer one container from one server to another server
+Docker container - docker commit - docker image- dockerhub public registry- docker pull image- docker run container
+
 
       Security groups
         - launch instance -
@@ -413,8 +483,8 @@ Day 35 : 8th Sep. 2025
         - key pair 
         - networksetting 
         - create security group - edi inbound rule 
-        - custom tcp 8080 source allow all
-        - type ssh , custom source allow all
+        - custom tcp 80 source allow all
+        - type ssh 22, custom source allow all
       Allocate Elastic ip address
         - click on ec2 , click on elastic bip address
         - click on allocate elasti ip address
@@ -423,7 +493,10 @@ Day 35 : 8th Sep. 2025
           - network border group( choose your network availablitiy zone)
             ap-south-1
           - click on allocate
-    placement group: for tightly coupled we use placement group
+    placement group: 
+          - for tightly coupled we use placement group
+          - ensure that all the resources are allocated with same configurations
+            which can be used by autoscaling
 
 			OS -> Ubuntu 
 			
@@ -434,14 +507,35 @@ Day 35 : 8th Sep. 2025
 			Containers				VM  
 			
 			Images 					AMI 
+
+Note: i want to transfer one container from one server to another server
+Docker container - docker commit - docker image- dockerhub public registry- docker pull image- docker run container
 		
-		
+	Key Pair:
+     - Name
+     - Key pair type- RSA
+     - Private key file format- .pem or .ppk
+     - pem file which can be used to access VM is in my local machine, 
+       what if i have 5 mem of the team, How others can used this pem file
+       We will share the pem file in shared network drive. We will give them the
+       path of the pem key file, We will not give any edit access or download access to the users
+     - By using AWS CLI we can also create key pair 
+
+    NACL( Network Access control)- subnet
+    SG( Security Group) - EC2
+
+    EC2-  Stop Instance  - deallocate the public ip instance- clear the RAM
+          Start Instance - start the instance will allocate new public ip
+          Reboot Instance - When ever there is Configuration changes We need to reeboot, will clean up the RAM
+          Hibernate Instance - Sleep mode, will never clean up the RAM , will no deallocate the IP
+          Terminated(delte) Instance - Delete the instance
+    
 	EBS Volumes ::::
 	
 		- Elastic Block Store !
 		- you can attach or dettach the volume or modify the volume
     snapshots
-         - click on create snapshot
+         - click on create snapshot( creat a snapshot from specific volume)
          - give the volume id
          - now click on create snapshot
          - select snapshot, click on actions, click on create volume from snapshot
@@ -451,7 +545,8 @@ Day 35 : 8th Sep. 2025
 
 
 	EFS Volumes ::::
-	    
+	    external storages
+
 	S3 ::::
 	  - Amazon s3 allows people to store objects)(files) in buckets(directories)
       - buckets must have a globally unique name( acorss all regions all accounts)
@@ -489,10 +584,10 @@ Day 35 : 8th Sep. 2025
           . force objects to be encrypted at upload
           . Grant access to another account( Cross account)
 
-     Creation of bucket
+     Creation of bucket:
       - click on create bucket 
       - bucket type - general purpose 
-      - bucket name - ol-temp-bkt1
+      - bucket name - pl-temp-bkt1
       - object ownership 
      Block public access setting for this bucket
       - disable block all public access 
@@ -534,9 +629,30 @@ Day 35 : 8th Sep. 2025
           - example s3 standard has 99.999% avaialbitliy = not avaiable 53 min  a year
 
 
+1. Example public access - Use Bucket Policy
+  Anonymous www website visitor---- s3 bucket -- need 
+                                                s3 bucket policy a
+                                                Allows public access
+ 
+
+2.Example: User access to S3 - IAM Permissions
 
 
-      
+IAM Policy- IAM USER-----------S3 bucket
+
+3.Example EC2 instance access- Use IAM Roles
+
+
+EC2 Instancrole---EC2 instance ----s3 bucket
+
+
+4. Advanced Cross-Account Access Use Bucket Policy
+
+IAM User or Other aws acccount- s3 bucket policy, allows cross-account-
+s3 bucket
+
+
+
 	AWS CodeCommit ==> Distributed VCS in AWS.
 	
 	
@@ -564,6 +680,8 @@ Day 36 : 9th Sep. 2025
 		
 		-> Configure Kube_WN1 ->		
 
+Sample staic webpage hosting:
+=============================
 
 - launch ec2 instance
 - PL- Webappserver
@@ -572,7 +690,7 @@ Day 36 : 9th Sep. 2025
 - keypair
 - networksetting -  
   - create security group 
-  - allow ssh, http
+  - allow ssh, http from anywhere 
 - storage - 8 gb
 - Advanced details
 - UserData :
@@ -589,17 +707,23 @@ Day 36 : 9th Sep. 2025
 
 Database services
 ------------------------------
-- Databases- Aurora and RDS- click on create database
-- instance cype db.rg.2x large 
+- Aurora and RDS- Databases- click on create database
+- Enging options- Aurora( PostgreSQL Compatible)
+- instance configuration -type db.rg.2x large 8 cpu 64 gib ram
 - availablity and durability 
+   Create an Aurora Replica OR READER node in different AZ
+- Connecitivity
+  Dont connect to an EC2 compute resource
+  VPC
 - Templates
    - production, dev/test, free tier
--
 
-Migration services
--  Database Migration service
 
-Aurora and RRD
+
+- Migration services
+  -Database Migration service
+
+Aurora and Rds
 ------------------------------
 Choosing the right databse:
  - we have a lot of managed databases on AWS to choose from 
@@ -615,6 +739,19 @@ questions to choose the right database based on your architecture:
  semi-structured?
 - strong schema? more flexibility? reporting? sear? RDSBMS/ NOSQL?
 - License costs? switch to cloud native DB such as aurora?
+
+Database Types:
+=================
+RDBMS(= SQL/OLTP): RDS,AURORA- Great for joins
+NoSQL database- no joins, no SQL: DynamoDB(~JSON) , ElastiCache
+(key value paris), Neptune(graphs), Document DB( for MongoDB), Keyspaces( for Apache Cassandra)
+ObjectStore: S3( for big objects) /Glacier (for backupo/ archives)
+Data Warehouse:(= SQL Analytics/ BI ): Redshift( OLAP), Athena, EMR
+Search: OpenSerach( json)- free text, unstructured searches
+Graphs: Amazon Neptune- displays relationshsips between data
+Ledger: Amazon Quantum ledger Database
+Time Series: Amazon Timestream
+
 
 Amazon RDS - Summary
 ------------------------------
@@ -652,7 +789,9 @@ EBS Volume
    . You get billed for all provisioned capacity
    . you can increase the capacity of the drive over time
 - you can create a snapshot of the volume
-  EBS Snapshots:
+
+EBS Snapshots:
+---------------
  - Make a backup(snapshot) of your EBS volume at a  point in a time
  - No necessary to detach volume to do snapshot but recommened
  - can copy snapshots across  AZ or region
@@ -681,11 +820,28 @@ Amazon EFS Elastic File system
 - Highly available, scable, expensive( 3xgp2 
   pay per use
 
+
+ US-EAST-1A         US-EAST-1B         US-EAST-1C
+ EC2 Instances      EC2 Instances       EC2 Instances
+    |                     |                  |
+                   security group
+
+                    EFS File System
+
 - click on EFS 
 - name 
 - VPC 
 - Recommeneded settings
-   
+   Throughput mode
+   Transistion into infrequent Access
+   Transistion into Archive
+   Transistion into Standard
+   Automatic backups
+   Encryption
+
+
+
+
 	192.168.0.0/16	==> Home 
 	
 	172.0.0.0/16	==> AWS Default VPC 
@@ -704,9 +860,13 @@ Amazon EFS Elastic File system
 		Route Table Asso.
 		Internet Gateway
 
+##################
+Day37: 11th Sep 2025
+##################
+
 AWS Networking
 ------------------
-docs.aws.amazon.com
+https://docs.aws.amazon.com
 
 Amazon VPC
 
@@ -761,7 +921,7 @@ AZ1          AZ2
 1 Region-= Multiple Availability Zones:
 Now AWS in 32 region and 102 availability zones
 
-VPC sc0pe with repsect to AWS account,region and AZ;
+VPC scope with repsect to AWS account,region and AZ;
 =====================================================
 
 - once we create an account we will choose regions like mumbai tokyou or n virginia
@@ -794,12 +954,15 @@ az1 az2 az3        az1 az2 az3 az4              az1 az2 az3 az4 az5 az6
 Mumbai               tokyo                   n virginia
 region1             region2                  region3
  
-vpc elb                 vpc                        vpc   
-ec2 rds               vpc                          vpc   
+vpc elb               vpc                        vpc   
+ec2 rds               vpc                        vpc   
 sub sub               vpc   
 
 
 az1 az2 az3        az1 az2 az3 az4              az1 az2 az3 az4 az5 az6
+
+vpc elb s3, dynamoDB-region level
+ec2 rds- subnet level/ AZ level
 
 
              
@@ -878,7 +1041,7 @@ Ip addressing Basics
 -  DSN is just for end users understanding but actual communication is done by ip'
 -  what if dns is not having any entry, it will go to the next level
 
-            
+         8  8 8 8 BITS
 class a 10.0.0.0 
        first address 10.0.0.1
        last address 10.2255.255.255
@@ -916,7 +1079,7 @@ VPC Addressing
     . 10.0.0.0/8 =>172.16..0.0 -1712.31.255.255 AWS CIDR 10.X.0.0/16
     .172.16.0.0/12 => 172.16.0.0 -172.31.255.255 AWS CIDR 172.16.0.0/16 to  172.31.0.0/16
     .192.168.0.0/16 => 912.168.0.0 - 192.168.255.255 => AWS CIDR 192.168.0.0/16
- - subnet CIDR prefix between /16 TO /28 (same as VPC CIDR
+ - subnet CIDR prefix between /16 TO /28 (same as VPC CIDR)
 - AWS VPC CIDR (IPV6)
   - VPC CIDR with prefix /56 (2^ 72 iPS)
   - IPV6 CIDR is allocated by AWS
@@ -981,6 +1144,10 @@ Private subnet
  - Typically uses NAT of instance to have internet access
  ex database, appserver
 
+Destination   Target
+172.31.0.0/16   local
+
+
 Subnets - good to know
 ------------------------
 - aws reservers 5 ips address( first 4 and last 1 ip address)  in each subnet
@@ -1015,7 +1182,7 @@ IPV6 Addresses
 - IPV6 address is 128 bits in size with 8 blocks of 16 bits each
   example 
      2001:0db8:85a3:0000:0000:8a2e:0370:7334
-- vpc cidr with prefix /56 (2^72 ips) ansd subnet cidr prefix /64
+- vpc cidr with prefix /56 (2^72 ips) and subnet cidr prefix /64
 - ipv6 addresses are public and gloablly unique and allows resources to communicate with the internet
 - vpc can operate in dual stack mode where vpc resources can commmunicate over IPV 4 or ipv6 or both
 - IPV6 address persists when you stop and start your instances and is released whne you terminate your instance
@@ -1040,11 +1207,11 @@ Security group
 - single security group can be attached to multiple instances
 - single instance can have multiple security groups
 - all inbound traffic is blocked by default
-- all inbound traffic is authhorixed by defualt
+- all outbound traffic is authhorixed by defualt
 - authorisies traffice for both IPV4 nad IPV6 traffice
 - you can reference another securtiy group as a source
 
-NACL
+NACL Network Access Control List
 ------------
 - works at subnet level- Hence automatically applied to al instances
 - contains both allow and deny rules, rules are numbered
@@ -1052,6 +1219,13 @@ NACL
 - stateless- we need to explicily open ports for return traffic
 - defualt NACL allos all inbound and outbound traffic
 - NACL are a greate way of block a speicif ip at the subnet level
+
+Rule         Type         Protocol      Port        Source       Allow/Deny
+
+100       All IPV4 traffic All          All          180.151.138.43/32    DENY
+101         HTTPS          TCP           443          0.0.0/0             ALLOW
+*          ALL IPV4 traffic ALL          ALL          0.0.0/0             DENY
+
 
 SG V NACL
 ------------
@@ -1065,7 +1239,7 @@ all rules are evaluated before making       rules are evaluated in the order
 NAT GATEWAY
 ---------------
 - to enable internet access to ec2 instance , nat will be defined in the subnet and will
-   be associated with ec2 instance and connected to interenet gateway
+  be associated with ec2 instance and connected to interenet gateway
 - Nategateway is completely aws managed services
 - higher banwidth better availability no admin
 - pay bu the hour for usage and bandwidth
@@ -1078,6 +1252,10 @@ NAT GATEWAY
   communicate with the internet
 - NAT gateway should be allocated elastic ip
 
+- NAT Gateways are highly available within a single AZ
+- For HA across multiple AZ's , multiple NAT gateways can be launched
+
+
 NAT Instance
 -------------
 - to overcome the natgateway due to high cost we can use nat instance
@@ -1085,9 +1263,23 @@ NAT Instance
 - must have public or elast ip
 - should be launched using AWS provided nat ami
 - disable source/destination check
+- Security group inbound rules to allow https or ICMP ( ping ) traffic from pirvate subnets
+
+ 
+ Inbound rules
+
+Protocol       Port        Source
+HTTP              80    10.10.1.0/24
+HTTPS           443     10.10.1.0/24
+ALL ICMP-IPV4   ALL     10.10.1.0/24
+
+Outbound Rules
+
+Protocol        Port       Destination 
+ALL              ALL        0.0.0.0/0
 
 
-
+ 
 #######################
 Day 38 : 12th Sep. 2025
 #######################
