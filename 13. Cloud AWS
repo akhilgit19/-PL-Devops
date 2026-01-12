@@ -1381,8 +1381,8 @@ Creating Public Subnet
 - availability zone- choose az as per your need , if no preference it will dyanamically allocate but it is recommened to choose
 - ipv4 vpc cidr block 10.101.0./16
 - ipv4 subnet cidr block 10.101.0./24
-- now select the subnet- click on actions - edit subnet ssettings
-- In auto assign IP setting- enable auto assign public ipv 4 address
+- now select the subnet- click on actions - edit subnet ssettings,
+  In auto assign IP setting- enable auto assign public ipv 4 address
 
 Creating Routetable
 - click on routetables
