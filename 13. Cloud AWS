@@ -1786,7 +1786,7 @@ VPC Peering   VPC- B
 |--          VPC- C
 
             
--  consider i have VPC -A and VPC -B if i want to use communication between both we suse 
+- consider i have VPC -A and VPC -B if i want to use communication between both we suse 
   vpc peering
 - privately connnet two  vpc using AWS network
 - Make them behave as if they were in the same network
@@ -1842,11 +1842,13 @@ dynamo db
                                                                       
                                              privatesubnet   
       -  Private link----- VPC Endpoint----------  application (private ip
-      |                                         az1 
+      |                    (interface)            az1 
       |
       |
+networlload balancer
+        |
 -------------------------------------------------|
-|applicationservice        networlload balancer   |
+|applicationservice         
 --------------------------------------------------
 s3 
 dyanmo db
@@ -1984,7 +1986,7 @@ region
 
 What is IPv6
 - IPv4 desinned to provide 4.3 billion address( they will be exhauted soon)
-- IPV6 is the sucess of iPV4
+- IPV6 is the sucessor of iPV4
 - IPV6 is desinged to provide 3.4*10^38 unique ip address
 - every ipv6 address in aws is public and internet- routable( no private range)
 - format x.x.x.x.x.x..x.( x is hexadecimal, range can be from 0000 to fffF)
@@ -2070,7 +2072,7 @@ Networking Costs in AWS  Per GB - Simplified
 
 Minimizing egress traffice  network cost
 - Egress traffic: outbound traffic( from AWS to outside)
-- Ingress traffic: inbound traffic - from outside to aws
+- Ingress traffic: inbound traffic - from outside to aws (typically free)
 - try to keeyp as much internet traffic withing AWS to minimize costs
 - Direct connect location that are co-located in the same AWS REGION RESULT IN LOWER COST FOR EGRESS
   Network
