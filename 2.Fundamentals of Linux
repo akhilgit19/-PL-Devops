@@ -620,7 +620,10 @@ Day 5 : 15th July 2025
 		chmod 600 dir1
 		
 		As a best practise chmod 777 should not be used at any cause!
-		
+
+        and 
+        chown user:group sdir1
+
 		
 		
 	- User Management 	:::
