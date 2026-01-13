@@ -2133,7 +2133,7 @@ Why https:=?
 4 Transport
 3 Network
 2 Datalink
-1 Physical
+1 Physical       Electronic/light /radion signals via Ethernet cable or optical fibre  or air
 
 
 How Https work?
@@ -2158,6 +2158,15 @@ Session key                                             SSL/TLS
 client server  ------------------------------------------------------------------  Session key
 encyrt/decrypt                                                                          encyrt/decrypt
                                                         network
+
+
+HTTPS,SSL/TLS With AWS Services:
+
+                                        ALB or NLB
+client    ------ssl/tls termination---- API Gateway -------------------- Amazondn services
+                                        CloudFront
+                                                     Amazon certificate manager
+
 
 Using AWS CLI
 aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications Resource Type=vpc, Tags=[{Key=Name,Value=MyVPC}]a
@@ -2212,26 +2221,27 @@ Day 40 : 16th Sep. 2025
        - They goal of high availablity is to survive a data center loss
        - They high availablity can be passive )for RDS Multi AZ for example
        - They hgih availablity can be active( for horizontal scaling)
+
      High availability and scabality for EC2
     - Vertical scaling increat size( =scle up/doemm
-        -Fromom t2.nsno -0,5 of RMA,I VPU
+        - Fromom t2.nano -0,5 of RMA,I VPU
         - tu u-12tla.metl 12.3 tb of ram 448 apvu
      - Horizontal scaling increase nuof iost sitances (= sdcaore 0utfor 
-        -auto  scalign group
+        - auto  scaling group
         - load balacer
       - High avaialibity: Run instacnes for the same  aoplication across multi AZ 
        - Auto scaling group mulit az
        - load balancer multi az                                                                                                                                                                                
 
-   Load Blance:
-    - Load balances ar servers that forward traffic to multiple server( eg: EC2 instances donstream
+   Load Blancer:
+    - Load balances are servers that forward traffic to multiple server( eg: EC2 instances donstream
 
    Why use a load balancer
    - Spread load acorss multiple doenstaream instances
-   - expose a s8ngle proint of access( DNS)  to to your application
+   - expose a single point of access( DNS)  to to your application
    - seamlessly handly failures of downstream instances
    - do regular health check s to your instances
-   - provide SSL terminatino (HTTPS) of your websites
+   - provide SSL termination (HTTPS) of your websites
    - enforce stickiness with cookies
    - high avaialblity acorss zones
    - seperate public traffic from private link
@@ -2405,7 +2415,7 @@ wwww<------------Route/user-|                    ------> http-- targetgroups for
 		
 		Query/Parameters based routing						www.mail.google.com/inbox/from:aws?
 	
-  Application load balncer( v2)
+  Application load balncer(v2)
   target groups
 - EC2 instances( can be managed by an auto scaling group)- http
 - ecs task( managed by ecs iteself) -http
@@ -2414,7 +2424,8 @@ wwww<------------Route/user-|                    ------> http-- targetgroups for
 - ALB can routed to multiple target ggroups
 - Health checks are at the target ggroup level
 
- Network Load Balancer
+ Network Load Balancer:
+
  - Network load balancers( layer 4) allow to:
    - forward TCP && UDP traffic to yoru instances
    - handle millions of request per seconds
@@ -2431,16 +2442,17 @@ Gateway load balancer
   deep packet inspection systems, payload manipulation
 - operates at layer 3 ( Network layer ) -IP packets
 - combines the follwing functions
-   .transparent netowkr gateway - single entry/exit for all traffic
+   . transparent netowkr gateway - single entry/exit for all traffic
    . load balancer- distributes traffic to your virtual applicances
 - uses the geneve protocol on port 6081
 
 
 users-------routetable       -------> application
                      |      |
-                        lb 
-               Targetgroups
-             ec2 ec2 ec2
+                        glb 
+                     |      |
+                   Targetgroups
+                    ec2 ec2 ec2
 
 
 
@@ -2522,7 +2534,7 @@ Type    protocol port      source
 - key pair
 - SG-
   allot http traffice from internet
-  allow ssh traffic from myvpc
+  allow ssh traffic from internet
 - advanced details
 
 	#!/bin/bash
@@ -2836,6 +2848,7 @@ client
 
 
 AWS Global accelerator:
+
 Work with elastic ip , ec2 instances, ALB, NLB, public or private
 -Consistent performance
  - Intellingent routing to lowest latency and fast regional failover
@@ -2852,7 +2865,7 @@ Work with elastic ip , ec2 instances, ALB, NLB, public or private
 AWS Global Acceleartor vs Cloud Front
 
 - They both use the AWS global network and its edge locations around the world 
-- Both services integrate with AWS shiel fro DDOS protection
+- Both services integrate with AWS shield for DDOS protection
 
 CloudFront 
  - Improves performacne for both cacheable content( such as aimages and videos)
@@ -2862,7 +2875,7 @@ CloudFront
 Global accelerator:
 - Improves performance for a wide range of applications over TCP or UDP
 - Proxying packets at the edge to applications running in one or more AWS regions
-- Good fir for non HTTPS use cases  such as gaming UDP lOT MQTT or voice over IP
+- Good for for non HTTPS use cases  such as gaming UDP lOT MQTT or voice over IP
 - good for HTTP use cases that require static IP addresses
 - good for HTTP use casses that required detemrinistic fast regional failover
 
@@ -2874,8 +2887,7 @@ Amazon Cloud Front
 - 216 point of presence globally edge locations
 - DDOS protection ( because worldwide) integrations with shield, AWS weba pplications firewall
 
-Amazon Cloud watch Metrics
-
+Amazon Cloud watch Metrics:
 -CloudWatch provided metrics for every services in AWS
 - Metric is a variable to monitor( CPUUtilization , neTWORKLN)
 - Metrics belong to namespace
@@ -2902,14 +2914,17 @@ Cloud watch logs:
 Cloud Watch logs: -S3 Export
 - Log data can take up to 12 hours to become available for ex port
 - The API call is createExportTask
-- Not near- realtime or realtime us logs subscriptiones ininstead
+- Not near- realtime or realtime us logs subscriptiones instead
+                                               ------ Lambda --------------------------real time-------- Open search service
+cloudwatchlogs ---logs----- subscription filter------ Kinesis Data Firehouse ----------nearrealtime-----S3
+                                               ------ Kinesis Data Streams------------------------------kdf kda ec2 lambda
 
 - while create a ec2, In advanced details. Detailed cloudwach monitoring is alwasy enabled
   for basic level
 
 
 
-CloudWatch Alarms
+CloudWatch Alarms:
 - Alarms are used to trigger notifications for any metric
 - Varous options (sampling % max,min ,etc)
 - Alarm States:
@@ -2920,20 +2935,21 @@ CloudWatch Alarms
    .Length of time in seconds  the evalute the metric
 
 
-Cloud watcha alarms targets
+Cloud watcha alarms targets:
 - stop terminate reboot recover an ec2 instance
 - trigger auto scaling action
-- send notificatino to SN ( from which you can do pretty much anything)
+- send notificatino to SNS ( from which you can do pretty much anything)
 
 
 
 EC2 instance recovery:
-Statuc check:
+Status check:
+==============
   Instance status= check the EC2 VM
   system status = check the underlying hardware
   attached EBS status= check attached EBS volume
              monitor                                              alarm
- ec2 instance ----- cloud wathc alarm(status check failed_ssyttem -------SNS topi
+ ec2 instance ----- cloud wathc alarm(status check failed_ssyttem -------SNS topic
 
 - Recovery: same private public elastic ip, metadata, placement group
 
@@ -3014,7 +3030,7 @@ Benefits of AWS Lambda
    - free tier of 1000000 aws lambda request and 4000000 gbs of compute time
    - Integrated with the whole AWS suite of services
    - Integrated with many programming languages
-  -  Easy monitoring through AWS Cloud wach
+  -  Easy monitoring through AWS Cloud waTCH
   -  Easy to get more resources per functions( up to 10 gb of RAM)
   -  increasing RAM will also improve CPU and network
 
@@ -3026,7 +3042,7 @@ Benefits of AWS Lambda
  - ruby
  - custom runtime api
  - lambda container image
-   - The container image must implement the lambada runtime PAI
+   - The container image must implement the lambada runtime API
    - ECS/Fargate is preferred for running arbittrary docker images
 
 
@@ -3045,7 +3061,8 @@ AWS Lamda Integrations Main ones
 Example: serverless thumbnail creationg
        
                  trigger                                         |----> push -- New thumbnial ins s3
- newimag in s3-----------> aws lambda function creates a thumnail|----> push -- Metadata in dynamobdb
+ newimag in s3-----------> aws lambda function creates a thumnail
+                                                                |----> push -- Metadata in dynamobdb
 
 AWS Lambda pricing: exam[ple
 - you can find overall pricing information here
@@ -3071,13 +3088,13 @@ AWS lambda limits to know - per region
 - Deployment
  - lambda function deployment size( compressed. zip ) 50mb
  - size of uncompressed deployment ( code + dependecnices) 250 mb
- - can use the /mtp directoyr to load other files at start up
+ - can use the /TMP directory to load other files at start up
  - size of envioment variables : 4kb
 
 
-- go to lambda in aws
+- go to lambda in aws, click on create function 
 - choose - use a blue print
-- blueprint name - python helow world function- A starter aws lambda function
+- blueprint name - python hellow world function- A starter aws lambda function
 - execution role- create a new role with basic lambda permissions
 - click on create function
 - you can see code, test,
@@ -3086,6 +3103,7 @@ like this users can maintain theri function defination and test the funciton
 - go to monitoring option and you can check cloud watch metrics
 - in monitoring tab you can see view cloud watch log
 - it will automatically create iam role to access cloudwatch logs
+- In cloudwatch you can see log groups and log streams
 
 
 
@@ -3115,6 +3133,7 @@ producwer -----------------------sqs queue---------------------consumer
                                      |
 producwer                            |-----------------------     consumer
 
+
 Limitations:
 - oldest offing( over 10 years old)
 - unlimited throughput, unlimited number of messabes in queue
@@ -3125,7 +3144,7 @@ Limitations:
 - can have duplicate messages( at least once delivery, ocassionally)
 - can have out of order messages( best effor ordering)
 
-SQS Producing messages
+SQS Producing messages:
 - Producer to sqs using the SDK (Send Message API)
 - The message is persisted in SQS until a consumer deletes it
 - Message retention : defualt 4 days up to 14 days
@@ -3155,7 +3174,8 @@ SQS Multiuple EC2 instances consumers
 - at least once delivery
 - best-effort message ordering
 - cosumers delete messsages after processing them
-- we can scale consumers horizontally to improve throughput of processing
+- we can scale consumers horizontally to improve throughput of processing by auto scaling level
+
 
 
 Amazon SQS- Security
@@ -3170,6 +3190,7 @@ Amazon SQS- Security
  . Useful for cross account acess to sqs queues
  . useful for allowing other services( SNS,S3) to write to an SQS queue
 
+
 - In amazon , click on queues- click on create queue
 - queue name
 - configation
@@ -3182,6 +3203,7 @@ define who can receive messages from the queue
 - click on create queue
 - click on your queue, click on on send and receive message
 - you can send meessage now and you can click on poll message to see the message in receive end
+- if you click on poll message you can see the message in the receive message request
 -
 
 
@@ -3194,7 +3216,8 @@ SNS - Simple notification service
 - encryption
 - access policy
 - Delivery status logging
--
+- click on create topic
+
 Amazon SNS
 - The event producer  only sends message to on SNS Topic
 - As many event receivers( subscriptions) as we want to listent to the  SNS to the SNS TOPIC 
@@ -3220,6 +3243,7 @@ Amazon SNS- Security
 
 Amazon Kinesis Data Streams
 - Collect and store streaming data in realtime
+- Rention period is 365 days
 
 Realtimedata:       
           
@@ -3256,7 +3280,12 @@ prot  |  |   |- SLD  | - tld
       fully qualified domain name 
 
 
+When ever you try to access any website, it will first search in webserer 
 
+example.com--- local dns server----------- Root DNS Server
+                                           TLD DNS Server(.com)
+                                           SLD DNS Server(exaple.com)
+           (assigned and manged by your compnay or assigned by your ISP dynamically)
 
 Next :::
 
@@ -3275,10 +3304,11 @@ Day 43 :23rd Sep. 2025
     - Authoritative= the customer can update the DNS records
     - Route 53 is also a domain registrar
     - ability to check the health of your resources
-    - the only AWS services wihch provides 1-00% availability SLA
+    - the only AWS services wihch provides 100% availability SLA
     - why route 53? 53 is a reference to the traditional DNS port.
 
-     Route53 - Record Types
+    Route53 - Record Types:
+
     A- maps a hostname to IPV4
     AAAA - maps a hostname to IPV6
     CNAME - maps a hostname to another hostname
@@ -3314,8 +3344,12 @@ Day 43 :23rd Sep. 2025
       - TLS certificates help with encryption( HTTPS)
       - Encryption in fight ensures no MITM( man in the middle attack) can happned
 
+SSL → Secure Sockets Layer
+
+TLS → Transport Layer Security
+
          username
-         passsword
+         passsword                      key          
 client                 tls encryption            tls descryption         https website
 
 - lets say for example in cient as a users i want to connect to the server with username and password
@@ -3329,8 +3363,8 @@ client                 tls encryption            tls descryption         https w
 AWS KMS( key management Service)
 - Anytime you hear encryption for an AWS service, it's most like KMS
 - AWS managed encryption keys for us
-- full integrated with IA for authorization
-- easy way to contrll access to your datat
+- full integrated with IAM for authorization
+- easy way to contrll access to your data
 - able to audit KMS key usage using cloudtrail
 - Seamlessly integrate into most aws services( EBS S3,RDS,SSM)
 - Never ever store your secretes in plaintext, especially in your code
@@ -3371,6 +3405,14 @@ AWS Certificate Manager(ACM)
    . APIS on API gateway
 - cannot use ACM iwht EC2( cant be extraacted)
 
+ACM- Importing Public Certificates
+- Option to generate the certificate outside of ACM and  then import it
+- No Automatic renewal, must import a new ceritificate before expiry
+- ACM sends daily expiration events starting 45 days prior to expiration
+  The# of days can be configured
+  Events are aprrearing in eventBridge
+- AWS Config has a managed rule named acm-certificate-expiration-ceck to check for expriring certificatest
+
 
 AWS WAF- Web application firewall
 - Protect your web applications from common web exploits (layer7)
@@ -3387,15 +3429,15 @@ AWS Shield: protect from DDOs attach:
 
 . DDos: Distributed Denial of service- many request at the same time
 . AWS shield standard
-. . Free service that is activated for every AWS customer
-. Provies protection from attacks such as SYN/UDP floods, reflection attacts and other
+. Free service that is activated for every AWS customer
+. Provides protection from attacks such as SYN/UDP floods, reflection attacts and other
  layer 3/layer 4 attacks
 . AWS shield advanced
   . Optional DDos mitigation service( $3,000 per month per organization
   . protect agains more sophisticated attack on Amazon EC2, Elastic load balancing( ELB)
     AMAZON cloudfront, aws global acceleartor and route 53
   . 24/7 access to AWS DDos response team ( DRP )
-  . Protect agains higher fees during usuag espikes due to DDOs
+  . Protect against higher fees during usuag espikes due to DDOs
   . Shield advanced automatic application layer DDos mitiagion automatically creates
     evaluates and deploy AWS WAF rules to mitigate layer 7 attacks
 
@@ -3450,11 +3492,11 @@ AWS Firewall Manager
 AWS Cloud Formation:
 - Cloud Formation is a declarative way of outlining  your aws
   infrastructure for any resources( most of them are supported)
-- for exaple, withing a cloudformation template, you say
+- for exmaple, withing a cloudformation template, you say
   . i want a security group
   . i want two ec2 instances using this security group 
   . i want an s3 bucket
-  . i want a load balancer( ELB) in fron of these machines
+  . i want a load balancer( ELB) in front of these machines
 . Then cloudformation creates those for you, in the right order with the exact configuration that you specify
 
 
@@ -3467,7 +3509,7 @@ Benifits of AWS Cloud formation(1/2)
 Cost:
  - East resources within the stack is tagged with an indentifier so you can easily see how much aa stack scosts you
  - you can estimate the costs of your resources using the cloudformation template
- - savings strategy In dev you could automation deletion of template at 5 mp and recreated at 8 am safely
+ - savings strategy In dev you could automation deletion of template at 5 pm and recreated at 8 am safely
 
 Productvity
 - ability to destroy and re-create an infrastructe on the cloud on the fiy
@@ -3794,8 +3836,8 @@ $conn->close();
 
 
 
-Projet 4 enahancment with LB and multi AZ setp:
-=====================================================
+Projet 4 enahancment with LB , Autoscaling, Route53 and multi AZ setp:
+========================================================================
 
 
 Route53 
@@ -3841,6 +3883,9 @@ hosted zone -------------------- WWW Internet
 7. Access website using your https://domainname/corp.php
 
 
+################################
+# Terraform & Provider
+################################
 terraform {
   required_providers {
     aws = {
@@ -3855,15 +3900,12 @@ terraform {
 }
 
 provider "aws" {
-  region     = "us-east-1"
-  access_key = "AKIAUNRZPCXQOFRGYEMO"
-  secret_key = "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"
+  region = "us-east-1"
 }
 
-#################
+################################
 # Variables
-#################
-
+################################
 variable "vpc_cidr" {
   default = "10.10.0.0/16"
 }
@@ -3885,87 +3927,55 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "EC2 key pair name"
-  type        = string
-  default     = "my-new-key"
+  default = "my-new-key"
 }
 
 variable "db_username" {
-  description = "RDS master username"
-  default     = "admin"
+  default = "admin"
 }
 
 variable "domain_name" {
-  description = "Your domain name (e.g. example.com)"
-  type        = string
-  default     = "example.com"
+  default = "example.com"
 }
 
-variable "hosted_zone_id" {
-  description = "Route53 Hosted Zone ID for the domain"
-  type        = string
-  # default = "... fill your zone ID ..."
-}
-
-#################
-# Data & Random
-#################
-
-resource "random_password" "rds_password" {
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+"
-}
-
+################################
+# AMI & Password
+################################
 data "aws_ssm_parameter" "amzn2_ami" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
 
-#################
-# Networking
-#################
+resource "random_password" "rds_password" {
+  length  = 16
+  special = true
+}
 
+################################
+# VPC & Networking
+################################
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
-
-  tags = {
-    Name = "webapp-vpc"
-  }
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "webapp-igw"
-  }
 }
 
-# Public subnets
 resource "aws_subnet" "public" {
   count                   = length(var.public_subnets)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnets[count.index]
   availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = true
-
-  tags = {
-    Name = "public-subnet-${count.index + 1}"
-  }
 }
 
-# Private subnets (for web servers + RDS)
 resource "aws_subnet" "private" {
   count             = length(var.private_subnets)
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnets[count.index]
   availability_zone = var.azs[count.index]
-
-  tags = {
-    Name = "private-subnet-${count.index + 1}"
-  }
 }
 
 resource "aws_route_table" "public" {
@@ -3975,10 +3985,6 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
-
-  tags = {
-    Name = "webapp-public-rt"
-  }
 }
 
 resource "aws_route_table_association" "public_assoc" {
@@ -3987,18 +3993,13 @@ resource "aws_route_table_association" "public_assoc" {
   route_table_id = aws_route_table.public.id
 }
 
-#################
+################################
 # Security Groups
-#################
-
-# ALB security group
+################################
 resource "aws_security_group" "alb_sg" {
-  name        = "webapp-alb-sg"
-  description = "Allow HTTP/HTTPS from internet to ALB"
-  vpc_id      = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
 
   ingress {
-    description = "HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -4006,7 +4007,6 @@ resource "aws_security_group" "alb_sg" {
   }
 
   ingress {
-    description = "HTTPS"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -4019,263 +4019,150 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "webapp-alb-sg"
-  }
 }
 
-# Webserver private SG
-resource "aws_security_group" "web_private_sg" {
-  name        = "webapp-private-ec2-sg"
-  description = "Allow HTTP from ALB, optionally SSH"
-  vpc_id      = aws_vpc.main.id
+resource "aws_security_group" "web_sg" {
+  vpc_id = aws_vpc.main.id
 
   ingress {
-    description     = "HTTP from ALB"
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.alb_sg.id]
   }
 
-  # Optionally add SSH from trusted IP or bastion
-  # ingress {
-  #   description = "SSH from admin IP"
-  #   from_port   = 22
-  #   to_port     = 22
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["YOUR_IP/32"]
-  # }
-
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "webapp-private-ec2-sg"
-  }
 }
 
-# DB security group
 resource "aws_security_group" "db_sg" {
-  name        = "webapp-db-sg"
-  description = "Allow MySQL access from web servers"
-  vpc_id      = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
 
   ingress {
-    description     = "MySQL from web servers"
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.web_private_sg.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "webapp-db-sg"
+    security_groups = [aws_security_group.web_sg.id]
   }
 }
 
-#################
+################################
 # RDS (Multi-AZ)
-#################
-
-resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "webapp-db-subnet-group"
+################################
+resource "aws_db_subnet_group" "db_subnets" {
   subnet_ids = aws_subnet.private[*].id
-
-  tags = {
-    Name = "webapp-db-subnet-group"
-  }
 }
 
 resource "aws_db_instance" "mysql" {
-  identifier              = "webapp-db"
-  allocated_storage       = 20
-  storage_type            = "gp3"
-  engine                  = "mysql"
-  engine_version          = "8.0"
-  instance_class          = "db.t3.micro"
-  username                = var.db_username
-  password                = random_password.rds_password.result
-  db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
-  vpc_security_group_ids  = [aws_security_group.db_sg.id]
-  multi_az                = true
-  publicly_accessible     = false
-  skip_final_snapshot     = true
-  deletion_protection     = false
-  apply_immediately       = true
-  backup_retention_period = 0
-
-  tags = {
-    Name = "webapp-db"
-  }
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  username               = var.db_username
+  password               = random_password.rds_password.result
+  db_subnet_group_name   = aws_db_subnet_group.db_subnets.name
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  multi_az               = true
+  skip_final_snapshot    = true
 }
 
-#################
-# Web Servers (private)
-#################
-
-resource "aws_instance" "web" {
-  count                      = length(aws_subnet.private)
-  ami                        = data.aws_ssm_parameter.amzn2_ami.value
-  instance_type              = var.instance_type
-  subnet_id                  = aws_subnet.private[count.index].id
-  key_name                   = var.key_name
-  vpc_security_group_ids     = [aws_security_group.web_private_sg.id]
-  associate_public_ip_address = false
-
-  tags = {
-    Name = "webserver-${count.index + 1}"
-  }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd php php-mysqli mariadb105 mysql
-              systemctl start httpd
-              systemctl enable httpd
-              mkdir -p /var/www/inc
-
-              cat <<EOT > /var/www/inc/dbinfo.inc
-              <?php
-              define('DB_SERVER', '${aws_db_instance.mysql.address}');
-              define('DB_USERNAME', '${var.db_username}');
-              define('DB_PASSWORD', '${random_password.rds_password.result}');
-              define('DB_DATABASE', 'corp');
-              ?>
-              EOT
-
-              curl -o /var/www/html/corp.php https://raw.githubusercontent.com/your-repo/corp.php
-              EOF
-}
-
-#################
-# ALB & Targeting
-#################
-
-resource "aws_lb" "web_alb" {
-  name               = "webapp-alb"
-  internal           = false
+################################
+# ALB
+################################
+resource "aws_lb" "alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = aws_subnet.public[*].id
-
-  tags = {
-    Name = "webapp-alb"
-  }
 }
 
-resource "aws_lb_target_group" "web_tg" {
-  name        = "webapp-tg"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.main.id
-  target_type = "instance"
-
-  health_check {
-    path                = "/"
-    protocol            = "HTTP"
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-  }
-
-  tags = {
-    Name = "webapp-tg"
-  }
+resource "aws_lb_target_group" "tg" {
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
 }
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.web_alb.arn
+  load_balancer_arn = aws_lb.alb.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.web_tg.arn
+    target_group_arn = aws_lb_target_group.tg.arn
   }
 }
 
-# Optional HTTPS listener (requires an ACM certificate)
-# resource "aws_lb_listener" "https" {
-#   load_balancer_arn = aws_lb.web_alb.arn
-#   port              = 443
-#   protocol          = "HTTPS"
-#   ssl_policy        = "ELBSecurityPolicy-2016-08"
-#   certificate_arn   = aws_acm_certificate.www_cert.arn
-#
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.web_tg.arn
-#   }
-# }
+################################
+# Launch Template
+################################
+resource "aws_launch_template" "web_lt" {
+  image_id      = data.aws_ssm_parameter.amzn2_ami.value
+  instance_type = var.instance_type
+  key_name      = var.key_name
 
-resource "aws_lb_target_group_attachment" "web_attach" {
-  count            = length(aws_instance.web)
-  target_group_arn = aws_lb_target_group.web_tg.arn
-  target_id        = aws_instance.web[count.index].id
-  port             = 80
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+
+  user_data = base64encode(<<EOF
+#!/bin/bash
+yum install -y httpd php php-mysqli
+systemctl start httpd
+systemctl enable httpd
+echo "Healthy" > /var/www/html/index.html
+EOF
+  )
 }
 
-#################
-# DNS via Route53
-#################
+################################
+# Auto Scaling Group
+################################
+resource "aws_autoscaling_group" "asg" {
+  min_size            = 2
+  desired_capacity    = 2
+  max_size            = 4
+  vpc_zone_identifier = aws_subnet.private[*].id
 
-data "aws_route53_zone" "selected" {
-  name         = var.domain_name
-  private_zone = false
+  target_group_arns = [aws_lb_target_group.tg.arn]
+
+  launch_template {
+    id      = aws_launch_template.web_lt.id
+    version = "$Latest"
+  }
+
+  health_check_type = "ELB"
 }
 
+################################
+# Route53
+################################
+data "aws_route53_zone" "zone" {
+  name = var.domain_name
+}
 
-resource "aws_route53_record" "www_alias" {
-  zone_id = data.aws_route53_zone.selected.zone_id
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.zone.zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 
   alias {
-    name                   = aws_lb.web_alb.dns_name
-    zone_id                = aws_lb.web_alb.zone_id
+    name                   = aws_lb.alb.dns_name
+    zone_id                = aws_lb.alb.zone_id
     evaluate_target_health = true
   }
 }
 
-
-
-#################
+################################
 # Outputs
-#################
-
-output "alb_dns_name" {
-  description = "ALB DNS name"
-  value       = aws_lb.web_alb.dns_name
-}
-
-output "alb_zone_id" {
-  description = "ALB zone ID"
-  value       = aws_lb.web_alb.zone_id
+################################
+output "alb_dns" {
+  value = aws_lb.alb.dns_name
 }
 
 output "db_endpoint" {
-  description = "RDS endpoint"
-  value       = aws_db_instance.mysql.address
-}
-
-output "rds_password" {
-  description = "RDS master password"
-  value       = random_password.rds_password.result
-  sensitive   = true
+  value = aws_db_instance.mysql.address
 }
 
 Next :::
