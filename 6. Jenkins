@@ -1451,10 +1451,19 @@ Build Triggers :::
 				8AM - 12PM - 3PM 
 				
 - In triggers, clck on POLL SCM
-- schedule- *****
-	
+- schedule- 
 		
-		
+0 8,12,15 * * *
+
+┬ ┬ ┬ ┬ ┬
+│ │ │ │ │
+│ │ │ │ └── Day of week (every day)
+│ │ │ └──── Month (every month)
+│ │ └────── Day of month (every day)
+│ └──────── Hour (8 AM, 12 PM, 3 PM)
+└────────── Minute (0)
+
+
 	Email Notifications :::
 	==========================
 	
