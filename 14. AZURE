@@ -1788,21 +1788,58 @@ In this case we use an another approach called shared access signatures
 
 Azure cloud services is been divided into 3 categories
 ------------------------------------------------------------------------------
-IAAS>> Virtual mahcines>> Web apps developments, build, deploments, sever maintenance, configurations
-PAAS>> App service>> Web application development, build and deployment
-SAAS
+IAAS>> Infrastrure  as service >> Virtual mahcines>> Web apps developments, build, deploments, sever maintenance, configurations
+PAAS>> Platform as service >> App service>> Web application development, build and deployment
+SAAS>> Software as service >>
 
 Here we are learing how we are hosting/migrating the web app which is  in my laptiop to azure cloud computing services.
 
 
+
 PAAS Service:
 ----------------
+
+Azure App Services::
+------------------------
+Azure App Service is a fully managed Platform as a Service (PaaS) offering from Microsoft for building, deploying, and scaling web applications, mobile backends, and REST APIs. It simplifies web hosting by handling the underlying infrastructure, allowing developers to focus on their code. App Service supports various programming languages and frameworks, including .NET, .NET Core, Java, Node.js, PHP, and Python, and can run on both Windows and Linux. 
+Azure App Service is a platform that lets you run web applications, mobile back ends, and RESTful APIs without worrying about managing the underlying infrastructure. Think of it as a powerful web hosting service that takes care of all the heavy lifting for you, so can focus on creating great applications.
+App Service supports a variety of web stacks: .NET, Java (in Java SE, Tomcat, and JBoss flavors), Node.js, Python, and PHP, and can run them on both Windows and Linux. Or, if your app is containerized, you can just deploy it as a custom container.
+
+
+Deploying Web Apps in Azure App services(As PAAS):
+========================================================
+Azure App Service lets us create apps faster with one-of-a kind cloud service to create enterprise-ready web app and mobile apps quickly and easily for any platform or device and deploy them on a scalable and reliable cloud infrastructure.
+Azure App Service is an HTTP-based service for hosting web applications, REST APIs, and mobile back ends. we can develop in our favourite language, be it .NET, .NET Core, Java, Ruby, Node.js, PHP, or Python. Applications run and scale with ease on both Windows and Linux-based environments.
+App Service not only adds the power of Microsoft Azure to our application, such as security, load balancing, autoscaling, and automated management. We can also take advantage of its DevOps capabilities, such as continuous deployment from Azure DevOps, GitHub, Docker Hub, and other sources, staging environments, custom domain, and TLS/SSL certificates.
+With App Service, we pay for the Azure compute resources that we use. The compute resources we use are determined by the App Service plan that we can run our apps on.
+
+
+
+HOSTING .Net Web apps in aZURE PAAS SERVICES:
+======================================================
+Step1: 
+Open Project solution files in VS-2022 in laptop>>
+Build the project>>
+Run the project to ensure the application is up and running in our local laptop(local repo or Private cloud)
+
+
 - First open the code in visual code
 - click on build 
 - now run the code 
--  click on solution explorer
--  right click on the project
-- cilck on publish
+
+
+Step2(Migrating/Hosting .Net web Application in cloud):
+Right click on project>>Publish>>+New Profile>>Azure>>Azure App Service(Windows)>>Next>>Select (or) Login to the Azure Account(in which we want to create an App services)>>
+Create a new instance and fill the details as below
+Name: WebApp1791(any name)
+Subscription Name: choose accordingly
+Resource Group: NareshRG(any name)
+Hosting Plan: WebAppp1(any name)
+And finally click on Create>>Finish>>Close>>Publish
+Publish>>
+Search for App Services in azure portal and deploy an app service in Azure portal(ensure that you deploy an app service plan that will support the custom domain)>>
+now click on browse after the App service got deployed to check whether the App services is up and running in Azure portal>>right click on the solution>>publish
+
 - click on azure, click on azure app service
 - click on next 
 - after singin
@@ -1825,13 +1862,179 @@ PAAS Service:
 - you will see PLLWebapp1548
 - copy the url you will see the webpage in the browser
 
+Step3(making enhancements in the project code @ on-prem & deploying directly in cloud):
+Now in VS expand Views(folder)>>Shared>>_Layout.cshtml>>in line No:13 instead of Application name mention as NareshIT>>click Save and Save All(at the top)>>Build the project again>>ensure build should get succeed>>right click the solution publish
+Hence here we have deployed/migrate our .Net web application on Azure App services which is offered as Platform as service(PAAS) in cloud platform..
+
 
 - After editing the code on live.
--  right click on the project
+- right click on the project
 - cilck on publish
 
 
+Kubernetes Services:
+======================
+1. It’s basically a container orchestration software or an orchestration
+engine and also an open-source platform for deploying and managing
+containerized applications.
+2. The functionalities of Kubernetes Services are container deployment,
+scaling &amp; descaling of containers/pods and containers load balancing.
+3. Kubernetes is not a replacement for Docker, but it can be considered as
+a replacement of Docker Swarm, Kubernetes is significantly more
+complex than Swarm and requires more work to deploy.
+4. This was introduced by google, written in Go/Golang and donated to
+cloud native computing foundation (CNCF) in 2014.
+5. Kubernetes v1.0 was released on 21 st July 2015 and the current stable
+release of K8S is version v1.18.0.
 
+
+Key features/Advantages of Kubernetes services(K8S):
+(i)Automated scheduling: K8S provides advanced scheduler to launch
+container on cluster nodes based on their resource requirements and other
+constraints while not sacrificing the availability
+(ii)Self-healing capabilities: it allows us to replace and reschedule containers
+when nodes die, it also kills containers that don’t respond to user defined
+health check and doesn’t advertise them to clients until they are ready to
+serve.
+(iii)Automated rollouts &amp; rollbacks: Kubernetes rolls out changes to the
+application or its configuration while monitoring application health to ensure it
+doesn’t kill all our instances at the same time. If something goes wrong with
+K8S then we can roll back the changes
+(iv)Horizontal scaling &amp; Load Balancing: K8S can scale up and scale down the
+application as per the requirements with simple command, using a User
+Interface or automatically based on CPU usage. K8S supports both manual
+scaling and auto scaling of PODS(Containers)
+(v)Service Discovery &amp; Load Balancing: With K8S there is no need to worry
+about networking and communication bcoz K8S will automatically assign IP
+addresses to containers and a single DNS name for a set of containers, that can
+load balance the traffic inside a cluster, containers get their own IP so we can
+put a set of containers behind a single DNS name for Load Balancing.
+
+(vi)Storage Orchestration: with K8S we can mount the storage system of our
+choice, we can either opt for local storage or can choose a public cloud
+provider such as Azure, AWS, GCP or perhaps can use a shared network
+storage system.
+6. K8S is widely used bcoz its an open source and it has lot of features
+which are not available in docker swarm and its been implemented by
+google and has a wider community (means lot of people working on this
+and ready to help)
+7. K8S works in declarative mode, like what we want to deploy, how many
+replicas we want….etc. and rest of the things will be taken care by K8S,
+like it will schedule the containers, manage the containers all….
+Kubernetes Architecture: Kubernetes implement a cluster computing
+background, that everything will work from inside a Kubernetes cluster, this
+cluster is hosted by one node acting as a master of the cluster and other nodes
+as worker/slave nodes, which do the actual Containerization, as shown below.
+
+Kubernetes Components:
+Web UI (Dashboard): Dashboard is a web based Kubernetes user interface, we
+can use dashboard to deploy containerized applications to a Kubernetes
+cluster, troubleshoot our containerized application and manage the cluster
+itself along with its available resources.
+Kubectl: This is a command line configuration tool(CLI) for K8S which is used
+to interact with master node of K8S, kubectl has a config file called Kubeconfig,
+this file has the information about server and authentication information to
+access the API server.
+
+Master Node:
+The master node is responsible for the management of K8S cluster, it is mainly
+the entry point for all the administrative task, it handles the orchestration of
+the workers nodes, there can be more than one master node in the cluster to
+check for fault tolerance.
+Master Nodes Components: It has below components that take care of
+communication, scheduling and controllers
+(i)API server: Kube API server interacts with API, it’s a frontend of the
+Kubernetes control plane. Communication center for developers, sysadmin and
+other Kubernetes components
+(ii)Scheduler: Scheduler watches the pods and assigns the pods to run on
+specific hosts. The scheduler will try to schedule the unscheduled pods in
+NODES with the help of Kubelets
+(iii)ETCD: It’s a key value data store, K8S will maintain all the cluster
+info like nodes, pods, services, volumes…etc, it’s basically a Database
+for K8S, it’s a simple distribute key value store, K8S uses ETCD as it’s a
+database to store all cluster data, some of the data stored in ETCD is job
+scheduling information, pods, state information and etc.
+Worker Nodes/Slave Nodes:
+1. Worker nodes are the nodes where the application actually running
+in the K8S cluster, it is also known as minion, each worker nodes
+are controlled by the master nodes using Kubelet process
+2. Container platform must be running on each worker nodes and it
+works together with kubelet to run the containers, this is why we
+use Docker engine and takes care of managing images and
+containers.
+3. we can also use other containers platforms like core OS, Rocket
+Work NODES Components:
+(iv)Kubelet: Kubelet is the primary node agent runs on each node and
+reads the container manifests which ensures that containers are running
+and healthy, its make sure that containers are running in a Pod, the
+Kublete doesn’t manage the containers which were not created by
+Kubernetes.
+Kube Proxy:
+
+1. Kube porxy enables the Kubernetes service abstraction by
+maintaining network rules on the host and performing the
+connection forwarding.
+2. Kube proxy maintains network rules on nodes, these network rules
+allow network communication to our pods from inside or outside of
+our cluster
+3. It helps us to have a network proxy and load balancer for the
+services in a single worker node.
+4. Service is just a logical concept, the real work is being done by the
+Kube-proxy pod that is running on each node
+5. It redirect the requests from cluster IP(virtual IP Address) to Pod
+IP.
+Container Runtime: Each node must have container runtime, such as
+Docker, rkt, or another container runtime to process instructions from the
+master server to run the containers
+Azure Kubernetes Services(AKS) : It is a managed service that allows
+us to quickly deploy and manage clusters(collection of nodes/servers). It
+is an open source system for container orchestration for
+Deployment/Management &amp; Scaling applications. AKS helps us to
+manage containerized application (may be 100&#39;s/1000&#39;s...) in different
+environments(windows, linux..etc).
+When we need to create a cluster in Azure then we go for Azure
+Kubernetes Services(AKS),it is offered as PAAS. Here we can create a
+cluster of either 3/4/5…etc nodes as per our application requirement. We
+can create a cluster of max 100 nodes in AKS.
+
+We can also set the auto scaling of this cluster based up on the
+requirement
+36. while creating the AKS cluster in Azure we have to consider the
+following things.
+
+(i)Kubernetes cluster name
+(ii)Region
+(iii)Availability zone
+(iv)Kubernetes version
+(v)Node size
+(vi)Node count
+(vii)Add node pools
+(viii)Enable virtual nodes/Virtual machine scaleset
+(ix)Role Based Access Control
+(x)AKS-managed Azure Active Directory
+(xi)Network configuration…etc. etc
+
+1. We can add node pools in AKS cluster as we need for our
+application, the Operating system type for each node pool we can
+choose either (Windows or Linux)
+2. Whatever the deployment that we do in Kubernetes cluster that all
+deployments comes under pod, and if we need an autoscaling of
+pod then we can make the virtual node feature as Enabled, what
+is the benefit of pod autoscaling?? Or what is Pod?? Pod will get
+placed inside the node under node cluster and if the load is getting
+increased on pod then it will not do the autoscaling of node
+instead, if the space is available in the node then first it will
+enhance/autoscaling of pod, and we deploy our applications inside
+the pods
+3. Cluster subnet: whatever the cluster has been created for our
+AKS from this subnets our cluster nodes will get the IP’s if we are
+having multiple subnets created..
+4. Virtual node subnet: The IPs assigned to pods will get assigned
+from this virtual node subnet
+5. Kubernetes service address range; To make communicate the
+pods from one another pod we use service address range.
+
+Note:
 Azure kuberntest cluster is a combination of multiple node pools
 Each node  pool can have a different O/S Windows or linux]
 Node pool is a combination of multiple nodes
@@ -1841,9 +2044,149 @@ This pods we can also called a containers
 On top of this pods we are hosting our applications
 
 
+Implementation of AKS Cluster:
+-------------------------------------------
+In Azure portal search for Kubernetes services&gt;&gt;+Create&gt;&gt;Create a
+Kubernetes cluster and then fill the details accordingly.
+Subscription: pick the subscription accordingly/mostly free trial
+Resource Group: MyRG
+Cluster preset configuration: Dev/Test
+Kubernetes cluster name: aksdemo1
+Region: East US
+Availability zones: Zones, 1,2,3
+AKS Pricing tier: Free
+Kubernetes version: 1.28.5(default)
+Automatic upgrade: Enabled with patch(recommended)
+Leave rest of the values to default&gt;&gt;click Next: Node pools&gt;&gt;Click
+Next: Networking&gt;&gt;Network configuration: Azure CNI Node
+Subnet(in networking tab)&gt;&gt;Click Next: Integration&gt;&gt;Click Next:
+Advance&gt;&gt;Next: Tags&gt;&gt;click Review+Create&gt;&gt;wait for some time till
+the validations gets completed&gt;&gt;Click Create to provision the
+Kubernetes cluster.
+Configuring Kubectl to communicate/connect to AKS cluster:
+Click on cloud shell&gt;&gt;Create a Storage account&gt;&gt;choose Bash&gt;&gt;wait
+for some time till the bash terminal gets ready&gt;&gt;
+Type clear&gt;&gt;command to clear the screen
+az aks get-credentials --resource-group MyRG --name
+aksdemo1&gt;&gt;Command to connect AKS cluster
+MyRG&gt;&gt;Resource Group name &amp; aksdemo1&gt;&gt;AKS name
+
+Note: If we are getting message as below after passing the above
+command then simply say y and hit enter as shown below.
+A different object named aksdemo1 already exists in your
+kubeconfig file.
+Overwrite? (y/n): y
+kubectl get nodes&gt;&gt;command to list kubernetes worker nodes, this
+command gives us the information about the nodes like status, age,
+version….etc.
+kubectl get nodes -o wide&gt;&gt;command to get the further details of
+Kubernetes worker nodes….like internal IP address of our Kubernetes
+cluster nodes, Age of the nodes, O/S of the nodes, Status……etc. etc…
+kubectl get namespaces&gt;&gt;Command to get all the namespaces of
+Kubernetes cluster
+Clear&gt;&gt;commands to clear the screen
+
+kubectl get pods --all-namespaces&gt;&gt;Commands to get the pods of
+all namespaces
+
+installing AKS CLI in our local laptop from below link:
+https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+Go to the above link&gt;&gt;go to Installation box&gt;&gt;click on Install – Windows&gt;&gt;click
+install or update&gt;&gt;click Latest MSI of the Azure CLI(64 bits)&gt;&gt;now the dll(dynamic
+link library) will get downloaded in our local laptop wait for some time&gt;&gt;Now in
+search type command prompt&gt;&gt;right click&gt;&gt;run as administrator&gt;&gt;and pass the
+command as
+az login&gt;&gt;command to login to Azure subscription&gt;&gt;wait for some
+time then it will show all the details of our subscription. then pass
+the below command and hit enter
+
+az aks install-cli&gt;&gt;Commands to install Azure CLI in our laptop, and it
+also download and install kubectl, the Kubernetes command-line
+tool. download and install kubelogin, a client-go credential (exec)
+plugin implementing azure authentication…. etc. After passing this
+command wait for some time and will get a message as below
+The installation directory &quot;C:\Users\wasay\.azure-kubelogin&quot; has
+been successfully appended to the user path, the configuration will
+only take effect in the new command sessions. Please re-open the
+command window.
+Now close the command prompt and reopen again as administrator.
+Cls&gt;&gt;Command to clear the command prompt screen in our local
+laptop.
+az aks get-credentials --resource-group MyRG --name aksdemo1
+kubectl get nodes&gt;&gt; command to list kubernetes worker nodes, this
+command gives us the information about the nodes like status, age,
+version….etc…doing this time from our local laptop command
+prompt…not from cloud shell.
+
+kubectl get nodes -o wide&gt;&gt; command to get the further details of
+Kubernetes worker nodes…. like internal IP address of our
+Kubernetes cluster nodes, Age of the nodes, O/S of the nodes,
+Status……etc. etc… doing this time from our local laptop command
+prompt…not from cloud shell.
+Explanation of 01-Create-AKS-Cluster folder files for sample
+application deployments on Kubernetes cluster:
+The below 2 are called Kubernetes manifest files.
+(i) 01-Deployment.yml (ii) 02-LoadBalancer.yml
+
+replicas:2&gt;&gt;means on 2 instances our application is going to run
+
+name: myapp1-deployment&gt;&gt;application deployment name
+image: stacksimplify/kubenginx:1.0.0&gt;&gt;Here the nginx application is
+pacakged in kube nginx 1.0.0 version
+containerPort: 80&gt;&gt;container is hosted on port No:80
+LoadBalancer.yml&gt;&gt;with this file we are creating a service called
+Load Balancer whose port No is 80 and container port is also 80
+Deploying an application in Kubernetes pods:
+Step1: Place this folder 01-Create-AKS-Cluster in below path in our
+local laptop
+C:\Windows\System32
+Step2: Search for command prompt&gt;&gt;right click run as administrator
+and pass the below commands(execute the commands in
+sequence…)
+az aks get-credentials --resource-group NareshRG --name
+aksdemo1&gt;&gt;Commands to get the Kubernetes cluster details
+kubectl get nodes&gt;&gt;Command to get the nodes details
+cd 01-Create-AKS-Cluster/&gt;&gt;Command to go inside this folder
+kubectl apply -f kube-manifests/&gt;&gt; Command to deploy an
+application on Kubernetes cluster pods
+kubectl get pods&gt;&gt;Commands to verify the pods in which the
+application is deployed and running
+kubectl get deployment&gt;&gt;commands to verify that our application
+deployment has been happened successfully in our Kubernetes
+cluster pods
+
+kubectl describe pod myapp1-deployment&gt;&gt; Commands to see
+what are the events occurred on the pods and application which we
+have deployed on Kubernetes cluster
+cls&gt;&gt;Commands to clear the screen.
+Kubectl get services&gt;&gt; Commands to see what services have been
+deployed like Load balancer IP, cluster IP, Kubernetes, app
+deployments, Port No’s…...etc. etc.
+Testing the application deployment in Kubernetes Pods:
+Take the Load balancer External IP(as shown in image below) and
+paste it in Microsoft Edge browser then here will can see the
+application opened in browser that we have deployed in our Azure
+Kubernetes cluster pods
+
+The application which is hosted on Kubernetes pods will appear in
+the browser something like below
+
+Kubectl delete -f kube-manifests/&gt;&gt; Commands to delete the
+application that we have deployed on Azure Kubernetes cluster
+pods…wait for some time until it deletes the application and pods…
+And now if we do again Kubectl get pods
+
+Then we find the result as No resources found in default
+namespace, means here all the pods and application that we have
+deployed is deleted except the Kubernetes cluster.
+
+Hence here in Kubernetes cluster we have deployed the pods, in the
+pods we have deployed the application, we have tested/browse the
+application on the browser and finally we have deleted the same.
 
 AKS Implementations:
 --------------------------
+
 - create a resource group
 - subscription-AzureSubscription1
 - resource group name -= MyResourceGroup
@@ -1858,6 +2201,7 @@ AKS Implementations:
 - Kubernetes Cluster name- aksdemo1
 - Region- Australia East
 - Fleet Manager-  none
+- Avaialblity zone- none
 - AKS pricing tier- Free ( The cluster managment is freem but you will be 
    chareded for VM, storage and menetworking usaged. Best for experimenting learning simplet etesting or workloads with fewer tthant 10 nodes)
 
@@ -1897,13 +2241,13 @@ In Advanced-
 - choose we will crate s storage account for you
 - click on next
 Command to connecto AKS Cluster
-- az aks get-credentials --resource-group MyResourceGroup --name aksdemo1
+- az aks get-credentials --resource-group MyResourceGroup --name aksdemo1 (clustername)
 - kubectl get nodes
 - kubectl get nodes -o wide
 - kubectlt get namespaces
 - clear command
 - kubeclt get pods --all-namespaces
-graphaically you can see nodepools, nodes
+graphaically you can see in Setting in nodepools, in Linux node pools, click on nodes
 
 Installing AKS CLI direclty in our local laptop to connecti to kubernetes cluster:
 ----------------------------------------------------------------------------------------
@@ -1917,6 +2261,325 @@ Installing AKS CLI direclty in our local laptop to connecti to kubernetes cluste
 
 3 NOV 2025
 ------------
+
+Containerization:
+Containerization is the packaging of software code with the operating
+system (OS) libraries and dependencies required to run the code to create a
+single lightweight executable—called a container, containers runs
+consistently on any infrastructure. More portable and resource-efficient
+than virtual machines (VMs), containers have become the de
+facto compute units of modern cloud-native applications.
+Containerization allows developers to create and deploy applications faster and
+more securely. With traditional methods, code is developed in a specific
+computing environment which, when transferred to a new location, often
+results in bugs and errors. For example, when a developer transfers code from a
+desktop computer to a VM or from a Linux to a Windows operating system.
+Containerization eliminates this problem by bundling the application code
+together with the related configuration files, libraries, and dependencies
+required for it to run. This single package of software or “container” is
+abstracted away from the host operating system, and hence, it stands alone
+and becomes portable(able to run across any platform or cloud, free of issues)
+Docker containers:
+ Each container has its own process, storage but host O/S is common for all
+the containers, if anything goes wrong with App1 then their won’t be any
+impact on other applications (like App2, App3…etc) as there are
+independent with each other and that’s the beauty of containerization.
+ Virtual Machines are heavy in weight and containers are light in weight,
+containers can be created anywhere on top of physical machines, virtual
+machines.
+ As we can in above image, we can create a containers which has
+application/application code and its software’s, Environment variables,
+agents, Frameworks and dependencies…etc.
+Containers: Containers will carry our applications and its dependencies.
+Containers are light in weight, it does not contain the CPU and memory as
+much as a VM, the container does not have an operating system, containers
+are portable which can be moved from 1stenv to another environment(env)
+
+2
+
+Docker in Brief:
+
+Docker_Training.pdf
+
+Docker container in Azure Cloud Computing:
+Containers:
+A container is a standard unit of software that packages up code and all its
+dependencies, so the application runs quickly reliably from one computing
+environment to another.
+
+ In case of VM’s there’s always a host, the host is created from the
+infrastructure on top of which there’s a hub hypervisor running and this
+hypervisor is responsible for hosting virtual machines and managing
+them, so there’s always a virtual machine on which we always have
+something called guest operating system, therefore we need to
+virtualize an entire operating for we to be able to host our application
+and we need to this again for every single application and when it comes
+to containers we also have a host and this host again has an
+infrastructure, but whats difference here is that we have a host
+operating system and top of which there’s something called run time
+and this run time is responsible for hosting and managing containers,
+but what is good here is that from here onwards we can just host
+
+3
+containers, we no longer need that guest operating system for each
+application and each container.
+ Therefore releasing a lot of unnecessary resources and as such allowing
+us to host more containers in more applications. So the main difference
+is here are first of all there’s less development overhead and developers
+don’t need to create container and they don’t need to create those
+images for virtual machines which takes a lot of time creating containers
+takes just minutes and if we know and if we have a priority prepare
+scripts in just couple of seconds and we have seen there is there’s no
+guest operating system’s, so there’s much less resources consumed and
+which also means since there’s not guest operating system loaded into
+the container and the file itself is in much smaller size, its from hundreds
+of megabytes down to 20 or 30 megabytes of size.
+ Since the small size is there and the less consumption is required that
+means they also are starting up faster and we can get our containers
+running in just seconds and as we are not running the O/S this against
+means there’s much less updates that we need to do, therefore there’s a
+reduced and simplified updating process that we need to implement for
+managing our applications
+Advantage of containers as compared to Virtual Machines:
+⮚ Less development overhead.
+⮚ Less resources(RAM, VCPU’S, Percentage CPU’s, processing, Disk
+consumption…etc) consumed.
+⮚ Smaller size
+⮚ Faster start-up
+⮚ Reduced and simplified updates
+
+
+
+Azure Container Instances(ACI):
+Azure container instances offer the fastest and simplest way to run a container
+in Azure, without having to provision any virtual machines and without having
+to adopt a higher-level service.
+Container Group: It is just a grouping of multiple containers where we can host
+multiple applications in it, in containers we host each application on port No’s
+(like port 80, 5000…etc)to allow public connectivity and which allows us to get
+a public ip and a public DNS name for our container and hence a public
+connectivity can be established and in this way we can host our web
+
+4
+applications using containers(docker containers) in Azure cloud computing
+platform.
+Key Benefits of using Azure Docker Container Instances(ACI):
+⮚ It provides fast startup times – in just few seconds ACI can start up
+containers
+⮚ It provides public IP &amp; DNS names
+⮚ Custom Sizes
+⮚ We can host both Linux and Windows containers
+⮚ We can get persistent(continuing to exist ) storage
+⮚ It even allows us Virtual Network deployment
+
+
+Demo’s on Azure Docker Container Instances (ACI):
+
+1)Simple web application with Docker container image on Azure Container
+Instance(ACI) on top of Linux O/S
+2)Custom image/WebApps using node js application and will deploy this image
+to ACI after this will deploy Docker container registry then container instance
+for hosting application on Docker container.
+Note: Try to do these all labs in Azure Paid Subscription, in Free trial the
+docker libraries, dll’s are not supported.
+Demo 1: Using Custom image docker file to host on top of Docker container
+instance.
+Creating Docker container instances with Azure CLI(in Azure portal cloud
+shell)
+Step1:
+command to create a Resource Group:
+az group create --name myResourceGroup --location JapanEast
+myResourceGroup&gt;&gt;Resourcegroup name (or) we can give any
+Step2:
+command to create docker container instance:
+az container create --resource-group myResourceGroup --name mycontainer1771 --image
+ashfaque9x/my-html-website --dns-name-label aci-demo1771 --ports 80
+myResourceGroup&gt;&gt;Resource Group name (or) we can give any
+
+5
+
+mycontainer1771&gt;&gt;container instance name (or) we can give any
+--image ashfaque9x/my-html-website&gt;&gt;registry in which our image/app is store (or) ny name
+aci-demo1771&gt;&gt;DNS name (or) we can give any
+80&gt;&gt;Port No on which we are hosting our Application on top of the docker container instance
+Step3:
+Wait for some time until the docker container instance get provisioned in
+Azure cloud platform, now copy the IP address/FQDN of the container instance
+and paste it in a browser to view the application hosted on Azure docker
+container instance.
+Deploying via Azure portal:
+1. Login to Azure portal&gt;&gt;search for container instances&gt;&gt;create&gt;&gt;and fill
+the below details:
+Subscription: Paid subscription (or existing whatever)
+Resource Group: any
+Container name: starbucks-cafe
+Region: Japan East
+Availability zone: none
+SKU: Standard
+Image Source: Other registry
+Image Type: Public
+Image: ashfaque9x/my-html-website [ Here ashfaque9x&gt;&gt;Username &amp;
+my-html-website&gt;&gt;Image name]
+Size: keep as default
+Click next on Networking tab
+DNS name label: cromaservices &gt;&gt; and leave all rest values as is and
+finally click on Review+Create and provision the first ACI
+Now copy and paste the IP address or FQDN of the ACI in another
+browser then will see Starbucks Cafe Dynamic website is hosted on top
+of our Docker container Instance.
+Demo 2: Practical Implementation of ACI:
+Step1:
+command to create a Resource Group:
+az group create --name myResourceGroup --location JapanEast
+
+6
+
+myResourceGroup&gt;&gt;Resourcegroup name (or) we can give any
+Step2:
+command to create docker container instance:
+az container create --resource-group myResourceGroup --name mycontainer1773 --image
+mcr.microsoft.com/azuredocs/aci-helloworld --dns-name-label aci-demo1773 --ports 80
+myResourceGroup&gt;&gt;Resource Group name (or) we can give any
+mycontainer1773&gt;&gt;container instance name (or) we can give any
+--image ashfaque9x/my-html-website&gt;&gt;registry in which our image/app is store
+aci-demo1773&gt;&gt;DNS name (or) we can give any
+80&gt;&gt;Port No on which we are hosting our Application on top of the docker container instance
+Step3:
+Wait for some time until the docker container instance get provisioned in
+Azure cloud platform, now copy the IP address/FQDN of the container instance
+and paste it in a browser to view the application hosted on Azure docker
+container instance.
+Deploying via Azure portal:
+ Login to Azure portal&gt;&gt;search for container instances&gt;&gt;create&gt;&gt;and fill
+the below details:
+Subscription: Free trial (or existing whatever)
+Resource Group: any
+Container name: give any name &gt;&gt;this is our container group name
+actually
+Region: give any region
+Image Source: QuickStart images
+Image: mcr.microsoft.com/azuredocs/aci-helloworld:latest &gt;&gt;so, here
+we are pasting the URL which is a container containing node.js
+application with helloworld message in Microsoft content registry with
+microsoft.com
+Size: keep as default
+Click next on Networking tab
+DNS name label: intelliservices&gt;&gt; and leave all rest values as is and
+finally click on Review+Create and provision the first ACI
+ Now copy and paste the IP address or FQDN of the ACI in another
+browser then will see Welcome to Azure Container Instances! &gt;&gt;Now
+
+7
+this indicates our simple web application running on docker container
+image via ACI.
+
+Demo 3: Custom image/WebApp using node js application and will deploy
+this docker image to Azure Docker Container Instance
+click on cloud shell&gt;&gt;click on Bash&gt;&gt;Mount a Storage Account&gt;&gt;choose
+Storage account subscription&gt;&gt;Apply&gt;&gt;click the radio button We will create
+a storage account for you&gt;&gt;Next&gt;&gt;It pops up saying deployment is in-
+progress and then patiently wait for sometime like some 2-3 minutes of
+time the Bash terminal with all its background gets ready and now pass the
+below command and hit enter
+git clone https://github.com/Azure-Samples/aci-helloworld.git&gt;&gt;this we
+are cloning the git repository of the container that we deployed in above
+demo
+type ls and hit enter&gt;&gt;and here we see we have a folder aci-helloworld
+type cd aci-helloworld/ and hit enter&gt;&gt;to go inside the aci-helloworld
+folder
+type code . and hit enter&gt;&gt;in cloud shell we pass this command to open an
+editor that looks very similar to visual studio code and now here an editor
+will get open with .git and app folder with multiple files in it and also some
+other files
+click on index.html file inside the app folder and remove the complete
+coding of tag &lt;svg&gt; to &lt;/svg&gt; and type in tag &lt;h1&gt; Welcome to Azure
+Docker Container Instances Classes for Naresh IT Students!
+&lt;/h1&gt;
+click on top right three dots and click on save to save the changes and close
+this editor by clicking on close(below)
+Docker Container Registry:
+It is an inbuild service for hosting containers for more than just other
+container instances, we can also use it with Kubernetes services, fabric
+services…etc and here this container registry will allow us to build a docker
+container and host it
+
+8
+Now come to Azure portal and search for container
+registries&gt;&gt;create&gt;&gt;and fill the details
+Subscription: take any
+Resource Group: take any
+Registry name: nareshdcr
+Location: EastUS/JapanEast
+Pricing Plan: Basic
+And leave all rest values to default and finally click on Review+Create to
+provision the container registry and this container registry will allow us to
+build a docker container and host it.
+Now come back to cloud shell and type the below command
+az acr build --resource-group RGName --image demo/custom-image-
+demo:v1 --registry containerRegistryName --file Dockerfile .
+And with above command we can send the entire docker code, build it, and
+store it on Azure docker container registry.
+Now come back to Container Registry in Azure portal and click on Access
+control IAM(left side)&gt;&gt;+Add&gt;&gt;Add role assignment&gt;&gt;privileged
+administrator roles&gt;&gt;owner&gt;&gt;Next&gt;&gt;+Select members&gt;&gt;choose the user
+which you have logged in with&gt;&gt;Select&gt;&gt;Next&gt;&gt;click on +Select roles and
+principals&gt;&gt;click on configure in constrain roles box&gt;&gt;+Add role&gt;&gt;select
+owner and contributor check
+box&gt;&gt;select&gt;&gt;save&gt;&gt;save&gt;&gt;Next&gt;&gt;Review+Assign&gt;&gt;Refresh
+
+Now click on repositories(in ACR left side)&gt;&gt;Refresh&gt;&gt; then will see our
+container image as below
+Demo/custom-image-demo
+If we click on the container image above, then will find v1 as Version 1 that
+we passed above.
+Note: In container registry on left side click on access keys and Enable the
+Admin User, if we don’t make it as enable then we cannot deploy the
+private container instance by considering this container registry(very
+important)
+
+9
+Now execute the below commands in a sequence of order in same cloud
+shell window in Bash
+az acr repository show-tags --name containerRegistryName --repository
+repositoryName
+
+az acr login -n containerRegistryName --expose-token
+
+az acr repository list --name containerRegistryName --output table
+
+az acr repository show --name containerRegistryName --repository
+repositoryName --output table
+
+Hence, here we have created custom docker image in private azure
+container registry.
+
+Docker is one of the most popular tools among all other container tools in the
+industry while working with Azure Container repository we deal with Docker
+CLI
+Hosting custom image from our private container registry to WebApp(Azure
+PAAS services):
+Step1:
+Click on Azure container registry that we have deployed&gt;&gt;repositories(left
+side)&gt;&gt;click on repositories(Ex: demo/custom-image-demo)&gt;&gt;on V1 click on 3
+dots extreme right(as shown in image below)&gt;&gt;click on Deploy to web app&gt;&gt;
+
+10
+
+Step2:
+Give the site name&gt;&gt;Subscription&gt;&gt;Resource Group&gt;&gt;set app service
+plan&gt;&gt;and finally click on create
+
+11
+
+Step3:
+Wait for some time till the deployment gets completed&gt;&gt;go to app services
+that we have deployed&gt;&gt;click on overview&gt;&gt;copy the url Default domain(as
+shown in image below)&gt;&gt; and put it in a browser and finally here we can see
+the custom image/app what we have implemented on top of Azure container
+registry is finally provisioned on top of Azure App Services(which is Azure PASS
+services)
+
+
 In the world of docker container instance image is nothing but webapp/website
 
 Demo1: Directly i am hosting my webapp on top of docker container instance
@@ -1969,6 +2632,7 @@ Container Instance
 - resource group name- PLL-RG
 -container name-  pllmridci
 -Region - austrial east
+- image source- quick
 - sku- standard 
 - image -mcr.mcirosoft/azuredocs/aci-helloworld:latest
 - os type- linxu
@@ -2041,6 +2705,7 @@ Container Instance
 - resource group name- PLL-RG
 -container name-  pllmycusotmizeddci
 -Region - austrial east
+- Image source- auzre container registry
 - sku- azure container registry 
 - registry -plldccr
 - image -demo/custom-image-demo 
