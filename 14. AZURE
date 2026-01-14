@@ -2382,6 +2382,7 @@ to ACI after this will deploy Docker container registry then container instance
 for hosting application on Docker container.
 Note: Try to do these all labs in Azure Paid Subscription, in Free trial the
 docker libraries, dll’s are not supported.
+
 Demo 1: Using Custom image docker file to host on top of Docker container
 instance.
 Creating Docker container instances with Azure CLI(in Azure portal cloud
@@ -2427,6 +2428,7 @@ finally click on Review+Create and provision the first ACI
 Now copy and paste the IP address or FQDN of the ACI in another
 browser then will see Starbucks Cafe Dynamic website is hosted on top
 of our Docker container Instance.
+
 Demo 2: Practical Implementation of ACI:
 Step1:
 command to create a Resource Group:
@@ -3260,11 +3262,47 @@ Azure Boards
 Azure Repo's
 Azure CI/CD pipelines
 
-Any work that you are doing in your project is considered as a workitem
 
-Epics: This is a work item of big size to complete this work item we may need some 4-5 days
-Issues: This is also work item of medium size to complete this work item we may  need some 1-2 days
-Task:This is alos work item of small size, to complete this work item we may  need some 4-5 days
+Different types of Boards available in Azure Devops/Azure Boards types:
+Basically, there are four type of WORK ITEM PROCES will find while creating a new project in Azure Devops.
+When we are creating a new project in Azure Devops then in Advance section will see there is a drop down for work item process and will see 4 values in the drop down those are 
+(i)Basic>>	
+(ii)Agile>>
+(iii)Scrum>>
+(iv)CMMI (Capability Maturity Model Integration).
+The type of Boards depends on these work item process. Here each type of work item process (in drop down) will provide different types of work items and workflow.
+These work items and workflow depends on the selection of work item process, if we choose the Basic one will have different type of work items and work flow, if we choose Agile (or) Scrum (or) CMMI then will get different type of work items and work flows for our Azure Devops projects.	
+
+
+Work item: A work item is a unit(small or large) of work which has several characteristics, and it is a part of our product development. When we work on development of a product then we divide our tasks into small parts and that small parts or group of those parts we say it as a work item. Basically, each and every single type of work that we are doing in our project development can be consider as work item. Work item is an independent unit which can be track independently on our Azure Board
+
+
+Characteristics of work item
+Example of work item
+Title 
+Epic(an Epic is a work item)
+Description
+User story(user story is a work item)
+Assigned To
+Bug (bug is a work item)
+Completed By…..etc.
+Improvement…etc.
+
+
+Work item in Azure Boards with Basic Process: when we work on Azure boards there are multiple types of boards, and all the boards depends on work item process which we have choose at the time of project creation.
+What work items are available in Azure Boards when we work with Basic Process: 
+There are three work items in Azure Boards with basic process. When we create a project with basic process then we have only 3 types of work items and i.e.: 
+
+(i)Epic: An Epic is basically a kind of functionality or a kind of large work(ex: we have to implement login/sign-up/forgot password/…etc all these functionality in our application, so we can say Epic is a membership, basically all the things which are required in the membership will be a part of Epic)
+
+(ii)Issue: Under this Epic we can create multiple type of issues and in Azure Boards with Basic process an issue is something that it may be a bug or a user story or an improvement…etc. all these are part of issue, and under this membership we can create multiple types of issues like login functionality /sign-up functionality /forgot password functionality…etc.
+
+(iii)Task: Task is the smallest unit of work, firstly we have Epic then Issue and then Task and for each issue we can create multiple task (Ex of Task: under login functionality we can create multiple task like 
+Task 1: creating table in the DB
+Task 2: creating an API is another task
+Task3: integration of API
+Task4: Design of the login page…etc.)
+
 
 Now we are going to learn https://dev.azure.com>>
 
@@ -3275,12 +3313,28 @@ Now we are going to learn https://dev.azure.com>>
 - Descriptioni- Creating this project for Paperlive Learning Students
 - click on create project
 
-- click on  PLL8PMBatch organization
-- click on organization settings
+- Now click on project -MyFirstProj
+- you will see all the devops services in left column
+- boards, backlogs, sprints, queries, delivery plans 
+- cliick on Boards, You can see 3 cloumndsm ToDO, doing and done
+
+
+- When you click on PLL8PMBatch organization
+- click on new project, In advanced, in workitem process, you can see  3 work item process
+  BASIC, CMMI, Scrum
+
+
+
+- click on  MyFirstProj 
+- click on project settings, clck on teams
 - click on users
 - click on add user
 - In users you can provide the gmail id's
+- Now come back to PLL8PMBatch organization, click on organization settings
+- click on users
 - add to projects- MyFirstProj
+- click on add users
+
 - choose send emails
 - In MyFirstProj, click on project settings, click on teams 
 - click on MyFirstProj Team, click on add, give the maild's and click on save
@@ -3288,13 +3342,14 @@ Now we are going to learn https://dev.azure.com>>
 43:23
 - go to boards
 - click on boards
-- in right top  choose epic, Now in ToDo ,click on new item
+- in right top  you will have filter choose epic/issues ,choose epic , Now in ToDo ,click on new item
 - type- applying for home loans, click on add top
 - click on title of the work item-applying for home loans
 - click on the user to assign
 - select the user and click on save and close
 
 - click on applying for home loans
+- you can click ,select and drage from TO do to doing
 - you can state, description, area,, iteration, reason, attach links, planning, priority, start date end date
   backlog, Todo,doing,done
 -
@@ -3307,11 +3362,27 @@ Now we are going to learn https://dev.azure.com>>
 - click on the user to assign
 - select the user and click on save and close
 
-1:09:00
+
+- In each item,
+  you will have state - todo, doing, done
+  area- Myfirstproj
+  iteration My FristProj\Sprint
+  reason- Reactivated/started/completed
+  description
+  discussions
+  Planning
+   priority-2
+   start date
+   target date
+  Related work  
+    attach link
+
 
 -If you want to create an issue which dependent on  epics , click on login funcationaliy mitem in doing list, click on 3 dots
 and click on issue. for tasks which depende on issues, you can add tasks.
 
+- click on 3 dots, clik on add task in the issue
+- 
 Sprints:
 - click on the backlogs
 - click on MyFirstProjTeam backlogs
@@ -3325,7 +3396,7 @@ Sprints:
 
 Azure Repos or Azure Repository:
 ---------------------------------------
-1)Azure Repos or Azure Repository
+1) Azure Repos or Azure Repository
 2) We can create as many repos we want inside the Azure devops projects
 3) Each Repo name should be unique
 4) By default one Repo will get create in our Azure devops project and if you  
@@ -3371,10 +3442,14 @@ For branch from server repo:
 - click on master down arrow,
 - name- PLL-B1
 - based on maser
+- you can also refer work items like, issues,taks,eppics but mostly you can ignore this
 - click on create
+- now in PLL-B1
 - edit the changes
+- Click on commit
+- Now in master branch
 - click on create pull request
-- click on approve, click on complete
+- click on approve, click on complete,click on  merge
 -  in merget type- merge( no fast forward)
    select complete associate  work items after merging
    select delete PLL-B1 after merging
@@ -3384,9 +3459,9 @@ For branch from server repo:
 
 
 For file creation:
-- click on 3 dots of repo
-- click on create a file
-- in same or different branch
+- click on 3 dots of repo on the folder
+- click on create a file- HomeController1515
+- In different branch-PLL-B2
 - after commit
 - create pull request
 - merge 
@@ -3395,7 +3470,7 @@ To delete repo
 - go to PLLRepo1 
 - there you can delete rep
 
-For branch from slocal repo:
+For branch from ocal repo:
 - create a folder 
 - git init
 - git pull PLLRepo1 url
@@ -3405,6 +3480,10 @@ For branch from slocal repo:
 - git remote add origin url
 - git push -u origin india
 - 
+
+- To delete a branch
+- click on branches
+- you will have  a option for delete
 
 Rebase
 Merge
