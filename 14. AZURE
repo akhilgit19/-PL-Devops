@@ -3548,13 +3548,13 @@ Creating build for MyRepoSimpleSignature Project:
 - In PLL8PMBatch project, click in repos, click on PLL8PMBatch, click on new repository
 - repository name MyFirstRepo, click on create
 - Now in the local repository ,
-- open git bash termin in MyRepoSimpleSignature
+- open git bash termin in MyRepoSimpleSignature folder
 - git init
 - dotnet new mvc
 - git add .
 - git commit -m "created a new project"
 - git push --set-upstream repourl master
-- In PLL8PMBatch, click in pipelines,click on azure repos git, click on myfirstrepo, click on showmmore option
+- In PLL8PMBatch, click in pipelines,click on create pipeline,click on azure repos git, click on myfirstrepo, click on showmmore option
 - click on APS.NET
 - click on save and run
 - Build will suceeded.
@@ -3569,6 +3569,9 @@ Creating build for MyRepoSimpleSignature Project:
 - you can see build status
 
 
+Project:
+Creating Build Pipeline for ASP.Net Web Applications using classic editor instead of Azure Repos Git:
+
 
 WebAPPProject- mcv5 appproject
 ------------------------------------
@@ -3576,7 +3579,13 @@ WebAPPProject- mcv5 appproject
 - Will build the webapp project in our local laptop using VS 2022 Enterprise edit
 - Once the build is succeeded then will run this project in our local laptop
 - Will push this webapp project to our server repo
-- Will do the build again in azure devops
+- Will do the build again in azure devops and once the build gets succeeded in Azure devops event then [ci]
+- then finally will deply the webapp project to azure irtual macine CD
+
+
+- Open VS2022
+- Open the project, click on build, click on build solution, when build is suceed
+- click on run
 
 - In PLL8PMBatch, click in repos, click on PLL8PMBatch, click on new repository, name PLLWebAppProj
 - Now in the local repository, click on new filder create-PLLWebAppProj, copy the source code of  mcv5
@@ -3590,7 +3599,7 @@ WebAPPProject- mcv5 appproject
 - click on asp.net, click on apply, click on save and queue 
 - click on save and run
 
-- Now using IAAS
+- Now using IAAS will do CD and deploy the webapp
 
 - Now create a VM
 - Subscription- azure subscription-1
@@ -3632,9 +3641,9 @@ WebAPPProject- mcv5 appproject
 - source- PLL8PMBatch-ASP.NET-CI
 - click on add
 - click on stage
-- search of iis website deployment
+- if it is windows vm, search of iis website deployment
 - click on apply
-- stage name- dev, click on k
+- stage2 name- dev, click on k
 - click on 1 job 2 task link now in dev
 - website name- PLLWebAppProj
 - click on add bindings
@@ -3642,6 +3651,7 @@ WebAPPProject- mcv5 appproject
 - click on ok
 - deployment group- Dev-DG
 - Timeout-15 m, job cancel time-15
+- Artifact download- it will show PLL8MBatch ASP.NET-CI
 - choose allow scripts to access the OAuth taken
 -  click on ISS wb app manage  and enalbe IIS
 - click on  ISS Web app deploy
@@ -3649,7 +3659,7 @@ WebAPPProject- mcv5 appproject
 - comment- Designing of my release pipeline completed
 - click on ok and click on create release on top
 - click on create
-- you will sucessfull webpp on your VM
+- you will see sucessfull webpp on your VM
 
 
 
@@ -3777,7 +3787,7 @@ Step 9: Wait for some time untill the App services gets deployed
 - Networking - defualt
 - Monitor+secure - defualt
 - click on revew+create
-
+- now go to ElearningProj, You can see in the defual domain url in browser, yoyu will see default webape
 
 
 Step 10: If we access the web App in browser from Azure portal then will see the default web page on our web App…our plan is to host the Ed-tech web application on our web App
@@ -3903,7 +3913,7 @@ Hence, we have developed the project by fetching the code from local repo by cre
 - click on elearning proj build, click ok
 - click on save on top and click on ok
 - click on pipeline
-- click on continous deployemt trigger( looks lik thunder button)
+- click on continous deployemt trigger(In artifacts looks lik thunder button)
 - enalbed the option for creates a release every time a new build available
 - click on save , click ok
 - comment- - Desingin the release piplienes, click onk
