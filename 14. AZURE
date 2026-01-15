@@ -1277,6 +1277,38 @@ One NSG will get created by default with our VM,If you dont want  an NSFG along 
 vnets
 subnets
 
+- Create resource group
+  subscription
+  resrouce group
+  region
+  revew + create
+
+-Create vm
+- click on create vm
+- vm name- VM1
+- region -SAPIN
+- avaiablity zone - no infstarcuture redundancy required
+- security type -standard
+- username
+-password
+- In networking 
+  NIC Network security group - basic 
+  publick inbojnd ports- allow selectyed ports
+  select inbound ports- HTTP(80, HTTPS(443), RDP(3389)
+  delete public ip and NIC when vm is delete- choose
+- clickn no reveiw +create
+
+now go to VM1
+- click on inbound security rules
+- click on add 
+- you can allow or deny ports
+- Priority -1001
+- port -3389
+- name- allowing rdp connection
+- protocol- tcp
+- click on add
+
+
 
 
 loadbalancers
@@ -1355,23 +1387,24 @@ AZURE FIREWALLS.
 - click on virtual network
   subscription
   resource grpu
-  vnetname-firewallvnet
+  vnetname-FWVnet
   region
   in ipaddress
   192.168.0.0  /16
-  click on defualt
-   name auzresubnet
+  click on subnet
+   name auzrefirewallsubnet
    in subnet purpose- choose azure firewall
-   ipuv4 address range-10.0.0.0/16
+   ipuv4 address range-10.0.0.0/26
   now click on add a subnet
-  click on defualt
+  click on subnet, 
     name vmsubnet
     in subnet purpose- choose azure firewall
    ipuv4 address range-10.0.2.0/24
-  click on defualt
-    subnet prupose name FIREWALLMANAMENT(forced runneling
-    in subnet purpose- choose azure firewall
-   ipuv4 address range-10.0.0.0/16
+  click on default
+  click on subnet, 
+    subnet purpose-  Firewall Management (forrced tunnelling)
+   ipuv4 address range-10.0.2.0/26
+  click on default
 - click on reivwe+create
 
 -Create vm
@@ -1385,7 +1418,7 @@ AZURE FIREWALLS.
 - public inbound ports- none
 - clic on next
 - networking - 
-  virtual network firewallvnet
+  virtual network FWVnet
   subnet - myvmsubnet
   network security group - basic
 - clickn no reveiw +create
@@ -1399,8 +1432,8 @@ AZURE FIREWALLS.
  firewall managment- use fireall rules
  choose a virtual network- use exisiting
  virtual network- FWVnet( MyRG)
- public -  click  on new and give myfwip
- manament public ip addres- clic on new,  name- MyIp
+ public ip address  -  click  on new and give myfwip
+ manament public ip addres- click on new,  name- MyIp
  click on new tags
  review + create
 
