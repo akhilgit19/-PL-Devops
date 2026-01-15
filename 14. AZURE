@@ -13,7 +13,9 @@ Public Cloud: Now the entire IT industry is moving and migrating their applicati
 we are having many cloud vendors (ex; Microsoft Azure, AWS, GCP, Oracle cloud, Salesforce, IBM…etc.) 
 these cloud providers are offering their cloud computing platform with public cloud concept, till now
 the entire IT industry, the organizations/IT firms were having their own cloud (private cloud) and now 
-the public cloud is available for all. Public cloud means the platform is available and accessible for all,
+the public cloud is available for all.
+
+Public cloud means the platform is available and accessible for all,
 not our resources/services & data. We have to create an account/subscription in the vendors platform and then
 will get an identity & with authentication/authorization process will happen to login 
 to our subscription in the cloud platform then it will allow us to create the resources/services which all 
@@ -392,7 +394,7 @@ ARM templates:
   Location japanEast
   first version
   version- 0.0.1
-- clic on next
+- click on next
 - copy your template in edit template
 - click on create
 - click on MyVMdeploymentUsingARM, click on deploy
@@ -1058,7 +1060,7 @@ Standard/Blob SA is having 4 different types of storage offerings
 
  Advanced
  security
- - require secure transfer for REST API operation
+- require secure transfer for REST API operation
 - allow enabling anonymous access on individual containers
 - enable stoarge account key access
 - default to microsoft entra authorization in athe azure portal
@@ -1115,7 +1117,7 @@ Yesterday we have deployed Blob/Standard SA
 Today will see how we can deploy Premium SA
 99.95.. ONLY Just one extra clikcyou  have to for the premium SA.
 
-In bloc/Standard SA you are getting all 4 different stoarge offerrings
+In blob/Standard SA you are getting all 4 different stoarge offerrings
 In premium SA you are supposed to choose what storage offering you want
 
 Performanc: Premium
@@ -1241,7 +1243,7 @@ Virutal Network
 subs
 resource group
 region
-vm nmamew
+vm nmame
 - security
 - ip address
 - tags
@@ -1264,7 +1266,13 @@ Network Security Group( NSG) :
 -----------------------------------
 In  Network Security Group( NSG) will implement the inbound and outbound traffice for our VM
 Here ins Network security group NSG will decide our VM should talk to which services and 
-networksecuritygroups
+should not talk to which services.
+
+In NSG we are controling the network traffic for our VM
+In NSG we are implementing inbound security rule and outbound security rules
+
+One NSG will get created by default with our VM,If you dont want  an NSFG along wiit our VM
+
 
 vnets
 subnets
@@ -3190,7 +3198,7 @@ Bcoz we have not provided the access to the user at RG level  we have provided  
 - click on PLL-RG-2
 - Click on access control IAM
 - click on add role asssignment
-- search for reader, click on next
+- In job function roles,search for reader, click on next
 - In memebers- choose assign access to user group or sercie prinicpal
 - click on select members
 - search for the user 
