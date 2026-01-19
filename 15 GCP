@@ -140,13 +140,18 @@ GCP Interfaces
 -Goodcloud API:
 
 
- IAM RESOURCES AND ACCESS 
 
+
+
+
+
+ IAM RESOURCES AND ACCESS 
+==================================
 .Google Cloud resource Hierarchy
 .Policy Inheritance
 .Identiy and Access Management( IAM)
 .IAM roles
-. Service accounts
+.Service accounts
 
 
 Organization:
@@ -179,6 +184,16 @@ One mutable display name.
 The lifecycle state of the project; for example, ACTIVE or DETELTE_REQUESTEDD
 Projects are linked to Billing Accounts
 
+Shut down project "My First Project"
+When you shut down a project:
+
+Charges from your previous usage may continue to appear for up to a day.
+To avoid unexpected charges, disable billing for the project before shutting it down.
+Traffic serving stops within a few hours.
+You will no longer have access to the project.
+The project will be permanently deleted after 30 days. However, some resources may be permanently deleted sooner.
+The owners of the project will be notified and can stop the deletion within 30 days.
+
 
 - organization- dashboard- project info- go to project settings
 - project name - Paperlive-GCP
@@ -195,6 +210,17 @@ Projects
 
 Google cloudl 
 services 
+
+
+
+IAM
+- Who (identity) has what access (role) to which resource defines the fundamental structure of Cloud IAM
+- Google kubernetes engine GKE clusters and cloud storage buckets are examples of google cloud resources
+- permission are grouped into roles and roles are assigned to authenticated members
+- A cloud IAM policy defines and enforces which roles are granted to which members and this  policy  is attached to a resource
+- Organizations folder projects used to organize resources are also conisdered resources google cloud
+- When an authentication member attempts to a resource, Cloud IAM checks the reourdces policy to 
+  to determinte whether the action is allowed
 
 
 IAM-POLICY INHERITANCE
