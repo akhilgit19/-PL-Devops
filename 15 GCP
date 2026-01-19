@@ -161,6 +161,9 @@ Hierarchical ancestor of project resources and folders
 Organization adminstrators have central control of all resources
 An organization ID, Which is a unique identifier for an organzation
 
+Organization node is the top most resources
+- Everything attached to the account goes under the organization node
+
 
 Folders
 ============
@@ -172,6 +175,20 @@ additional grouping mechanism and isolation boundaries between projects and  org
 
 -Each team folder could contain additional sub-folders to represent different  applications
 folders acts as a policy inheritance point for Cloud IAM and organization policies
+
+
+Folders can contain subfolders and projecdts
+
+- The resources inherit policies and permission assigned to folders
+
+Folders group projects
+- Folders allow you to group resources on per daepartment basis
+
+Folders faciliate policy inheritance
+- The projects inherit policies assigned to a folder
+
+
+
 
 Projects
 ============
@@ -213,16 +230,6 @@ services
 
 
 
-IAM
-- Who (identity) has what access (role) to which resource defines the fundamental structure of Cloud IAM
-- Google kubernetes engine GKE clusters and cloud storage buckets are examples of google cloud resources
-- permission are grouped into roles and roles are assigned to authenticated members
-- A cloud IAM policy defines and enforces which roles are granted to which members and this  policy  is attached to a resource
-- Organizations folder projects used to organize resources are also conisdered resources google cloud
-- When an authentication member attempts to a resource, Cloud IAM checks the reourdces policy to 
-  to determinte whether the action is allowed
-
-
 IAM-POLICY INHERITANCE
 - IAM Policies can be set the organization folder project and resource levels
 - A resource inherits policies from its parent resource.
@@ -244,9 +251,74 @@ IAM-POLICY INHERITANCE
 - you can provide access by click on grant access and ,
   new prinicpals- mail id
   role-   basic  you wil lhave owner,editor browser and viewer
-  
+
+
+
 
 IAM - WHO-  mail id
       what - role- resource role
       which- which resource
+
+
+IAM
+- Who (identity) has what access (role) to which resource defines the fundamental structure of Cloud IAM
+- Google kubernetes engine GKE clusters and cloud storage buckets are examples of google cloud resources
+- permission are grouped into roles and roles are assigned to authenticated members
+- A cloud IAM policy defines and enforces which roles are granted to which members and this  policy  is attached to a resource
+- Organizations folder projects used to organize resources are also conisdered resources google cloud
+- When an authentication member attempts to a resource, Cloud IAM checks the reourdces policy to 
+  to determinte whether the action is allowed
+
+
+IAM Components
+
+Member: A member can be a google account(for end unsers), a service account( for apps and virtual machine),
+a google group, or cloud identiy domain that can  access a resources.\\
+The identiy of a member is an email address associated with a user,service account
+or googlegroup or a domain name associated with  Gsuite or cloud identiy domains
+
+
+Role:
+ A role is a collection of permissions. Permission determine what 
+what operatiosn are allowed when you grant a role to a member, you grant all the permission that the role contains
+
+Policy: The Cloud IAM policy binds one or more members to a role. When you want to define who (member) has what type of access(role) 
+on  a resource, you create a policy and attach it to the resource.
+
+
+Service accounts are assigned roles
+==========================================
+                  Service account
+Virtual mahcine----  Create a service--------------- cloud storage
+                     account to authenticate
+                     the VM to cloud storage
+
+- To create service account
+
+-Service Account details
+- click on IAM
+- click on service accoutns
+- click on service acconts
+- service account name- data-copy
+- service account -id -data copy
+- click on create and continue
+
+Grant this servie account  access to the project
+
+- select a role- serach for storage- select storage admin
+- click on continue
+
+- Grant users access to this service account(optiona)
+
+- click on done
+- now click on data-copy, click on 3 dots, click on managedkey, 
+  click on add key, click on create key, download and copy
+
+8:47 3 rd video
+
+
+
+
+
+
 
