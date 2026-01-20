@@ -343,6 +343,29 @@ Granting Access:
 
 
 
+Types of file Storage:
+=========================
+
+File Storage
+Block Storage
+Object Storage
+
+
+
+
+GCS Object Storage:
+-Cloud storage provides worldwide
+ hightly durable, object storage
+ that scales to exabytes of data
+
+GCS- Key features
+- Highly scalable unlimited storage
+- data durablity -99.99999
+- data availablity- 99.99
+- fast and highly avaialbe
+- no minimal object size
+- pay as per go model
+- cost effective solution
 
 
 
