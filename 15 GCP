@@ -314,7 +314,44 @@ Grant this servie account  access to the project
 - now click on data-copy, click on 3 dots, click on managedkey, 
   click on add key, click on create key, download and copy
 
-8:47 3 rd video
+
+
+Lab:
+
+- In Demo-Paperlive project
+Granting Access:
+- click on IAM, click on grant access
+- give the gmail account
+- in Assign roles- select storage admin
+- click on save
+- Now loging in gcp console as the another gmail account
+- click on select project
+- Click on All, select Demo-Paperlive project
+- click on cloud storage
+- click on buckets
+- click on create ( This is because we got storage admin access)
+
+- Now add one more role , go to the IAM, click on same gmail account
+  click on edit principal click on add role
+- In role, click on basic, select viewer access
+- Now if you login with the account, you can see 
+
+- In role, click on basic, select owner access
+- Now if you login with the account, you can see  you can deploy containers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
