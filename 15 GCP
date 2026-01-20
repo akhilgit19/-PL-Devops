@@ -231,6 +231,7 @@ services
 
 
 IAM-POLICY INHERITANCE
+==========================
 - IAM Policies can be set the organization folder project and resource levels
 - A resource inherits policies from its parent resource.
 - if a policy is set at the organization level it is inheritedby all child  folders and projects
@@ -351,8 +352,6 @@ Block Storage
 Object Storage
 
 
-
-
 GCS Object Storage:
 -Cloud storage provides worldwide
  hightly durable, object storage
@@ -368,17 +367,162 @@ GCS- Key features
 - cost effective solution
 
 
+- Object life cycle Managment
+- Object Versioning
+- Rention policies
+- Object holds
+- Customer Managed Encryption keys
+- Customer supplied encruyption keys
+- Uniform bucket level access ( disable object ACLS)
+- Notification for event  driven workloads
+- Audit logs
+
+Google Cloud Storage Structure
+------------------------------
+Project- Bucket-objects
+
+Buckets
+- Logical Container which holds your data
+- Every data you store will be under a bucket
+- Global unique name
+- Bucket Name cannot be changed once it is created
+- Labels can be added for identification( upto 63 character)
+- IAM provides security and permission to bucket
+
+Objects
+- Objects are actual data you save incl cloud storage
+- There is no limit on number of objects in a bucket
+- Max size of singel objects is 5 TB
+- Recommended to have fewer bucket and more objects
+- Signed URL- Time-limited resource access
+
+- In paperlive-gcp project
+- click on cloud storage resource
+- click on buckets
+- click on create
+- name- gcp-training-feb20
+- labels- clck on add a lable
+- key1- dev , value -=1
+- Choose where to sotre your data
+ location type
+  Multi- region
+  dual -region-- choose
+  region ( lowest latency with a single region
+- location -Asia pacific
+- regions - asia-south1(Mumabai) and asia-south2 (Delhi)
+- Choose a storage class for your data
+  . Autoclass
+  . Set a default claass
+- Standard- choose
+  Nearline
+  coldline
+  Archive
+- click on continue
+- Choose how to control access to objects
+  .Prevent public access
+  denalbe enforce public prevention on this bucket
+  .Access control
+   Fine-grained
+- Choose how to protect object data
+- click on create
+- now click on gcp-training-feb20 bucket
+- click on upload
+- you can see the authenticated url after uploading, you can try accessing
+
+ACL Level
+- if you click on edit access after clicking on object
+- you can add entry, 
+   entity - domain,user, project, publice
+   name-
+   access
+
+- Edit defualt storage class
+There are four basic cloud stroage  classeds
+- Standard Storage- Hot data
+- Nearline Storage- Once per month
+- Coldline Storage- Once every 90 days
+- Archieve Storage- Once a year
+
+
+bucket level
+- click on bucket
+- click on 3 dots, click on edit access
+
+
+GCS- Security
+- IAM (Identity access Management) Policy- applies at bucket elvel
+- ACL - Access control list object level 
+
+GCS- Security versioning
+-Applies at bucket and disabled by deffault
+- if you enable versioning,intead of override, itset versions at file levlvevel
+- while accessing object, it give live object
+- version names start with #
+
+Lify Cycle Policies
+- day 0 save objects-- standard
+- 6 months move to backp-- nearline
+- 1 year  move to archive-- coldline
+- 5 years deletge--delete file
 
 
 
+GCS- Security versioning
+- click on bucket
+- click on protection
+- you can see object oversioning( for data recover)
+ you can enable  - object versioning 
+- you will also have soft delete policy 
+ (it prevent deletion of the file it is like a bind)
+
+- in the bucket you can setup, Lify cycle rule
+- click on add ule
+- select an action- choose dlete object
+- set conditions, age-2
+  choose created before
+  chooose number of newer versions
+- click on continue
+- click on create
+
+once you open the cloud shell terminal
+- if you see different project
+- gcloud config set project Paperlive-GCP
+- you will swithch to Paperlive-GCP Project 
+- gsutil mb gs://gcp-command-demo
+
+- gsutil ls (listing storage buckets)
+
+- ls -l
+- gsutil cp frontend.yml gs://gcp-command-demo
 
 
+Compute Engine-Virtual Machine Instances
+=================================================
+- An instance is a virtual machine an compute engine which can create windows and os operating systems
 
 
+Compute Engine -Features
 
 
+Compute Engine- Acccess
+- Linux: SSH
+ - SSH from the google cloud console or cloud shell via the google clodu SDK
+ - SSH from computer or third part client and generate key pair
+ - Requires firewall rule to allow tcp:22
+
+ Windows: RDP
+ - RDP clients
+ - Requires setting the windows password
+ - Requires firewall rule to allow tcp: 3380
+
+Compute Engine -Lab-1
+--------------------------
+-Create Linux VM instance
+-Configure  web server
+-Access from public network
 
 
-
+First time when you are using compute engine, You should engable  api
+- click on enable
 
 
