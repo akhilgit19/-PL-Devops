@@ -521,8 +521,89 @@ Compute Engine -Lab-1
 -Configure  web server
 -Access from public network
 
-
+- click on Demo-PaperLive project, click on compute engine
 First time when you are using compute engine, You should engable  api
 - click on enable
+- click on VM instances, click on create VM
+Machine Configuration
+- Name- web-vm
+- Region- us-central1 (lowa)
+- zone- us-central1-a
+- select general purpose
+- choose e2
+- In machine type, click the down arrwo button- you can choose standard/ shared core
+ e2-medium( 2cpu 4 gb memory)
+Os and storage
+- click on change
+boot disk
+public images   custom imgaes snapshots archive snapshots
+
+public images
+- Operating system- 
+- Version - CentOS stream 9
+- Boot disk type- Balanced persistent disk
+- Size GB- 2OGB
+- click on select
+Networking
+- allow http traffic
+Observavility
+- default
+Security
+- default
+Advanced
+- default
+- click on create
+
+Once vm is created
+- Now click on ssh
+- click on authorize
+-  df -h 
+- sudo yum install httpd -y
+- echo '<!doctype html><html><body><h1>Hello.. Welcome to
+GCP</h1></body></html>' | sudo tee /var/www/html/index.html
+- sudo bash
+- systemctl restart httpd
+- now take the external ip and and put in the browser
+-
+
+
+Unique Features
+- Live Migration and Auto-restart
+- Spot instances
+- TPU
+
+Preemptible/spot instances
+- Create and run a mahcine much  lower than normal price
+- compute engine can terminate anytime without informing you 
+- pv cannot live migrate
+- cannot create using free tier credits
+
+
+
+ In advanced
+ Provisioning model
+- Vm proivisioning mode
+ spot
+- set a time limit for the VM
+- Gracefullly shut down the vm
+
+On Vm termination 
+stop
+
+
+Sole tenant nodes:
+
+- Select sole-tenant nodes
+- noe group properties
+- node template properties
+- configure auto scaling
+
+Theory
+- Sole tenant node is a physical compute engine serer that is deidicated projects Vms
+- Use Sole-tenant nodes to keep your Vms physically separated from  Vm;s in other projects
+- Vms running on sole-tenant nodes an use the same compute engine feautres  as other Vms
+- suitable for workload like gaming which require hihger performance 
+- Multiple Vms with various size can be provisioned
+
 
 
