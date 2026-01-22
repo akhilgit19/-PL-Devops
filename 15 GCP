@@ -606,4 +606,306 @@ Theory
 - Multiple Vms with various size can be provisioned
 
 
+Storage Options:
+====================
+1. Persistent disk
+ . standard
+ . SSD
+ . Balanced
+ . Extreme
+ . Hyper Extreme
+Persistent disk
+- Block storage, can attach from network storage
+- functions like a physical disk in a laptop or server
+- os disk is a persistent disk
+- available in standard, SSD, Balanced and extreme variants
+- Independent from virtual machine
+- you can delete compute instance keeping your persistent  disk
+- performance scale up with size
+- supports only dynamic resizing
+- automatic encruption
+- scope is zonal, regional replication is available
+- maximum up to 128 number can be addded in one indststance
+
+
+
+Creating a VM
+
+- click on Demo-PaperLive project, click on compute engine
+First time when you are using compute engine, You should engable  api
+- click on enable
+- click on VM instances, click on create VM
+Machine Configuration
+- Name- web-vm
+- Region- us-central1 (lowa)
+- zone- us-central1-a
+- select general purpose
+- choose e2
+- In machine type, click the down arrwo button- you can choose standard/ shared core
+ e2-medium( 2cpu 4 gb memory)
+Os and storage
+- click on change
+boot disk
+public images   custom imgaes snapshots archive snapshots
+
+public images
+- Operating system- 
+- Version - CentOS stream 9
+- Boot disk type- Balanced persistent disk
+- Size GB- 2OGB
+- click on select
+Networking
+- allow http traffic
+Observavility
+- default
+Security
+- default
+Advanced
+- default
+- click on create
+- click on vm- click on ssh
+- sudo apt install apache2 -y
+- sudo systemctl start apache2
+- echo '<!doctype html><html><body><h1>Hello.. Welcome to
+GCP</h1></body></html>' | sudo tee /var/www/html/index.html
+- sudo systemctl restart apache2
+- 
+
+Now in storage
+- click on disks
+- In  disk types( you can see  all disks)
+- In compare disks( comparision between standard, balanced, ssd,extreme)
+- size
+- privoisoned IOPS
+- disk source type- image
+- disk setting
+ disk type- Balanced persistent diks
+ size -100
+Encryption
+- google-managed encryption key
+
+
+Local SSD
+- Local SSD are physically attached to the server  that host your VM insstance
+- Local SSD have higher throuhput and lower latency than standard  persistent disks or SSD persistent disks
+- The data that you store on a local SSD  persists only until 
+- Fixed size 375 GB up to 9 TB can be attached
+- VM with local SSD cannot live migrate
+- not avaiable for shared core
+- local SSD can attach only while Vm creation
+
+
+While creating V
+
+Creating a VM
+
+- click on Demo-PaperLive project, click on compute engine
+First time when you are using compute engine, You should engable  api
+- click on enable
+- click on VM instances, click on create VM
+Machine Configuration
+- Name- web-vm
+- Region- us-central1 (lowa)
+- zone- us-central1-a
+- select general purpose
+- choose n4
+- In machine type, click the down arrwo button- you can choose standard/ shared core
+ e2-medium( 2cpu 4 gb memory)
+Os and storage
+- click on add local ssd
+- disk capacity - 375 GB
+- click on change
+boot disk
+public images   custom imgaes snapshots archive snapshots
+
+public images
+- Operating system- 
+- Version - CentOS stream 9
+- Boot disk type- Balanced persistent disk
+- Size GB- 2OGB
+- click on select
+Networking
+- allow http traffic
+Observavility
+- default
+Security
+- default
+Advanced
+- default
+- click on create
+- click on vm- click on ssh
+- sudo apt install apache2 -y
+- sudo systemctl start apache2
+- echo '<!doctype html><html><body><h1>Hello.. Welcome to
+GCP</h1></body></html>' | sudo tee /var/www/html/index.html
+- sudo systemctl restart apache2
+-
+
+
+
+Deleting the VM-- Compute Engine- lab-1
+------------------------------
+- frst edit the vm instance  deletion rule
+  select keep the disk instead of delete the disk while deleting the VM
+- Now delet the VM and create new vm in same zone
+
+- click on VM instances, click on create VM
+Machine Configuration
+- Name- web-vm
+- Region- us-central1 (lowa)
+- zone- us-central1-a
+- select general purpose
+- choose n4
+- In machine type, click the down arrwo button- you can choose standard/ shared core
+ e2-medium( 2cpu 4 gb memory)
+Os and storage
+
+- click on change
+boot disk
+public images   customimgaes snapshots archivesnapshots existingdisks
+
+existingdisks
+disk- web-vm
+
+Networking
+- allow http traffic
+Observavility
+- default
+Security
+- default
+Advanced
+- default
+- click on create
+- click on vm- click on ssh
+- sudo apt install apache2 -y
+- sudo systemctl start apache2
+- echo '<!doctype html><html><body><h1>Hello.. Welcome to
+GCP</h1></body></html>' | sudo tee /var/www/html/index.html
+- sudo systemctl restart apache2
+-
+- Now click on storage
+- click on disks
+
+
+
+Compute Engine lab-2
+------------------------------
+Delete the VM instance keeping disks and recreate
+Create a new VM in different zone using current disk
+
+above will fail it is not possible as it is scope is not available for shared core
+
+
+
+
+Regional Persistent
+--------------------
+- Regional persistent disk is a storage option that provides
+  synchronous replication of data between two zones in a region
+- High availablity applications
+- Redundancy during zonal failure
+- Primary standby configuration
+- failover to secondary if primary instance fails
+- Heartbeat is responsible for failure detection
+
+Snapthost:
+------------
+
+Compute Engine -lab-3
+=========================
+Create snapshot of disk
+create snapshot scheudle
+restore vm from snapshot
+create machine image and restore from it
+
+
+-Period back up solution of persistent disk
+-snapshots are incremental and automatically compressed
+-scope is global
+
+-The first successful snapshot of a persisten disk is a full snapshot that 
+contain data on the persistent disk.
+
+-The second snapshot only contains any new data or modified data since the first snapshot
+snapshot 3 contains any new or changed data since snapshot 2 but wont contain any unchnaged data from ssnapshot 1 or 2
+
+- Regional and multi regional storage locations are avilable
+- snapshots can be automated using snapshot schedules
+
+
+-Regional and multi regional storage locations are available
+
+
+
+- In storage, click on snapshots
+- clik on create snapshots
+- name- snapshot-od-disk
+- snapshot source type- disk
+- source disk- web-vm
+- type- snapshot--chosse
+        instant
+        arhcive snapshot
+- location 
+  regional 
+  select- asia-stouth1 (munaiu)
+- click on create
+
+- click on VM instances, click on create VM
+Machine Configuration
+- Name- web-vm
+- Region- us-central1 (lowa)
+- zone- us-central1-a
+- select general purpose
+- choose n4
+- In machine type, click the down arrow button- you can choose standard/ shared core
+ e2-medium( 2cpu 4 gb memory)
+Os and storage
+- click on change
+- click on snapshot
+- snapshot name- snaposhot-os disk -webvm
+
+Automation of snapshot
+----------------------
+- click on snapshot
+- click on create a snapshot schedule
+- name - daily-backup
+disk location
+- schedule location
+  region- us-centroal
+
+storage location
+ multi regional
+ regional--- choose
+ selecti location - us-central
+ - schedule frequence- daily 
+- start time
+- auto delete - 30 days
+Deletion rule
+ After you delete the disk that uses this scheudle]
+- keep snapshots
+- click on create
+
+
+
+Machine image:
+-----------------------
+Machine image contains a VM's properties, metadata , permissions and data from all itls
+attached disks, You can use a machine image to create backup or resotore a VM
+
+- create a machine image
+- Name- mi-web
+- Source Vm instance- web-vm-from-disk
+locatino
+ Multi-regional
+ regional
+
+
+
+
+
+
+
+
+
+
 
