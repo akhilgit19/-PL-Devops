@@ -902,10 +902,64 @@ locatino
 
 
 
+From Cloud Shell terminal
+============================
+- gcloud compute isntances list
+- gcloud compute disks list
+- gcloud compute instances create vm1
+- gcloud compute instances delete web-vm-from-disk
 
 
 
+Load Balancers
+=======================
+ Load Balancing-types
+- External load balancing- when your users reach your application from the internet
+- Internal load balancing- when your clietns are insde of google cloud
+- Regional load balancing- when your applications are available in single region
+- Global load balancing for wehn your application are available across the worlds
+
+                     Load Balancing
+=-------------------------------------------------------=
+      |                                          |
+   External                                    Internal
+
+|            |                                    |
+global       regional                            regional
+ |              |
+http/https      network       
+ssl proxy
+tcp proxy
 
 
+OSI Network Stack
+
+User
+application layer-- http/https
+presentation layer
+session layer--------SSL Proxy
+transport layer------TCP Proxy
+network layer -------Network
+data link layer
+physical layer
 
 
+Global or Regional??
+------------------------------
+- Use global load balancing when your backend are distributed across  multiple regions
+  your users need access to the same applications and content and you want to provide access by using a single anycast op address
+- Global LB supports Ipv6
+- Use regional load balancing when your backends are in one region
+- Regional LB supports ipv4
+
+External or Internal??
+--------------------------
+External-  https, ssl proxiy, tcp proxy, tcp/udp network
+Internal- tcp/udp, Internal https
+                                                    HealthCheck  Firewall
+           Application load balancer
+Traffice--> Forwarding rule--> Target HTTPS proxy--> URL map--> bakcend service--> Backend         
+                                    |
+                                 ssl certificate
+
+40:22 
