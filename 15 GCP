@@ -962,4 +962,209 @@ Traffice--> Forwarding rule--> Target HTTPS proxy--> URL map--> bakcend service-
                                     |
                                  ssl certificate
 
-40:22 
+Backends:
+--------------
+
+- Instance groups
+- Zonal network Endpoint group- One more internal ip address
+- Internet Network endpoints groups- 
+  Outside of google cloud hostname:port IP:port
+- Serverless NEGs- App engine, Clou rule, Cloud function
+- GCS Buckets
+
+
+Autoscaling:
+---------------
+- Compute Engine offers autoscaling to automatically add ore remove VM instances
+  from an instance group based on increase or decreases in lod
+- Autoscaling let your apps gracefully handle your increaisng traffic
+- it reduce cost whne lower number of resources required
+
+Managed Instance groups:
+-----------------------------
+- it let you operate on multiple identical VM
+- Supports autoscaling and load balancing
+- hihg availablity -helps you to keep VM running
+- health checkup and auto healing
+- regional coverage, protect app from zonal failure
+- automatic scalablity base don predefined config
+- automatic updating( rolling update)
+
+Un managed instance groups:
+
+Load Balancing lab:
+--------------------------
+
+Creating instance template:
+---------------------------
+- click on Paperlive-GCP project
+- click on compute engine
+- click on instance templates
+- name- lb-template
+- location - regional 
+             global----- chose
+- Machine Configuration
+   - e2
+- Machine type
+   e2-micro (2 CPU,1 COR ,1 GBMemory)
+- Provisioning model
+  standard
+- Boot disk
+   default
+- Identify and API access
+  defualt  allow default acess
+- Firewall
+  allow http traffic
+- In advanced
+  - In Management
+    Automation option
+    #!/bin/bahs
+    apt-get update
+    <html><body><h1>Load Balancer lab </h1>
+    <p>Server Name : $(hostname)</p>
+    </body></html>
+- click on create
+
+Creating Instance groups
+-----------------------------
+- click on Paperlive-GCP project
+- click on compute engine
+- click on instance groups
+In New Managed instance group(stateless)
+- Name- ib-group-us
+- Instance template- select lb-template
+- location
+   single zone
+   multiple zone--- Choose
+  region          zones
+  target distribution shape
+  even ---------------------choose
+   (Distribute managed instances evenly across zones)
+  balanced
+   (Distribute managed instances as evenly as possible across zones give
+    availablity of resources in each zone)
+  any
+   ( Deploy managed instances to one or multiple zones based on availablity of resources
+     and reservations)
+  any single zone
+    (Deploy managed instances within a single zone)
+- Autoscale
+  Auto-scaling mode
+  On: add and remoe instances to and from the group
+  scaleout: only add instances to the group
+  off: do not auto scale
+
+  Minimum number of instances     Maximum number of instances 
+  3                               5
+
+- Edit signal
+  signal type
+   -CPU utilisation
+  Target CPU Utilisation
+   -90
+-Auto scaling schedules
+ -Inititalisation period
+   120 seconds
+- Auto healing
+  -health check
+   lb-health (http)
+  - initial delay
+    300 
+   clickon create a health check
+    - Name- lb-health
+    -scope- global
+    -region-us-centrail1
+    - protocal -http, port-80
+    - Proxy protocol None
+    - Request path* - /
+    - health check
+- Health criteria
+   check interval-30 sec
+   timeout-5  sec
+   healthy threshold-2       consecutive sucesss
+   Unhealth threshold-5      consecutive failures
+
+
+Create Load Balancing
+---------------------------
+- In Network services
+- click on load balancing
+- click on create load balancer
+- type of load balancer
+  application load balancer(http/https)  --choose
+  networkload load balancer( tcp/udp/ssl)
+- clikc on next
+- public facing or internal
+  publick facing(external)- choose
+  internal facing(internal)
+- click on next
+- global or single region deployment
+  - best for global worlloads 
+  - best for regional workloads- choose
+- click on next
+- click on configure
+- load balancer name- lb-demo
+- region -us-centrail
+- network- defualt
+  click on reserve subnet
+  name- lb-proxy
+  region- us-centrail
+  network defualt
+  ipv4 range - 10.90.0.0/25
+  click on add
+- Front-end configuration
+   Name- lb-gron
+   protocol http
+   network service tier- premium--choose
+                         standard
+   port-80
+   ip address 
+    -ephemeral (temporoar) - choose
+    - click on create ip addresses
+    - name -lb-ip
+    - click on reserve
+- backend configuration
+   click on create
+  - name- lb-backend
+  - backend type- instance group
+  - protocol - http
+  - name port - http
+  - timeout- 30
+  - ip adddress selection policy
+    ip stack type
+    - ipv4
+    - instance group
+       lb-group-us
+    -port no- 80
+    -balancing mode
+     -utitilisation
+    - maximum backend utilisation
+      80
+    - Health check
+      click on create a health check 
+      - name- lb-health-ext
+      -region-us-centrail1
+      - protocal -http, port-80
+      - Proxy protocol None
+      - Request path* - /
+      - health check
+      - Health criteria
+        check interval-30 sec
+        timeout-5  sec
+        healthy threshold-2       consecutive sucesss
+        Unhealth threshold-3
+      - click on save
+- now load balancer is ready access it with  ip address
+
+   
+
+Command to increase the utilisation of CPU
+- yes >/dev/null &
+- then test with top command
+
+
+
+
+
+
+
