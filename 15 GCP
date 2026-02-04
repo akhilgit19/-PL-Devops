@@ -1162,6 +1162,91 @@ Command to increase the utilisation of CPU
 - yes >/dev/null &
 - then test with top command
 
+Cloud CDN
+============
+Content Delievery Network uses google edge network
+to see content closer to users,which accelerates
+your websites
+
+
+Cloud CDN( Cache hit and miss)
+
+- When a user request content from an externache  HTTPS load balancer, the
+  request arrivest at google front end(GFE) which is at the edge of 
+  google' network as close as possible to the user
+- GFE looks in the cloud CDN cache and finds a cached reponse to the users request the GFE sends
+  the cached responsible to the user
+- When a cache hits occurs, The GFE looks up the content by its cache key and responds directly to the user
+  shortenting the round-trip time and sving the origin server from having to process the request
+- The first time that a piece of content is requested the GFE determines that it can't fulfill the reste
+  from the cache
+- When a cache miss occurs the GFE might attempt to get the content from a nearby cache.
+  if the nearby cache has the content the GFE sends the content  to the first cache bu using cache
+  filll.Otherwise the GFE forwards the external HTTPS load balancer
+
+- In Network Services
+Cloud CDN
+
+
+
+Cloud DNS
+============
+-DNS is a hierarchical distributed
+database that stores IP addresses
+and other data and allows queries 
+
+- Cloud DNS is a high performance,
+  global domain name system( DSN service that 
+  publishes your domain names to the global DSN in a 
+  cost-effective way with 100% SLA
+- Scalable, reliable and managed DNS
+  service runnig on the same infrastructure as google
+- low latency and cost-effective way to make your applications
+  avaialbe to your users
+- Easuly publish and manage millions of NDS zones and records 
+  using our simple user interface
+- 100% availablity
+- Automatic scaling
+- Cost effective price
+
+
+
+
+- Purchase godaddy dns
+- In Network Services
+
+Cloud DNS
+-----------
+- continue and enalbe
+- click on create zone
+- zone type- public
+- zone name- my-zone
+- DNS name- www.gcptraining.com (go daddy dns)
+- cloud loggin - off
+- click on create
+- In the records sets, you can click on dsn name , in type ns click on drop down , you can see in the record data- 4 setsrvers it amde entry
+- Now In the records sets, in click on add standard
+- dns name- www.gcptraining.com
+- resrouce record type- A
+- TTL-5
+- TTL unit- minutes
+- ipv4 address- 35.57.98.38
+- Now go to godaddy you need to add all the 4 server entryies in the name server
+
+
+Virtual Private Cloud
+=======================
+Virtual Private Cloud( VPC) provides an isolated private
+network in your GCP project to host your resources like
+GCE,GKE,App engine etc
+
+38.34
+
+
+
+
+
+
 
 
 
