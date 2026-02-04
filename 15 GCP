@@ -990,8 +990,16 @@ Managed Instance groups:
 - automatic scalablity base don predefined config
 - automatic updating( rolling update)
 
-Un managed instance groups:
+Unmanaged instance groups:
+--------------------------
+- Identical/Nonidentical instances
+- arbitrarily add or remove instances
+- it do not support autoscaling auto healing
+ scalablity or high avaialblity
+- only use for load balancing in heterogeneos instances
 
+
+ 
 Load Balancing lab:
 --------------------------
 
@@ -1240,7 +1248,71 @@ Virtual Private Cloud( VPC) provides an isolated private
 network in your GCP project to host your resources like
 GCE,GKE,App engine etc
 
-38.34
+
+
+- Software defined virtual version of physical network
+- use to provide connectivity, security to different resources like GCE, GKE,etc
+- scope is global
+- scope of subnet is regional
+- firewalls and routes control and regulate traffic to VPC
+- hybrid connectivity can be established using VPN and interconnect
+- VPC can be shared within different projects in same organization
+- One VPC can connect with another VPC peering in different projects or organizatinos
+
+
+Types of VPC
+------------
+Defualt
+- Each projectg starts with a defualt netwokr,later you can disable
+- prepopulated firewall rules
+- you can avoid creating default VPC by changin organization policies
+- subnets will be created in each region
+- internet gatewayh also get created
+
+
+automatic
+-Easy to create and use
+- Use only if you need subnets in each region
+- pre-defines iP ranges
+- you can swithc auto mode VPC to custom VPC
+- Do not support VPC peering and VPN
+- Default VPC is an automode network
+'
+
+custom
+- More flexible to create to according to requirements
+- Use when you dont need subnets in every region
+- complete control on configuration
+- Full control on IP ranges
+- make sure ip confiicts should not happen with other network
+- if you plan to use VPC peering and VPN
+
+
+VPC Components
+---------------------
+Subnets
+Firewalls Rules
+Internal IP address
+External IP address
+Routes
+
+
+
+Lab
+----
+
+- In Google cloud, click on vpc networks
+
+
+
+Subnetwork
+- Subnet is a logical subdivision of a large network
+- scope of subnet is regional
+- IP ragnes are defined for subnetworks
+- A network must have one subnet to use
+- Default/autommodw  VPC automatically  create subnetworks in eveyr
+  region with predefine IP ranges
+- In custom mode vpc, subnet need to be created manuyally
 
 
 
