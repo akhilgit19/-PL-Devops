@@ -1441,9 +1441,193 @@ VPC Peering
  Either side can coose to  delete the peering  association at any time
 - A given vpc network  can peer up to 25 networks
 - since coomunication is happening over inernal ip, ot save cost and provide better security
-- 
+-  Peering traffic(traffic flowing between peered netwokrs)
+  has the same latency,throughput and availablity as private traffic in the same network
+
+Defualt VPC
+- Each project starts with a default netowkr, later you can disable it
+- prepopulate firewall rules
+- you can avoid creating default VPC by changin or ganization policies
+- subnets will be created in each region
+- internet gateway alos get created
+
+
+Automode VPC
+- Easy to create and use
+- use only if you need subnets in each region
+- pre0-defines IP ranges
+- you can switch auto mode VPC to custom VPC
+- Do not support VPC peering and VPN
+- defualt VPC is an automode netwokr
+
+Lab
+- Create Auto VPC(Name: dev-auto-vpc)
+- Create Custom VPC( Name: prod-VPC)
+- Create 3 subnets in custom VPC on different regions
+- web-sub(10.90.1.0/26)
+- db-sub( 10.90.2.0/26)
+- Util-sub(10.90.3.0/26)
+
+Create 4 instances
+
+-Web-vm(VPC-prod-vpc subnet:web-sub)
+-db-vm( VPC- prod-vpc subnet:db-sub)
+-util-vm( VPC-prod-vpc subnet: util-sub)
+-dev-vm( VPC-dev-auto-vpc subnet:any)
+
+
+
+Prod VPC
+
+web-vm          db-vm     util-vm
+Web-SUB        DB-SUB     UTIL-SUB
+
+
+Dev-auto -VPC
+
+dev-vm
+Dev-SUB
+
+
+
+Creating AUTO VPC
+- IN VPC networks
+- click on create VPC Network
+- Name-dev-auto-vpc
+- subnet creation mode- Automatic
+- IPV4 Firewall rules( if you want you can seelct)
+- dynamic routing mode
+   regiona
+   global- chooose
+- click on create
+
+
+
+Creating Custom VPC
+- IN VPC networks
+- click on create VPC Network
+- Name- prod-VPC
+- subnet creation mode- 
+  custom
+- Subnets
+   Name- web-sub
+   Region- us-centrail1
+   ipv4 range-10.90.1.0/26
+
+  - click on edit subnet 
+   Name- db-sub
+   Region- us-centrail1
+   ipv4 range-10.90.2.0/26
+
+   - click on edit subnet 
+   Name- util-sub
+   Region- us-centrail1
+   ipv4 range-10.90.3.0/26
+
+- IPV4 Firewall rules( if you want you can seelct)
+- dynamic routing mode
+   regiona
+   global- chooose
+- click on create
+
+
+
+
+- Now to compute engine
+- Click on create instance
+- In Machine configuratgion-  
+  - name- web-vm
+  -region -us-centrail
+  - machine ype
+    e2-small(2 vcpu,1 crore,2 gb memory)
+- In OS and storage
+  default
+- Networking
+  In Network interfaces
+   Network- prod-vpc
+   subnetwork- web-sub IPV4(10.90.2.0/26)
+  -  Network service tier
+     standard
+- create VM
+
+
+Creating VMS in respective subnets
+- Now to compute engine
+- Click on create instance
+- In Machine configuratgion-  
+  - name- web-vm
+  -region -us-centrail
+  - machine ype
+    e2-small(2 vcpu,1 crore,2 gb memory)
+- In OS and storage
+  default
+- Networking
+  In Network interfaces
+   Network- prod-vpc
+   subnetwork- web-sub IPV4(10.90.1.0/26)
+  -  Network service tier
+     standard
+- create VM
+
+
+- Now to compute engine
+- Click on create instance
+- In Machine configuratgion-  
+  - name- db-vm
+  -region -us-centrail
+  - machine ype
+    e2-small(2 vcpu,1 crore,2 gb memory)
+- In OS and storage
+  default
+- Networking
+  In Network interfaces
+   Network- prod-vpc
+   subnetwork- db-sub IPV4(10.90.2.0/26)
+  -  Network service tier
+     standard
+- create VM
+
+
+- Now to compute engine
+- Click on create instance
+- In Machine configuratgion-  
+  - name- util-vm
+  -region -us-centrail
+  - machine ype
+    e2-small(2 vcpu,1 crore,2 gb memory)
+- In OS and storage
+  default
+- Networking
+  In Network interfaces
+   Network- prod-vpc
+   subnetwork- util-sub IPV4(10.90.3.0/26)
+  -  Network service tier
+     standard
+- create VM
 
 
 
 
 
+- Now to compute engine
+- Click on create instance
+- In Machine configuratgion-  
+  - name- dev-vm
+  -region -asia-mumbai
+  - machine ype
+    e2-small(2 vcpu,1 crore,2 gb memory)
+- In OS and storage
+  default
+- Networking
+  In Network interfaces
+   Network- auto-vpc
+   subnetwork- dev-auto-vpc-ipv4(10.128.0.0/20)
+  -  Network service tier
+     standard
+- create VM
+
+
+Lab Condtions:
+
+- ALL VMS in PRod VPC should ping internall
+- Dev-vm
