@@ -1601,6 +1601,8 @@ Creating VMS in respective subnets
   In Network interfaces
    Network- prod-vpc
    subnetwork- util-sub IPV4(10.90.3.0/26)
+  - Network tags
+    util-tags
   -  Network service tier
      standard
 - create VM
@@ -1630,4 +1632,85 @@ Creating VMS in respective subnets
 Lab Condtions:
 
 - ALL VMS in PRod VPC should ping internall
-- Dev-vm
+- Dev-vm should be connected from util-vm to copy  data
+- Install wordpress on web vm should be connected from public  internet]
+- Remove external IPs setup NAT Gateway
+
+
+- ALL VMS in PRod VPC should ping internall
+
+Lab continutions
+- In Network Security, In Cloud NGFW, click on create firewall rule
+- Name- allow-ssh-prod
+- network- prod-vpc
+- directio of traffic- ingress
+- Actions on match- allow
+- Targets-
+   All instances in the network
+- Source IPV4 range
+  0.0.0.0/0
+- Protocols and ports
+  - specified protocols and ports
+    - TCP
+      port-22
+- click on create 
+
+- Now loging in to web-vm
+- click on ssh
+- ping internal ip of db-vm
+
+
+- In Network Security, In Cloud NGFW, click on create firewall rule
+- Name- allow-ping-prod
+- network- prod-vpc
+- directio of traffic- ingress
+- Actions on match- allow
+- Targets-
+   All instances in the network
+- Source IPV4 range
+  Internal ip of web-vm, db-vm, util-vm
+- Protocols and ports
+  - specified protocols and ports
+    - Others
+      icmp
+- click on create 
+
+- In Network Security, In Cloud NGFW, click on create firewall rule
+- Name- allow-ssh-dev-auto
+- network- dev-auto-vpc
+- direction of traffic- ingress
+- Actions on match- allow
+- Targets-
+   All instances in the network
+- Source IPV4 range
+  0.0.0.0/0
+- Protocols and ports
+  - specified protocols and ports
+    - TCP
+      port-22
+- click on create 
+
+
+
+
+
+- In Network Security, In Cloud NGFW, click on create firewall rule
+- Name- allow-dev-to-util-ping
+- network- prod-vpc
+- direction of traffic- ingress
+- Actions on match- allow
+- Targets-
+   All instances in the network
+   specified target tags-------Choose
+   specified service account
+- Target tags
+  util-tags
+- Source IPV4 range
+  dev-vm internal ip, 
+- Protocols and ports
+  - specified protocols and ports
+    - other
+      icmp
+- click on create 
+
+
