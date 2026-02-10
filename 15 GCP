@@ -1460,7 +1460,10 @@ Automode VPC
 - Do not support VPC peering and VPN
 - defualt VPC is an automode netwokr
 
-Lab
+
+
+Firewall Lab:
+-----------------
 - Create Auto VPC(Name: dev-auto-vpc)
 - Create Custom VPC( Name: prod-VPC)
 - Create 3 subnets in custom VPC on different regions
@@ -1712,5 +1715,52 @@ Lab continutions
     - other
       icmp
 - click on create 
+
+
+
+VPC lab:
+----------
+
+Prod VPC
+
+web-vm          db-vm     util-vm
+Web-SUB        DB-SUB     UTIL-SUB
+
+
+Dev-auto -VPC
+
+dev-vm
+Dev-SUB
+
+
+
+- Click on VPC network, click on VPC network peering, create connection
+- Peering connection name-  dev-to-prod 
+- your vpc network- dev-auto-vpc   -(source)
+- Peered VPC Network
+  - In project new-training-50112-- Choose
+  - In another project
+- VPC network name
+  prod-vpc ------(destination)
+- ipv4
+- click on create
+
+- Click on VPC network, click on VPC network peering, create connection
+- Peering connection name-  prod-to-dev
+- your vpc network- prod-vpc  -(source)
+- Peered VPC Network
+  - In project new-training-50112-- Choose
+  - In another project
+- VPC network name
+  dev-auto-vpc------(destination)
+- ipv4
+- click on create
+
+- You can check from Ping by dev ip from  pod and same vice versia
+
+
+
+
+
 
 
