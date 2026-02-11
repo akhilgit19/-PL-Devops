@@ -1376,6 +1376,13 @@ Basically at the time of VM creation we are having some basic  provisioning of  
 If we want to open/deny apart from this 4 services we use network security group [RDP,SMTP]
 If we want to have the complete control on our VM and even teh control of  network traffic inside the VM THEN WE CAN MAKE US OF aZURE FIREWALLS.
 
+Feature	 NIC (The Door)	    NSG (The Guard)	      Firewall (The Specialist)
+Primary  JobConnectivity	 Basic Traffic     Filtering	Advanced Protection & Inspection
+Intelligence	None	   Low (Static Rules)	   High (Threat Intel / IDPS)
+Layer	    Layer 2/3	       Layer 4 (Ports/IPs)	       Layer 3 to Layer 7 (URLs/Websites)
+Cost	  Included with VM	 Free	          Paid (Expensive)
+
+
 AZURE FIREWALLS.
 -----------------
 - Create resource group
@@ -1661,6 +1668,101 @@ Endpoints:
 - priority-1
 - Health checks- enable
 - 
+
+
+Step 1: Deploy Virtual Machines in Different Regions
+Because VNETs are regional, you will create two separate networks automatically by picking two different regions.
+
+Create Webserver1 (Primary):
+
+Region: Australia East.
+
+Inbound Ports: Allow HTTP (80), HTTPS (443), and RDP (3389).
+
+Networking: Let Azure create a new VNET (e.g., VNET-East).
+
+Create Webserver2 (Failover):
+
+Region: Australia Central (or West US / North Europe).
+
+Inbound Ports: Same as above.
+
+Networking: Let Azure create a new VNET (e.g., VNET-Central).
+
+Step 2: Configure Unique DNS Labels for Each VM
+Traffic Manager identifies your VMs using their DNS hostnames, not just IP addresses.
+
+Go to Virtual Machines > Webserver1 > Configuration (under Settings).
+
+In the DNS name label, enter a unique name: pll-primary-east. Save it.
+
+Repeat for Webserver2: enter pll-backup-central. Save it.
+
+Note: The final FQDN will look like pll-primary-east.australiaeast.cloudapp.azure.com.
+
+Step 3: Set Up the Web Servers (IIS)
+Connect via RDP to both servers.
+
+Install IIS: Open PowerShell and run: Install-WindowsFeature -name Web-Server -IncludeManagementTools
+
+Customize the Pages:
+
+Go to C:\inetpub\wwwroot.
+
+Replace iisstart.htm with a new index.html.
+
+Server 1 text: "This is Indigo - Primary Region (East)"
+
+Server 2 text: "This is Indigo - Failover Region (Central)"
+
+Step 4: Create the Traffic Manager Profile
+Search for Traffic Manager profiles and click Create.
+
+Name: Give it a global name (e.g., pll-global-app).
+
+Routing Method: Select Priority.
+
+Resource Group: Use your existing PLLRG. Click Create.
+
+Step 5: Add Endpoints to Traffic Manager
+Open your new Traffic Manager profile and go to Endpoints > Add.
+
+Endpoint 1 (Primary):
+
+Type: Azure Endpoint.
+
+Name: Primary-East.
+
+Target Resource Type: Public IP Address.
+
+Target Resource: Select Webserver1-ip.
+
+Priority: 1.
+
+Endpoint 2 (Backup):
+
+Type: Azure Endpoint.
+
+Name: Backup-Central.
+
+Target Resource Type: Public IP Address.
+
+Target Resource: Select Webserver2-ip.
+
+Priority: 2.
+
+Step 6: Test the Failover
+Check Primary: Copy the DNS name from the Traffic Manager Overview page. Paste it in your browser. You should see the Primary (East) message.
+
+Simulate Disaster: Go to the Azure portal and Stop (Deallocate) Webserver1.
+
+Verify Failover: Refresh your browser after 2 minutes. The page should now display the Backup (Central) message.
+
+Interview Tip: "Why use Traffic Manager over a Load Balancer?"
+Load Balancer: Works inside a region (e.g., handles traffic between two VMs in Australia East).
+
+Traffic Manager: Works across regions at the DNS level. It is the only way to send users to a completely different part of the world if an entire Azure data center goes down.
+
 
 24-octo-2025
 Table Storage
