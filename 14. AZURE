@@ -3718,6 +3718,22 @@ Creating Build Pipeline for ASP.Net Web Applications using classic editor instea
 
 WebAPPProject- mcv5 appproject
 ------------------------------------
+# install .NET
+brew install --cask dotnet-sdk
+
+# create project
+dotnet new mvc -n MyMvcApp
+cd MyMvcApp
+
+# git
+git init
+git add .
+git commit -m "Initial commit"
+
+# connect + push
+git remote add origin https://somachanderrao123@dev.azure.com/somachanderrao123/PLL8PMBatch/_git/MyFirstRepo
+git push -u origin master
+
 - First will open the webapp project
 - Will build the webapp project in our local laptop using VS 2022 Enterprise edit
 - Once the build is succeeded then will run this project in our local laptop
